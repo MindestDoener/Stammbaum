@@ -11,4 +11,7 @@
   <button type="submit"
           (click)='onAddPerson({firstName: firstName.value, lastName: lastName.value, birthDate: birthDate.valueAsDate, deathDate: deathDate.valueAsDate})'>Add
   </button>
+  <div *ngFor="let person of stammbaum.persons">
+    {{person.firstName}} {{person.lastName}}
+  </div>
 </div>
