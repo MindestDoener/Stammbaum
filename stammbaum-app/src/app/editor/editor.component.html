@@ -1,1 +1,14 @@
-<p>editor works!</p>
+<div *ngIf="!stammbaum">
+  <input type="text" #titleInput>
+  <button type="submit" (click)='onCreateStammbaum(titleInput.value)'>Create</button>
+  <hr>
+</div>
+<div *ngIf="stammbaum">
+  <input type="text" #firstName>
+  <input type="text" #lastName>
+  <input type="date" #birthDate>
+  <input type="date" #deathDate>
+  <button type="submit"
+          (click)='onAddPerson({firstName: firstName.value, lastName: lastName.value, birthDate: birthDate.valueAsDate, deathDate: deathDate.valueAsDate})'>Add
+  </button>
+</div>

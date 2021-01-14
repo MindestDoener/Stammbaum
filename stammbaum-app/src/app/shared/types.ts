@@ -5,8 +5,16 @@ export interface Stammbaum {
 
 export interface Person {
   id: number;
-  name: string;
-  surName: string;
+  firstName: string;
+  lastName: string;
+  deathDate?: Date;
+  birthDate: Date;
+  children?: Person[];
+}
+
+export interface CreatePersonRequest {
+  firstName: string;
+  lastName: string;
   deathDate?: Date;
   birthDate: Date;
   children?: Person[];
