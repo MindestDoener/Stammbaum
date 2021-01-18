@@ -1,16 +1,32 @@
 <div *ngIf="!stammbaum">
-  <input type="text" #titleInput>
+  <label>
+    Tree Name:
+    <input type="text" #titleInput>
+  </label>
   <button type="submit" (click)='onCreateStammbaum(titleInput.value)'>Create</button>
   <hr>
 </div>
 <div *ngIf="stammbaum">
-  <input type="text" #firstName>
-  <input type="text" #lastName>
-  <input type="date" #birthDate>
-  <input type="date" #deathDate>
-  <button type="submit"
-          (click)='onAddPerson({firstName: firstName.value, lastName: lastName.value, birthDate: birthDate.valueAsDate, deathDate: deathDate.valueAsDate})'>Add
-  </button>
+  <form [formGroup]="addPersonForm" (ngSubmit)="onAddPerson()">
+    <label>
+      First Name:
+      <input formControlName="firstName" type="text" required>
+    </label>
+    <label>
+      Last Name:
+      <input formControlName="lastName" type="text" required>
+    </label>
+    <label>
+      Birth Date:
+      <input formControlName="birthDate" type="date" required>
+    </label>
+    <label>
+      Death Date:
+      <input formControlName="deathDate" type="date">
+    </label>
+    <button type="submit" [disabled]="addPersonForm.status == 'INVALID'">Add</button>
+  </form>
+
   <div *ngFor="let person of stammbaum.persons">
     {{person.firstName}} {{person.lastName}}
   </div>
