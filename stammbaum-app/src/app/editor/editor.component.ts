@@ -6,7 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.less']
+  styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
 

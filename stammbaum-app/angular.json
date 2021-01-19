@@ -28,8 +28,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less",
-              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "src/styles.scss",
+              "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": [
@@ -97,7 +97,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "src/styles.scss"
             ],
             "scripts": []
           }
@@ -133,7 +133,7 @@
   "defaultProject": "stammbaum-app",
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "less"
+      "styleext": "scss"
     }
   }
 }
