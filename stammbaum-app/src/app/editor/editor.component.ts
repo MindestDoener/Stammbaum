@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StammbaumServiceService} from '../shared/stammbaum-service.service';
 import {CreatePersonRequest, Stammbaum} from '../shared/types';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-editor',
