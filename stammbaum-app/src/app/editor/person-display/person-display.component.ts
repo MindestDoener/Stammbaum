@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Person} from '../../shared/types';
 
 @Component({
@@ -11,9 +11,16 @@ export class PersonDisplayComponent implements OnInit {
   @Input()
   person!: Person;
 
+  @Output()
+  deletePerson: EventEmitter<Person> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onDeletePerson(): void {
+    this.deletePerson.emit(this.person);
   }
 
 }

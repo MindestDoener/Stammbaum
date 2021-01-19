@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {StammbaumServiceService} from '../shared/stammbaum-service.service';
-import {CreatePersonRequest, Stammbaum} from '../shared/types';
+import {CreatePersonRequest, Person, Stammbaum} from '../shared/types';
 import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
@@ -33,6 +33,10 @@ export class EditorComponent implements OnInit {
     const personRequest: CreatePersonRequest = {...this.addPersonForm.value};
     this.stammbaumService.addPersonToStammbaum(personRequest);
     this.addPersonForm.reset();
+  }
+
+  onDeletePerson(person: Person): void {
+    this.stammbaumService.deletePersonFromStammbaum(person);
   }
 
 }
