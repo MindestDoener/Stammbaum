@@ -18,6 +18,10 @@ export class EditorComponent implements OnInit {
     deathDate: new FormControl()
   });
 
+  createStammbaumForm = new FormGroup({
+    treeName: new FormControl()
+  });
+
   stammbaum?: Stammbaum;
 
   genders = ['Male', 'Female'];
@@ -28,8 +32,8 @@ export class EditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onCreateStammbaum(name: string): void {
-    this.stammbaum = this.stammbaumService.createEmptyStammbaum(name);
+  onCreateStammbaum(): void {
+    this.stammbaum = this.stammbaumService.createEmptyStammbaum(this.createStammbaumForm.controls.treeName.value);
   }
 
   onAddPerson(): void {
