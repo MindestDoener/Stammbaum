@@ -1,17 +1,43 @@
 <div *ngIf="!stammbaum">
-  <input type="text" #titleInput>
-  <button type="submit" (click)='onCreateStammbaum(titleInput.value)'>Create</button>
+  <form class="form-row">
+    <label class="m-1">
+      Tree Name:
+      <input class="form-control" type="text" #titleInput>
+    </label>
+    <button class="btn btn-dark m-1" type="submit" (click)='onCreateStammbaum(titleInput.value)'>Create</button>
+  </form>
   <hr>
 </div>
 <div *ngIf="stammbaum">
-  <input type="text" #firstName>
-  <input type="text" #lastName>
-  <input type="date" #birthDate>
-  <input type="date" #deathDate>
-  <button type="submit"
-          (click)='onAddPerson({firstName: firstName.value, lastName: lastName.value, birthDate: birthDate.valueAsDate, deathDate: deathDate.valueAsDate})'>Add
-  </button>
-  <div *ngFor="let person of stammbaum.persons">
-    {{person.firstName}} {{person.lastName}}
-  </div>
+  <form class="form-row" [formGroup]="addPersonForm" (ngSubmit)="onAddPerson()">
+    <label class="m-1">
+      First Name:
+      <input class="form-control" formControlName="firstName" placeholder="First Name" type="text" required>
+    </label>
+    <label class="m-1">
+      Last Name:
+      <input class="form-control" formControlName="lastName" placeholder="Last Name" type="text" required>
+    </label>
+    <label class="m-1">
+      Gender:
+      <select class="form-control" formControlName="gender" required>
+        <option value="" disabled>Choose Gender</option>
+        <option *ngFor="let gender of genders; index as i" [ngValue]="i">{{gender}}</option>
+      </select>
+    </label>
+    <label class="m-1">
+      Birth Date:
+      <input class="form-control" formControlName="birthDate" type="date" required>
+    </label>
+    <label class="m-1">
+      Death Date:
+      <input class="form-control" formControlName="deathDate" type="date">
+    </label>
+    <button class="btn btn-dark m-1" type="submit" [disabled]="addPersonForm.status == 'INVALID'">Add</button>
+  </form>
+  <hr>
+  <app-person-display class="m-1"
+                      *ngFor="let person of stammbaum.persons"
+                      [person]="person"
+                      (deletePerson)="onDeletePerson($event)"></app-person-display>
 </div>

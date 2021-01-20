@@ -1,0 +1,15 @@
+<div class="d-inline-flex flex-row align-items-stretch bg-light">
+  <div
+    class="p-2 d-inline-flex align-items-center {{person.gender === 0 ? 'male' : 'female'}} rounded-left">
+    <i class="bi bi-person" style="color: white; font-size: 1.5rem"></i>
+  </div>
+  <div class="p-2">
+    <span>{{person.firstName}}</span><br>
+    <span>{{person.lastName}}</span><br>
+    <span>{{person.birthDate}}</span><br>
+    <span *ngIf="person.deathDate !== null">{{person.deathDate}}</span>
+  </div>
+  <div class="p-2 d-inline-flex align-items-center btn btn-danger" (click)="onDeletePerson()">
+    <i class="bi bi-trash"></i>
+  </div>
+</div>

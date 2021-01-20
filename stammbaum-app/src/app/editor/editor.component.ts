@@ -1,15 +1,26 @@
 import {Component, OnInit} from '@angular/core';
 import {StammbaumServiceService} from '../shared/stammbaum-service.service';
-import {CreatePersonRequest, Stammbaum} from '../shared/types';
+import {CreatePersonRequest, Person, Stammbaum} from '../shared/types';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.css']
+  styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
 
+  addPersonForm = new FormGroup({
+    firstName: new FormControl(),
+    lastName: new FormControl(),
+    gender: new FormControl(),
+    birthDate: new FormControl(),
+    deathDate: new FormControl()
+  });
+
   stammbaum?: Stammbaum;
+
+  genders = ['Male', 'Female'];
 
   constructor(private stammbaumService: StammbaumServiceService) {
   }
@@ -21,8 +32,14 @@ export class EditorComponent implements OnInit {
     this.stammbaum = this.stammbaumService.createEmptyStammbaum(name);
   }
 
-  onAddPerson(personRequest: CreatePersonRequest): void {
+  onAddPerson(): void {
+    const personRequest: CreatePersonRequest = {...this.addPersonForm.value};
     this.stammbaumService.addPersonToStammbaum(personRequest);
+    this.addPersonForm.reset();
+  }
+
+  onDeletePerson(person: Person): void {
+    this.stammbaumService.deletePersonFromStammbaum(person);
   }
 
 }
