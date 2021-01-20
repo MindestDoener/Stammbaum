@@ -6,8 +6,8 @@
   <div class="p-2">
     <span>{{person.firstName}}</span><br>
     <span>{{person.lastName}}</span><br>
-    <span>{{person.birthDate}}</span><br>
-    <span *ngIf="person.deathDate !== null">{{person.deathDate}}</span>
+    <span><span class="date-sign">*</span> {{convertDate(person.birthDate)}}</span><br>
+    <span *ngIf="person.deathDate !== null"><span class="date-sign">†</span> {{convertDate(person.deathDate)}}</span>
   </div>
   <div class="p-2 d-inline-flex align-items-center btn btn-danger" (click)="onDeletePerson()">
     <i class="bi bi-trash"></i>

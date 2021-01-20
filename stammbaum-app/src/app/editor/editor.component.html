@@ -31,7 +31,7 @@
     </label>
     <label class="m-1">
       Death Date:
-      <input class="form-control" formControlName="deathDate" type="date">
+      <input class="form-control" formControlName="deathDate" type="date" [min]="addPersonForm.controls.birthDate.value">
     </label>
     <button class="btn btn-dark m-1" type="submit" [disabled]="addPersonForm.status == 'INVALID'">Add</button>
   </form>
