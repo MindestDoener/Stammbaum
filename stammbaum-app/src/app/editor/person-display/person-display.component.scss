@@ -1,0 +1,12 @@
+@import "~bootstrap/scss/bootstrap";
+
+$male-color: $blue;
+$female-color: $pink;
+
+.male {
+  background-color: $male-color;
+}
+
+.female {
+  background-color: $female-color;
+}

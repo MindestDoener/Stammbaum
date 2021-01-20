@@ -13,11 +13,14 @@ export class EditorComponent implements OnInit {
   addPersonForm = new FormGroup({
     firstName: new FormControl(),
     lastName: new FormControl(),
+    gender: new FormControl(),
     birthDate: new FormControl(),
     deathDate: new FormControl()
   });
 
   stammbaum?: Stammbaum;
+
+  genders = ['Male', 'Female'];
 
   constructor(private stammbaumService: StammbaumServiceService) {
   }

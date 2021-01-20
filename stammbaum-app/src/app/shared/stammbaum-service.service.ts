@@ -12,13 +12,21 @@ export class StammbaumServiceService {
 
   }
 
-  private static makeUUID(): number {
+  private makeUUID(): number {
     let uuid = '';
     for (let i = 0; i < 10; i++) {
       uuid += Math.round(Math.random() * 9).toString();
     }
-    console.log(uuid);
-    return parseInt(uuid, 10);
+    const num = parseInt(uuid, 10);
+    // check for duplicate ids
+    if (this.stammbaum) {
+      for (const person of this.stammbaum?.persons) {
+        if (person.id === num) {
+          return this.makeUUID();
+        }
+      }
+    }
+    return num;
   }
 
   createEmptyStammbaum(name: string): Stammbaum {
@@ -28,18 +36,16 @@ export class StammbaumServiceService {
         persons: []
       };
     }
-    console.log(this.stammbaum);
     return this.stammbaum;
   }
 
   addPersonToStammbaum(personRequest: CreatePersonRequest): void {
     if (this.stammbaum !== undefined) {
       const person = {
-        id: StammbaumServiceService.makeUUID(),
+        id: this.makeUUID(),
         ...personRequest
       };
       this.stammbaum.persons.push(person);
-      console.log(this.stammbaum);
     }
   }
 

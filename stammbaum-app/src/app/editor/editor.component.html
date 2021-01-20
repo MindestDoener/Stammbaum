@@ -19,6 +19,13 @@
       <input class="form-control" formControlName="lastName" placeholder="Last Name" type="text" required>
     </label>
     <label class="m-1">
+      Gender:
+      <select class="form-control" formControlName="gender" required>
+        <option value="" disabled>Choose Gender</option>
+        <option *ngFor="let gender of genders; index as i" [ngValue]="i">{{gender}}</option>
+      </select>
+    </label>
+    <label class="m-1">
       Birth Date:
       <input class="form-control" formControlName="birthDate" type="date" required>
     </label>
