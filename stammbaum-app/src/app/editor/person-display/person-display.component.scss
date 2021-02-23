@@ -15,3 +15,11 @@ $female-color: $pink;
   font-weight: $font-weight-bold;
   font-size: $font-size-lg;
 }
+
+#person-display:hover #context-btn {
+  color: $gray-600;
+}
+
+#context-btn {
+  color: $light;
+}

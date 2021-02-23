@@ -50,5 +50,5 @@
   <app-person-display class="m-1"
                       *ngFor="let person of stammbaum.persons"
                       [person]="person"
-                      (deletePerson)="onDeletePerson($event)"></app-person-display>
+                      (openContextMenu)="onOpenContextMenu($event)"></app-person-display>
 </div>
