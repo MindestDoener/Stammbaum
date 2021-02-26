@@ -12,7 +12,7 @@ export class PersonDisplayComponent implements OnInit {
   person!: Person;
 
   @Output()
-  deletePerson: EventEmitter<Person> = new EventEmitter();
+  openContextMenu: EventEmitter<Person> = new EventEmitter();
 
   constructor() {
   }
@@ -20,8 +20,8 @@ export class PersonDisplayComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onDeletePerson(): void {
-    this.deletePerson.emit(this.person);
+  onOpenContextMenu(): void {
+    this.openContextMenu.emit(this.person);
   }
 
   convertDate(date: Date): string {

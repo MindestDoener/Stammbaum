@@ -39,7 +39,7 @@ export class StammbaumServiceService {
     return this.stammbaum;
   }
 
-  addPersonToStammbaum(personRequest: CreatePersonRequest): void {
+  addPerson(personRequest: CreatePersonRequest): void {
     if (this.stammbaum !== undefined) {
       const person = {
         id: this.makeUUID(),
@@ -49,7 +49,18 @@ export class StammbaumServiceService {
     }
   }
 
-  deletePersonFromStammbaum(person: Person): void {
+  // Takes Person as input and changes data of person in array with same id to data of person in parameter
+  updatePerson(person: Person): void {
+    if (this.stammbaum !== undefined) {
+      for (let i = 0; i < this.stammbaum.persons.length; i++) {
+        if (person.id === this.stammbaum.persons[i].id) {
+          this.stammbaum.persons[i] = person;
+        }
+      }
+    }
+  }
+
+  deletePerson(person: Person): void {
     if (this.stammbaum !== undefined) {
       for (let i = 0; i < this.stammbaum.persons.length; i++) {
         if (person.id === this.stammbaum.persons[i].id) {
