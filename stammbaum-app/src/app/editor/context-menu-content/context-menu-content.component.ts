@@ -1,14 +1,6 @@
-import {
-  AfterContentInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+import {AfterContentInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Person} from '../../shared/types';
+import {Gender, Person} from '../../shared/types';
 import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
@@ -16,7 +8,7 @@ import {FormControl, FormGroup} from '@angular/forms';
   templateUrl: './context-menu-content.component.html',
   styleUrls: ['./context-menu-content.component.css']
 })
-export class ContextMenuContentComponent implements OnChanges, AfterContentInit {
+export class ContextMenuContentComponent implements AfterContentInit {
 
   @Input()
   person!: Person;
@@ -40,16 +32,13 @@ export class ContextMenuContentComponent implements OnChanges, AfterContentInit 
   constructor(public activeModal: NgbActiveModal) {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // this.setForm();
-  }
-
   ngAfterContentInit(): void {
     this.setForm();
   }
 
   private setForm(): void {
     this.editPersonForm.patchValue(this.person);
+    this.editPersonForm.patchValue({gender: (this.person.gender === Gender.MALE) ? 0 : 1});
     console.log('Form set');
   }
 
@@ -60,7 +49,7 @@ export class ContextMenuContentComponent implements OnChanges, AfterContentInit 
   onUpdatePerson(): void {
     this.person.firstName = this.editPersonForm.value.firstName;
     this.person.lastName = this.editPersonForm.value.lastName;
-    this.person.gender = this.editPersonForm.value.gender;
+    this.person.gender = this.editPersonForm.value.gender === 0 ? Gender.MALE : Gender.FEMALE;
     this.person.birthDate = this.editPersonForm.value.birthDate;
     this.person.deathDate = this.editPersonForm.value.deathDate;
     this.updatePerson.emit(this.person);
