@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {StammbaumServiceService} from '../shared/stammbaum-service.service';
-import {CreatePersonRequest, Gender, Person, Stammbaum} from '../shared/types';
+import {convertDate, CreatePersonRequest, Gender, Person, Stammbaum} from '../shared/types';
 import {FormControl, FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ContextMenuContentComponent} from './context-menu-content/context-menu-content.component';
@@ -20,6 +20,9 @@ const mx = require('mxgraph')({
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent {
+
+  constructor(private stammbaumService: StammbaumServiceService, private modalService: NgbModal) {
+  }
 
   @ViewChild('graphContainer') graphContainer: ElementRef | undefined;
 
@@ -41,7 +44,12 @@ export class EditorComponent {
 
   genders = ['Male', 'Female'];
 
-  constructor(private stammbaumService: StammbaumServiceService, private modalService: NgbModal) {
+  private static getValue(person: Person): string {
+    if (person.deathDate) {
+      return person.firstName + ' ' + person.lastName +
+        '\n * ' + convertDate(person.birthDate) + ' - † ' + convertDate(person.deathDate);
+    }
+    return person.firstName + ' ' + person.lastName + '\n * ' + convertDate(person.birthDate);
   }
 
   onCreateStammbaum(): void {
@@ -92,12 +100,12 @@ export class EditorComponent {
       person.cell = this.graph.insertVertex(
         parent,
         person.id.toString(),
-        person.firstName + ' ' + person.lastName,
+        EditorComponent.getValue(person),
         0,
         0,
         200,
         80,
-        'fillColor=' + person.gender
+        'rounded=1;html=1;arcSize=50;fillColor=#F0F0F0;strokeWidth=3;strokeColor=' + person.gender
       );
 
     } finally {
@@ -120,8 +128,9 @@ export class EditorComponent {
   updatePersonEvent = (personToUpdate: Person) => {
     this.stammbaumService.updatePerson(personToUpdate);
     if (personToUpdate.cell != null) {
-      this.graph?.model.setValue(personToUpdate.cell, personToUpdate.firstName + ' ' + personToUpdate.lastName);
-      this.graph?.model.setStyle(personToUpdate.cell, 'fillColor=' + personToUpdate.gender);
+      this.graph?.model.setValue(personToUpdate.cell, EditorComponent.getValue(personToUpdate));
+      this.graph?.model.setStyle(personToUpdate.cell,
+        'rounded=1;arcSize=50;fillColor=#F0F0F0;strokeWidth=3;strokeColor=' + personToUpdate.gender);
     }
   }
 }

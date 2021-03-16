@@ -30,3 +30,8 @@ export enum Gender {
   MALE = '#86e1fc',
   FEMALE = '#eca7ff'
 }
+
+export function convertDate(date: Date): string {
+  const temp = date.toString().split('-');
+  return `${temp[2]}.${temp[1]}.${temp[0]}`;
+}

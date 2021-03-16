@@ -6,7 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 @Component({
   selector: 'app-context-menu-content',
   templateUrl: './context-menu-content.component.html',
-  styleUrls: ['./context-menu-content.component.css']
+  styleUrls: ['./context-menu-content.component.scss']
 })
 export class ContextMenuContentComponent implements AfterContentInit {
 
