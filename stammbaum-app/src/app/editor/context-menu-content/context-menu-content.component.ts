@@ -19,7 +19,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
   @Output()
   updatePerson: EventEmitter<Person> = new EventEmitter();
 
-  genders = ['Male', 'Female'];
+  genders = ['Male', 'Female', 'Diverse'];
 
   editPersonForm = new FormGroup({
     firstName: new FormControl(),
@@ -38,7 +38,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
 
   private setForm(): void {
     this.editPersonForm.patchValue(this.person);
-    this.editPersonForm.patchValue({gender: (this.person.gender === Gender.MALE) ? 0 : 1});
+    this.editPersonForm.patchValue({gender: (this.person.gender === Gender.MALE) ? 0 : (this.person.gender === Gender.FEMALE) ? 1 : 2});
     console.log('Form set');
   }
 
@@ -49,7 +49,8 @@ export class ContextMenuContentComponent implements AfterContentInit {
   onUpdatePerson(): void {
     this.person.firstName = this.editPersonForm.value.firstName;
     this.person.lastName = this.editPersonForm.value.lastName;
-    this.person.gender = this.editPersonForm.value.gender === 0 ? Gender.MALE : Gender.FEMALE;
+    this.person.gender =
+      (this.editPersonForm.value.gender === 0) ? Gender.MALE : (this.editPersonForm.value.gender === 1) ? Gender.FEMALE : Gender.DIVERSE;
     this.person.birthDate = this.editPersonForm.value.birthDate;
     this.person.deathDate = this.editPersonForm.value.deathDate;
     this.updatePerson.emit(this.person);

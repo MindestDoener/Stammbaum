@@ -42,7 +42,7 @@ export class EditorComponent {
 
   graph?: mxgraph.mxGraph;
 
-  genders = ['Male', 'Female'];
+  genders = ['Male', 'Female', 'Diverse'];
 
   private static getValue(person: Person): string {
     if (person.deathDate) {
@@ -85,7 +85,8 @@ export class EditorComponent {
 
   onAddPerson(): void {
     const personRequest: CreatePersonRequest = {...this.addPersonForm.value};
-    personRequest.gender = (this.addPersonForm.value.gender === 0) ? Gender.MALE : Gender.FEMALE;
+    personRequest.gender =
+      (this.addPersonForm.value.gender === 0) ? Gender.MALE : (this.addPersonForm.value.gender === 1) ? Gender.FEMALE : Gender.DIVERSE;
     const person = this.stammbaumService.addPerson(personRequest);
     this.addPersonForm.reset();
 
@@ -105,7 +106,7 @@ export class EditorComponent {
         0,
         200,
         80,
-        'rounded=1;html=1;arcSize=50;fillColor=#F0F0F0;strokeWidth=3;strokeColor=' + person.gender
+        'rounded=1;html=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + person.gender
       );
 
     } finally {
@@ -130,7 +131,7 @@ export class EditorComponent {
     if (personToUpdate.cell != null) {
       this.graph?.model.setValue(personToUpdate.cell, EditorComponent.getValue(personToUpdate));
       this.graph?.model.setStyle(personToUpdate.cell,
-        'rounded=1;arcSize=50;fillColor=#F0F0F0;strokeWidth=3;strokeColor=' + personToUpdate.gender);
+        'rounded=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + personToUpdate.gender);
     }
   }
 }

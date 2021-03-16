@@ -28,7 +28,8 @@ export interface CreatePersonRequest {
 
 export enum Gender {
   MALE = '#86e1fc',
-  FEMALE = '#eca7ff'
+  FEMALE = '#eca7ff',
+  DIVERSE = '#b3ec69'
 }
 
 export function convertDate(date: Date): string {
