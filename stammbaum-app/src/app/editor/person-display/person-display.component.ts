@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Person} from '../../shared/types';
+import {Person, convertDate} from '../../shared/types';
 
 @Component({
   selector: 'app-person-display',
@@ -14,6 +14,10 @@ export class PersonDisplayComponent implements OnInit {
   @Output()
   openContextMenu: EventEmitter<Person> = new EventEmitter();
 
+  convertDate(date: Date): string {
+    return convertDate(date);
+  }
+
   constructor() {
   }
 
@@ -22,10 +26,5 @@ export class PersonDisplayComponent implements OnInit {
 
   onOpenContextMenu(): void {
     this.openContextMenu.emit(this.person);
-  }
-
-  convertDate(date: Date): string {
-    const temp = date.toString().split('-');
-    return `${temp[2]}.${temp[1]}.${temp[0]}`;
   }
 }

@@ -47,8 +47,8 @@
     <button class="btn btn-dark m-1" type="submit" [disabled]="addPersonForm.status == 'INVALID'">Add</button>
   </form>
   <hr>
-  <app-person-display class="m-1"
-                      *ngFor="let person of stammbaum.persons"
-                      [person]="person"
-                      (openContextMenu)="onOpenContextMenu($event)"></app-person-display>
 </div>
+
+<div #graphContainer id="graphContainer" [hidden]="!stammbaum" ></div>
+
+

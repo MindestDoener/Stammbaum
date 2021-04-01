@@ -20,10 +20,8 @@ export class StammbaumServiceService {
     const num = parseInt(uuid, 10);
     // check for duplicate ids
     if (this.stammbaum) {
-      for (const person of this.stammbaum?.persons) {
-        if (person.id === num) {
-          return this.makeUUID();
-        }
+      if (this.stammbaum.persons.has(num)) {
+        return this.makeUUID();
       }
     }
     return num;
@@ -33,40 +31,40 @@ export class StammbaumServiceService {
     if (this.stammbaum === undefined) {
       this.stammbaum = {
         name,
-        persons: []
+        persons: new Map<number, Person>()
       };
     }
     return this.stammbaum;
   }
 
-  addPerson(personRequest: CreatePersonRequest): void {
+  addPerson(personRequest: CreatePersonRequest): Person {
+    const person = {
+      id: this.makeUUID(),
+      ...personRequest
+    };
     if (this.stammbaum !== undefined) {
-      const person = {
-        id: this.makeUUID(),
-        ...personRequest
-      };
-      this.stammbaum.persons.push(person);
+      this.stammbaum.persons.set(person.id, person);
     }
+    return person;
   }
 
-  // Takes Person as input and changes data of person in array with same id to data of person in parameter
+  // Takes Person as input and changes data of person in map with same id to data of person in parameter
   updatePerson(person: Person): void {
     if (this.stammbaum !== undefined) {
-      for (let i = 0; i < this.stammbaum.persons.length; i++) {
-        if (person.id === this.stammbaum.persons[i].id) {
-          this.stammbaum.persons[i] = person;
-        }
-      }
+      this.stammbaum.persons.set(person.id, person);
     }
   }
 
   deletePerson(person: Person): void {
     if (this.stammbaum !== undefined) {
-      for (let i = 0; i < this.stammbaum.persons.length; i++) {
-        if (person.id === this.stammbaum.persons[i].id) {
-          this.stammbaum.persons.splice(i, 1);
-        }
-      }
+      this.stammbaum.persons.delete(person.id);
     }
+  }
+
+  getPersonById(id: number): Person | undefined {
+    if (this.stammbaum !== undefined) {
+      return this.stammbaum.persons.get(id);
+    }
+    return undefined;
   }
 }
