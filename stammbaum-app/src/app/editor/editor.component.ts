@@ -85,8 +85,7 @@ export class EditorComponent {
 
   onAddPerson(): void {
     const personRequest: CreatePersonRequest = {...this.addPersonForm.value};
-    personRequest.gender =
-      (this.addPersonForm.value.gender === 0) ? Gender.MALE : (this.addPersonForm.value.gender === 1) ? Gender.FEMALE : Gender.DIVERSE;
+    personRequest.gender = Gender.getById(this.addPersonForm.value.gender);
     const person = this.stammbaumService.addPerson(personRequest);
     this.addPersonForm.reset();
 
@@ -106,7 +105,7 @@ export class EditorComponent {
         0,
         200,
         80,
-        'rounded=1;html=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + person.gender
+        'rounded=1;html=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + person.gender.color
       );
 
     } finally {
@@ -116,7 +115,7 @@ export class EditorComponent {
   }
 
   onOpenContextMenu(person: Person): void {
-    const modalRef = this.modalService.open(ContextMenuContentComponent);
+    const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
     modalRef.componentInstance.person = person;
     modalRef.componentInstance.deletePerson.subscribe((personToDelete: Person) => {
       this.stammbaumService.deletePerson(personToDelete);
@@ -131,7 +130,7 @@ export class EditorComponent {
     if (personToUpdate.cell != null) {
       this.graph?.model.setValue(personToUpdate.cell, EditorComponent.getValue(personToUpdate));
       this.graph?.model.setStyle(personToUpdate.cell,
-        'rounded=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + personToUpdate.gender);
+        'rounded=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + personToUpdate.gender.color);
     }
   }
 }

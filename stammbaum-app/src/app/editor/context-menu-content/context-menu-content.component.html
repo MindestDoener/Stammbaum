@@ -36,10 +36,20 @@
       </label>
     </div>
     <div class="form-row nowrap">
+      <label class="m-1">
+        Children:
+        <select multiple class="form-control" formControlName="children" >
+          <option *ngFor="let personEntry of stammbaum?.persons | keyvalue" [ngValue]="personEntry.key" [disabled]="personEntry.key === person.id">
+            {{personEntry.value.firstName + " " + personEntry.value.lastName}}
+          </option>
+        </select>
+      </label>
+    </div>
+    <div class="form-row nowrap">
       <button class="btn btn-dark m-1" type="submit" [disabled]="editPersonForm.status == 'INVALID'">Update</button>
+      <div class="btn btn-danger m-1" (click)="onDeletePerson()">Delete Person</div>
     </div>
   </form>
-  <div class="btn btn-danger" (click)="onDeletePerson()">Delete Person</div>
 
 </div>
 <div class="modal-footer">
