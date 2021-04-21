@@ -115,7 +115,7 @@ export class EditorComponent {
   }
 
   onOpenContextMenu(person: Person): void {
-    const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ContextMenuContentComponent, {size: 'lg'});
     modalRef.componentInstance.person = person;
     modalRef.componentInstance.deletePerson.subscribe((personToDelete: Person) => {
       this.stammbaumService.deletePerson(personToDelete);
@@ -127,10 +127,19 @@ export class EditorComponent {
 
   updatePersonEvent = (personToUpdate: Person) => {
     this.stammbaumService.updatePerson(personToUpdate);
-    if (personToUpdate.cell != null) {
-      this.graph?.model.setValue(personToUpdate.cell, EditorComponent.getValue(personToUpdate));
-      this.graph?.model.setStyle(personToUpdate.cell,
+    if (personToUpdate.cell != null && this.graph) {
+      this.graph.model.setValue(personToUpdate.cell, EditorComponent.getValue(personToUpdate));
+      this.graph.model.setStyle(personToUpdate.cell,
         'rounded=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + personToUpdate.gender.color);
+      if (personToUpdate.children && personToUpdate.children.length > 0) {
+        this.graph.model.getEdges(personToUpdate.cell, false, true, false)
+          .forEach(edge => this.graph?.model.remove(edge));
+        for (const child of personToUpdate.children) {
+          const parent = this.graph.getDefaultParent();
+          // tslint:disable-next-line:no-non-null-assertion
+          this.graph.insertEdge(parent, personToUpdate.id.toString() + child.id.toString(), '', personToUpdate.cell, child.cell!);
+        }
+      }
     }
   }
 }
