@@ -39,8 +39,13 @@
       <label class="m-1">
         Children:
         <select multiple class="form-control" formControlName="children" >
-          <option *ngFor="let personEntry of stammbaum?.persons | keyvalue" [ngValue]="personEntry.key" [disabled]="personEntry.key === person.id">
-            {{personEntry.value.firstName + " " + personEntry.value.lastName}}
+          <option
+            *ngFor="let child of possibleChildren"
+            [ngValue]="child.id">
+            {{child.firstName + " " + child.lastName}}
+          </option>
+          <option *ngIf="possibleChildren.length === 0" disabled>
+            No added person is a possible child
           </option>
         </select>
       </label>

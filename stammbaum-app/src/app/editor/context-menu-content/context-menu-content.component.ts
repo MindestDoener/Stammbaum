@@ -33,12 +33,29 @@ export class ContextMenuContentComponent implements AfterContentInit {
 
   stammbaum?: Stammbaum;
 
+  possibleChildren: Person[] = [];
+
   constructor(public activeModal: NgbActiveModal, private stammbaumService: StammbaumServiceService) {
     this.stammbaum = stammbaumService.stammbaum;
   }
 
   ngAfterContentInit(): void {
+    // tslint:disable-next-line:no-non-null-assertion
+    this.possibleChildren = Array.from(this.stammbaum!.persons.values()).filter(it => this.isPossibleChild(it));
     this.setForm();
+  }
+
+  isPossibleChild(person: Person): boolean {
+    if (person.id === this.person.id) { // child cant be the person itself
+      return false;
+    }
+    if (person.children && person.children.indexOf(this.person) > -1) { // child cant be parent of person
+      return false;
+    }
+    if (this.person.birthDate > person.birthDate) { // child cant be born before person
+      return false;
+    }
+    return true;
   }
 
   private setForm(): void {

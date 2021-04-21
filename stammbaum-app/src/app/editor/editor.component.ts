@@ -42,6 +42,8 @@ export class EditorComponent {
 
   graph?: mxgraph.mxGraph;
 
+  layout?: mxgraph.mxHierarchicalLayout;
+
   genders = ['Male', 'Female', 'Diverse'];
 
   private static getValue(person: Person): string {
@@ -68,7 +70,8 @@ export class EditorComponent {
       this.graph.addListener(mx.mxEvent.DOUBLE_CLICK, this.doubleClickEvent);
     } finally {
       this.graph.getModel().endUpdate();
-      new mx.mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
+      this.layout = new mx.mxHierarchicalLayout(this.graph, 'west');
+      this.layout?.execute(this.graph.getDefaultParent());
     }
   }
 
@@ -132,13 +135,14 @@ export class EditorComponent {
       this.graph.model.setStyle(personToUpdate.cell,
         'rounded=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + personToUpdate.gender.color);
       if (personToUpdate.children && personToUpdate.children.length > 0) {
+        const parent = this.graph.getDefaultParent();
         this.graph.model.getEdges(personToUpdate.cell, false, true, false)
           .forEach(edge => this.graph?.model.remove(edge));
         for (const child of personToUpdate.children) {
-          const parent = this.graph.getDefaultParent();
           // tslint:disable-next-line:no-non-null-assertion
-          this.graph.insertEdge(parent, personToUpdate.id.toString() + child.id.toString(), '', personToUpdate.cell, child.cell!);
+          this.graph.insertEdge(parent, personToUpdate.id.toString() + child.id.toString(), '', personToUpdate.cell, child.cell!, 'edgeStyle=orthogonalEdgeStyle;');
         }
+        this.layout?.execute(parent); // todo fixen weil macht irgendwie nichts
       }
     }
   }
