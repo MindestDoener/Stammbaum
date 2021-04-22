@@ -6,6 +6,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ContextMenuContentComponent} from './context-menu-content/context-menu-content.component';
 import {mxgraph} from 'mxgraph';
 
+
 declare var require: any;
 
 const mx = require('mxgraph')({
@@ -42,8 +43,6 @@ export class EditorComponent {
 
   graph?: mxgraph.mxGraph;
 
-  layout?: mxgraph.mxHierarchicalLayout;
-
   genders = ['Male', 'Female', 'Diverse'];
 
   private static getValue(person: Person): string {
@@ -70,8 +69,7 @@ export class EditorComponent {
       this.graph.addListener(mx.mxEvent.DOUBLE_CLICK, this.doubleClickEvent);
     } finally {
       this.graph.getModel().endUpdate();
-      this.layout = new mx.mxHierarchicalLayout(this.graph, 'west');
-      this.layout?.execute(this.graph.getDefaultParent());
+      new mx.mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
     }
   }
 
@@ -131,18 +129,30 @@ export class EditorComponent {
   updatePersonEvent = (personToUpdate: Person) => {
     this.stammbaumService.updatePerson(personToUpdate);
     if (personToUpdate.cell != null && this.graph) {
-      this.graph.model.setValue(personToUpdate.cell, EditorComponent.getValue(personToUpdate));
-      this.graph.model.setStyle(personToUpdate.cell,
-        'rounded=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + personToUpdate.gender.color);
-      if (personToUpdate.children && personToUpdate.children.length > 0) {
-        const parent = this.graph.getDefaultParent();
-        this.graph.model.getEdges(personToUpdate.cell, false, true, false)
-          .forEach(edge => this.graph?.model.remove(edge));
-        for (const child of personToUpdate.children) {
-          // tslint:disable-next-line:no-non-null-assertion
-          this.graph.insertEdge(parent, personToUpdate.id.toString() + child.id.toString(), '', personToUpdate.cell, child.cell!, 'edgeStyle=orthogonalEdgeStyle;');
+      const parent = this.graph.getDefaultParent();
+      try {
+        this.graph.getModel().beginUpdate();
+
+        this.graph.model.setValue(personToUpdate.cell, EditorComponent.getValue(personToUpdate));
+        this.graph.model.setStyle(personToUpdate.cell,
+          'rounded=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + personToUpdate.gender.color);
+        if (personToUpdate.children && personToUpdate.children.length > 0) {
+          this.graph.model.getEdges(personToUpdate.cell, false, true, false)
+            .forEach(edge => this.graph?.model.remove(edge));
+          for (const child of personToUpdate.children) {
+            this.graph.insertEdge(
+              parent,
+              personToUpdate.id.toString() + child.id.toString(),
+              '',
+              personToUpdate.cell,
+              // tslint:disable-next-line:no-non-null-assertion
+              child.cell!,
+              'strokeColor=#B3B3B3;');
+          }
         }
-        this.layout?.execute(parent); // todo fixen weil macht irgendwie nichts
+      } finally {
+        this.graph.getModel().endUpdate();
+        new mx.mxHierarchicalLayout(this.graph).execute(parent);
       }
     }
   }
