@@ -1,6 +1,3 @@
-import {mxgraph} from 'mxgraph';
-import mxCell = mxgraph.mxCell;
-
 export interface Stammbaum {
   name: string;
   persons: Map<number, Person>;
@@ -14,7 +11,6 @@ export interface Person {
   deathDate?: Date;
   birthDate: Date;
   children?: Person[];
-  cell?: mxCell;
 }
 
 export interface CreatePersonRequest {
