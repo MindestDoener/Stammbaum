@@ -8,13 +8,15 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { PersonDisplayComponent } from './editor/person-display/person-display.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuContentComponent } from './editor/context-menu-content/context-menu-content.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorComponent,
     PersonDisplayComponent,
-    ContextMenuContentComponent
+    ContextMenuContentComponent,
+    LandingPageComponent
   ],
     imports: [
         BrowserModule,
