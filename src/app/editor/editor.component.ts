@@ -17,10 +17,6 @@ export class EditorComponent {
 
   @ViewChild('graphContainer') graphContainer: ElementRef | undefined;
 
-  createStammbaumForm = new FormGroup({
-    treeName: new FormControl()
-  });
-
   addPersonForm = new FormGroup({
     firstName: new FormControl(),
     lastName: new FormControl(),
@@ -39,11 +35,6 @@ export class EditorComponent {
         '\n * ' + convertDate(person.birthDate) + ' - † ' + convertDate(person.deathDate);
     }
     return person.firstName + ' ' + person.lastName + '\n * ' + convertDate(person.birthDate);
-  }
-
-  onCreateStammbaum(): void {
-    this.stammbaum = this.stammbaumService.createEmptyStammbaum(this.createStammbaumForm.controls.treeName.value);
-    // this.initDiagram();
   }
 
   // initDiagram(): void {

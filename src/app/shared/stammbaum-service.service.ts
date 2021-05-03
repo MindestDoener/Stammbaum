@@ -6,6 +6,8 @@ import {CreatePersonRequest, Person, Stammbaum} from './types';
 })
 export class StammbaumServiceService {
 
+  stammbaumList: Stammbaum[] = [];
+
   stammbaum?: Stammbaum;
 
   constructor() {
@@ -27,14 +29,15 @@ export class StammbaumServiceService {
     return num;
   }
 
-  createEmptyStammbaum(name: string): Stammbaum {
+  createEmptyStammbaum(name: string){
     if (this.stammbaum === undefined) {
       this.stammbaum = {
         name,
         persons: new Map<number, Person>()
       };
     }
-    return this.stammbaum;
+    this.stammbaumList.push(this.stammbaum);
+    this.stammbaum = undefined;
   }
 
   addPerson(personRequest: CreatePersonRequest): Person {
@@ -66,5 +69,9 @@ export class StammbaumServiceService {
       return this.stammbaum.persons.get(id);
     }
     return undefined;
+  }
+
+  getTreeList(): Stammbaum[] {
+    return this.stammbaumList;
   }
 }

@@ -2,6 +2,7 @@ import { Component, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { EditorComponent } from './editor/editor.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { TreeListComponent } from './tree-list/tree-list.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,8 @@ const routes: Routes = [
     component: LandingPageComponent
   },
   {
-    path: 'editor',
-    component: EditorComponent
+    path: 'trees',
+    component: TreeListComponent
   }
 ];
 

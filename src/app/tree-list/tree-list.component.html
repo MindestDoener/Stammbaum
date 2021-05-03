@@ -1,0 +1,11 @@
+<form class="form-row" [formGroup]="createStammbaumForm" (ngSubmit)="onCreateStammbaum()">
+  <label class="m-1">
+    Tree Name:
+    <input class="form-control" formControlName="treeName" placeholder="Untitled Tree" type="text" required>
+  </label>
+  <button class="btn btn-dark m-1" type="submit" [disabled]="createStammbaumForm.status == 'INVALID'">Create</button>
+</form>
+<hr>
+<div class="list-group">
+  <a routerLink="" class="list-group-item list-group-item-action" *ngFor="let tree of treeList">{{ tree.name }}{{ tree.persons }}</a>
+</div>

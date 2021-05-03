@@ -1,13 +1,3 @@
-<div *ngIf="!stammbaum">
-  <form class="form-row" [formGroup]="createStammbaumForm" (ngSubmit)="onCreateStammbaum()">
-    <label class="m-1">
-      Tree Name:
-      <input class="form-control" formControlName="treeName" placeholder="Untitled Tree" type="text" required>
-    </label>
-    <button class="btn btn-dark m-1" type="submit" [disabled]="createStammbaumForm.status == 'INVALID'">Create</button>
-  </form>
-  <hr>
-</div>
 <div *ngIf="stammbaum">
   <div class="d-flex flex-row align-items-center bg-dark text-white">
     <div class="pl-2">
