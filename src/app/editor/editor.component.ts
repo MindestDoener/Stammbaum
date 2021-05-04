@@ -19,8 +19,6 @@ export class EditorComponent implements OnInit{
   ngOnInit(): void {
     const params = this.route.snapshot.paramMap;
     this.stammbaum = this.stammbaumService.getSingleTree(params.get('id'));
-
-
   }
 
   @ViewChild('graphContainer') graphContainer: ElementRef | undefined;

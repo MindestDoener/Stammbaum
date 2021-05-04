@@ -10,7 +10,7 @@ import { Stammbaum } from '../shared/types';
 })
 export class TreeListComponent {
 
-  treeList?: Stammbaum[];
+  treeList?: Stammbaum[] = this.stammbaumService.getTreeList();
 
   createStammbaumForm = new FormGroup({
     treeName: new FormControl()
@@ -19,7 +19,6 @@ export class TreeListComponent {
   constructor(private stammbaumService: StammbaumServiceService) { }
 
   onCreateStammbaum(): void {
-    console.log(this.stammbaumService.stammbaumList);
     const sbID = (this.stammbaumService.stammbaumList === undefined) ? "0" : this.stammbaumService.stammbaumList.length.toString();
     this.stammbaumService.createEmptyStammbaum(this.createStammbaumForm.controls.treeName.value, sbID);
     this.treeList = this.stammbaumService.getTreeList();

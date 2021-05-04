@@ -10,7 +10,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuContentComponent } from './editor/context-menu-content/context-menu-content.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { TreeListComponent } from './tree-list/tree-list.component';
-import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +18,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     PersonDisplayComponent,
     ContextMenuContentComponent,
     LandingPageComponent,
-    TreeListComponent,
-    NavbarComponent
+    TreeListComponent
   ],
     imports: [
         BrowserModule,
