@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <form class="form-row" [formGroup]="createStammbaumForm" (ngSubmit)="onCreateStammbaum()">
   <label class="m-1">
     Tree Name:
@@ -7,5 +8,7 @@
 </form>
 <hr>
 <div class="list-group">
-  <a routerLink="" class="list-group-item list-group-item-action" *ngFor="let tree of treeList">{{ tree.name }}{{ tree.persons }}</a>
+  <a class="list-group-item list-group-item-action" *ngFor="let tree of treeList" [routerLink]="tree.id">
+    Name: {{ tree.name }}  |  Personenanzahl: {{ tree.persons.size }}  |  ID: {{ tree.id }}
+  </a>
 </div>

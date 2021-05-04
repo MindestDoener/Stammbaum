@@ -1,15 +1,17 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {CreatePersonRequest, Person, Stammbaum} from './types';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StammbaumServiceService {
-
-  stammbaumList: Stammbaum[] = [];
+export class StammbaumServiceService implements OnInit {
 
   stammbaum?: Stammbaum;
+  stammbaumList?: Stammbaum[];
 
+  ngOnInit(){
+    this.stammbaumList = [];
+  }
   constructor() {
 
   }
@@ -29,14 +31,17 @@ export class StammbaumServiceService {
     return num;
   }
 
-  createEmptyStammbaum(name: string){
-    if (this.stammbaum === undefined) {
-      this.stammbaum = {
-        name,
-        persons: new Map<number, Person>()
-      };
+  createEmptyStammbaum(name: string, id: string){
+    if(this.stammbaumList === undefined){
+      this.stammbaumList = []
     }
-    this.stammbaumList.push(this.stammbaum);
+    this.stammbaum = {
+      name,
+      persons: new Map<number, Person>(),
+      id
+    };
+
+    this.stammbaumList?.push(this.stammbaum);
     this.stammbaum = undefined;
   }
 
@@ -72,6 +77,14 @@ export class StammbaumServiceService {
   }
 
   getTreeList(): Stammbaum[] {
-    return this.stammbaumList;
+    return this.stammbaumList ?? [];
+  }
+
+  getSingleTree(id: string | null): Stammbaum | undefined{
+    if(this.stammbaumList !== []){
+      return this.stammbaumList?.find(stammbaum => stammbaum.id === id);
+    }else{
+      return undefined;
+    }
   }
 }

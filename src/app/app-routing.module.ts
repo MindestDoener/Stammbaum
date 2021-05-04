@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'trees',
     component: TreeListComponent
+  },
+  {
+    path: 'trees/:id',
+    component: EditorComponent
   }
 ];
 

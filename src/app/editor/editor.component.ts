@@ -1,18 +1,26 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {StammbaumServiceService} from '../shared/stammbaum-service.service';
 import {convertDate, CreatePersonRequest, Gender, Person, Stammbaum} from '../shared/types';
 import {FormControl, FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ContextMenuContentComponent} from './context-menu-content/context-menu-content.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss']
 })
-export class EditorComponent {
+export class EditorComponent implements OnInit{
 
-  constructor(private stammbaumService: StammbaumServiceService, private modalService: NgbModal) {
+  constructor(private stammbaumService: StammbaumServiceService, private modalService: NgbModal, private route: ActivatedRoute) {
+  }
+
+  ngOnInit(): void {
+    const params = this.route.snapshot.paramMap;
+    this.stammbaum = this.stammbaumService.getSingleTree(params.get('id'));
+
+
   }
 
   @ViewChild('graphContainer') graphContainer: ElementRef | undefined;
@@ -28,6 +36,8 @@ export class EditorComponent {
   stammbaum?: Stammbaum;
 
   genders = ['Male', 'Female', 'Diverse'];
+
+
 
   private static getValue(person: Person): string {
     if (person.deathDate) {

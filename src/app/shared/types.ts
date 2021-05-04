@@ -1,6 +1,7 @@
 export interface Stammbaum {
   name: string;
   persons: Map<number, Person>;
+  id: string;
 }
 
 export interface Person {
