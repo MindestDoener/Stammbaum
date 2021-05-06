@@ -1,23 +1,6 @@
-<div *ngIf="!stammbaum">
-  <form class="form-row" [formGroup]="createStammbaumForm" (ngSubmit)="onCreateStammbaum()">
-    <label class="m-1">
-      Tree Name:
-      <input class="form-control" formControlName="treeName" placeholder="Untitled Tree" type="text" required>
-    </label>
-    <button class="btn btn-dark m-1" type="submit" [disabled]="createStammbaumForm.status == 'INVALID'">Create</button>
-  </form>
-  <hr>
-</div>
 <div *ngIf="stammbaum">
-  <div class="d-flex flex-row align-items-center bg-dark text-white">
-    <div class="pl-2">
-      <svg class="bi" width="32" height="32" fill="currentColor">
-        <use xlink:href="assets/img/bootstrap-icons.svg#diagram-2"/>
-      </svg>
-    </div>
-    <div class="pb-1 tree-name-heading">
-      Tree: {{stammbaum.name}}
-    </div>
+  <div class="pb-1 tree-name-heading">
+    Tree: {{stammbaum.name}}
   </div>
   <form class="form-row" [formGroup]="addPersonForm" (ngSubmit)="onAddPerson()">
     <label class="m-1">
@@ -50,5 +33,3 @@
 </div>
 
 <div #graphContainer id="graphContainer" [hidden]="!stammbaum" ></div>
-
-

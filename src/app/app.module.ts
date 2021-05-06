@@ -9,6 +9,8 @@ import { PersonDisplayComponent } from './editor/person-display/person-display.c
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuContentComponent } from './editor/context-menu-content/context-menu-content.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { TreeListComponent } from './tree-list/tree-list.component';
+import { TreeListItemComponent } from './tree-list/tree-list-item/tree-list-item.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     EditorComponent,
     PersonDisplayComponent,
     ContextMenuContentComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    TreeListComponent,
+    TreeListItemComponent
   ],
     imports: [
         BrowserModule,

@@ -14,6 +14,9 @@ export class ContextMenuContentComponent implements AfterContentInit {
   @Input()
   person!: Person;
 
+  @Input()
+  stammbaum!: Stammbaum;
+
   @Output()
   deletePerson: EventEmitter<Person> = new EventEmitter();
 
@@ -31,12 +34,9 @@ export class ContextMenuContentComponent implements AfterContentInit {
     children: new FormControl([])
   });
 
-  stammbaum?: Stammbaum;
-
   possibleChildren: Person[] = [];
 
   constructor(public activeModal: NgbActiveModal, private stammbaumService: StammbaumServiceService) {
-    this.stammbaum = stammbaumService.stammbaum;
   }
 
   ngAfterContentInit(): void {
@@ -76,7 +76,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.gender = Gender.getById(this.editPersonForm.value.gender);
     this.person.birthDate = this.editPersonForm.value.birthDate;
     this.person.deathDate = this.editPersonForm.value.deathDate;
-    this.person.children = this.editPersonForm.value.children.map((id: number) => this.stammbaumService.getPersonById(id));
+    this.person.children = this.editPersonForm.value.children.map((id: number) => this.stammbaumService.getPersonById(id, this.stammbaum!.id));
     this.updatePerson.emit(this.person);
   }
 }
