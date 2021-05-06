@@ -47,15 +47,11 @@ export class EditorComponent implements OnInit{
     return person.firstName + ' ' + person.lastName + '\n * ' + convertDate(person.birthDate);
   }
 
-  doubleClickEvent = (sender: any, event: any) => {
-    const cell = event.getProperty('cell');
-    if (cell != null) {
-      const person = this.stammbaumService.getPersonById(+cell.id, this.stammbaum!.id);
-      if (person) {
-        this.onOpenContextMenu(person);
-      }
+  dblClickEvent = (node: Node) => {
+    const person = this.stammbaumService.getPersonById(+node.id);
+    if (person) {
+      this.onOpenContextMenu(person);
     }
-    event.consume();
   }
 
   onAddPerson(): void {
@@ -66,6 +62,8 @@ export class EditorComponent implements OnInit{
     const node: Node = {
       id: person.id.toString(),
       label: EditorComponent.getValue(person),
+      dimension: {width: 200, height: 40},
+      data: {customColor: person.gender.color},
     };
     person.node = node;
     this.nodes.push(node);

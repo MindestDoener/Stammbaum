@@ -31,7 +31,7 @@
   </form>
   <hr>
 </div>
-<div id="tree-container" >
+<div id="tree-container">
   <ngx-graph
     *ngIf="stammbaum"
     class="graph"
@@ -39,6 +39,25 @@
     [showMiniMap]="true"
     [links]="links"
     [nodes]="nodes"
+    xmlns:svg="http://www.w3.org/2000/svg"
   >
+    <ng-template #nodeTemplate let-node>
+      <svg:g class="node" (dblclick)="dblClickEvent(node)">
+        <svg:rect
+          rx="10"
+          [attr.width]="node.dimension.width"
+          [attr.height]="node.dimension.height"
+          [attr.fill]="node.data.customColor"
+        />
+        <svg:text
+          alignment-baseline="central"
+          text-anchor="middle"
+          [attr.x]="node.dimension.width / 2"
+          [attr.y]="node.dimension.height / 2 + 5"
+        >
+          {{node.label}}
+        </svg:text>
+      </svg:g>
+    </ng-template>
   </ngx-graph>
 </div>
