@@ -7,7 +7,9 @@
 </form>
 <hr>
 <div class="list-group">
-  <a class="list-group-item list-group-item-action" *ngFor="let tree of treeList" [routerLink]="tree.id">
-    Name: {{ tree.name }}  |  Personenanzahl: {{ tree.persons.size }}  |  ID: {{ tree.id }}
+  <a class="list-group-item list-group-item-action" *ngFor="let tree of treeList | keyvalue" [routerLink]="tree.key">
+    <app-tree-list-item
+      [stammbaum]="tree.value">
+    </app-tree-list-item>
   </a>
 </div>

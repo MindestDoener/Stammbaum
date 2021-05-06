@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { StammbaumServiceService } from '../shared/stammbaum-service.service';
-import { Stammbaum } from '../shared/types';
+import { Person, Stammbaum } from '../shared/types';
 
 @Component({
   selector: 'app-tree-list',
@@ -10,7 +10,7 @@ import { Stammbaum } from '../shared/types';
 })
 export class TreeListComponent {
 
-  treeList?: Stammbaum[] = this.stammbaumService.getTreeList();
+  treeList?: Map<string, Stammbaum> = this.stammbaumService.getTreeList();
 
   createStammbaumForm = new FormGroup({
     treeName: new FormControl()
@@ -19,7 +19,7 @@ export class TreeListComponent {
   constructor(private stammbaumService: StammbaumServiceService) { }
 
   onCreateStammbaum(): void {
-    const sbID = (this.stammbaumService.stammbaumList === undefined) ? "0" : this.stammbaumService.stammbaumList.length.toString();
+    const sbID = (this.stammbaumService.stammbaumList === undefined) ? "0" : this.stammbaumService.stammbaumList.size.toString();
     this.stammbaumService.createEmptyStammbaum(this.createStammbaumForm.controls.treeName.value, sbID);
     this.treeList = this.stammbaumService.getTreeList();
     // this.initDiagram();

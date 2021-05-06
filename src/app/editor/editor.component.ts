@@ -74,7 +74,7 @@ export class EditorComponent implements OnInit{
   onAddPerson(): void {
     const personRequest: CreatePersonRequest = {...this.addPersonForm.value};
     personRequest.gender = Gender.getById(this.addPersonForm.value.gender);
-    const person = this.stammbaumService.addPerson(personRequest);
+    const person = this.stammbaumService.addPerson(personRequest, this.stammbaum!.id);
     this.addPersonForm.reset();
 
     // if (!(this.graph && this.stammbaum)) {
