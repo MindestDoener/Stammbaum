@@ -76,7 +76,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.gender = Gender.getById(this.editPersonForm.value.gender);
     this.person.birthDate = this.editPersonForm.value.birthDate;
     this.person.deathDate = this.editPersonForm.value.deathDate;
-  this.person.children = this.editPersonForm.value.children.map((id: number) => this.stammbaumService.getPersonById(id, this.stammbaum!.id));
+    this.person.children = this.editPersonForm.value.children.map((id: number) => this.stammbaumService.getPersonById(id, this.stammbaum!.id));
     this.updatePerson.emit(this.person);
   }
 }

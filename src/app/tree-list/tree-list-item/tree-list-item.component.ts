@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Stammbaum } from '../shared/types';
+import { Stammbaum } from '../../shared/types';
 
 @Component({
   selector: 'app-tree-list-item',

@@ -22,7 +22,6 @@ export class TreeListComponent {
     const sbID = (this.stammbaumService.stammbaumList === undefined) ? "0" : this.stammbaumService.stammbaumList.size.toString();
     this.stammbaumService.createEmptyStammbaum(this.createStammbaumForm.controls.treeName.value, sbID);
     this.treeList = this.stammbaumService.getTreeList();
-    // this.initDiagram();
   }
 
 
