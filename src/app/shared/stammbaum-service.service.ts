@@ -6,66 +6,63 @@ import {CreatePersonRequest, Person, Stammbaum} from './types';
 })
 export class StammbaumServiceService{
 
-  stammbaum?: Stammbaum;
   stammbaumList?: Map<string, Stammbaum> = new Map<string, Stammbaum>();
 
     constructor() {
   }
 
-  private makeUUID(): number {
+  private makeUUID(treeId: string): number {
     let uuid = '';
     for (let i = 0; i < 10; i++) {
       uuid += Math.round(Math.random() * 9).toString();
     }
     const num = parseInt(uuid, 10);
     // check for duplicate ids
-    if (this.stammbaum) {
-      if (this.stammbaum.persons.has(num)) {
-        return this.makeUUID();
+    if (this.stammbaumList?.get(treeId)) {
+      if (this.stammbaumList.get(treeId)?.persons.has(num)) {
+        return this.makeUUID(treeId);
       }
     }
     return num;
   }
 
   createEmptyStammbaum(name: string, id: string){
-    this.stammbaum = {
+    let stammbaum = {
       name,
       persons: new Map<number, Person>(),
       id
     };
 
-    this.stammbaumList?.set(id ,this.stammbaum);
-    this.stammbaum = undefined;
+    this.stammbaumList?.set(id , stammbaum);
   }
 
-  addPerson(personRequest: CreatePersonRequest, id: string): Person {
+  addPerson(personRequest: CreatePersonRequest, treeId: string): Person {
     const person = {
-      id: this.makeUUID(),
+      id: this.makeUUID(treeId),
       ...personRequest
     };
-    if (this.stammbaum !== undefined) {
-      this.stammbaum.persons.set(person.id, person);
-
+    if (this.stammbaumList !== undefined) {
+      this.stammbaumList.get(treeId)?.persons.set(person.id, person);
     }
     return person;
   }
 
   // Takes Person as input and changes data of person in map with same id to data of person in parameter
-  updatePerson(person: Person): void {
-    if (this.stammbaum !== undefined) {
-      this.stammbaum.persons.set(person.id, person);
+  updatePerson(person: Person, treeId: string): void {
+    if (this.stammbaumList !== undefined) {
+      this.stammbaumList.get(treeId)?.persons.set(person.id, person);
     }
   }
 
-  deletePerson(person: Person): void {
-    if (this.stammbaum !== undefined) {
-      this.stammbaum.persons.delete(person.id);
+  deletePerson(person: Person, treeId: string): void {
+    if (this.stammbaumList !== undefined) {
+      this.stammbaumList.get(treeId)?.persons.delete(person.id);
     }
   }
 
-  getPersonById(id: number): Person | undefined {
-    if (this.stammbaum !== undefined) {
-      return this.stammbaum.persons.get(id);
+  getPersonById(id: number, treeId: string): Person | undefined {
+    if (this.stammbaumList !== undefined) {
+      return this.stammbaumList.get(treeId)?.persons.get(id);
     }
     return undefined;
   }

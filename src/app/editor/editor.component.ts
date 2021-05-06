@@ -63,7 +63,7 @@ export class EditorComponent implements OnInit{
   doubleClickEvent = (sender: any, event: any) => {
     const cell = event.getProperty('cell');
     if (cell != null) {
-      const person = this.stammbaumService.getPersonById(+cell.id);
+      const person = this.stammbaumService.getPersonById(+cell.id, this.stammbaum!.id);
       if (person) {
         this.onOpenContextMenu(person);
       }
@@ -106,7 +106,7 @@ export class EditorComponent implements OnInit{
     const modalRef = this.modalService.open(ContextMenuContentComponent, {size: 'lg'});
     modalRef.componentInstance.person = person;
     modalRef.componentInstance.deletePerson.subscribe((personToDelete: Person) => {
-      this.stammbaumService.deletePerson(personToDelete);
+      this.stammbaumService.deletePerson(personToDelete, this.stammbaum!.id);
       // this.graph?.removeCells([personToDelete.cell]);
       modalRef.close();
     });
@@ -114,7 +114,7 @@ export class EditorComponent implements OnInit{
   }
 
   updatePersonEvent = (personToUpdate: Person) => {
-    this.stammbaumService.updatePerson(personToUpdate);
+    this.stammbaumService.updatePerson(personToUpdate, this.stammbaum!.id);
     // if (personToUpdate.cell != null && this.graph) {
     //   const parent = this.graph.getDefaultParent();
     //   try {
