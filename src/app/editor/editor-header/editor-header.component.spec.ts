@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PersonDisplayComponent } from './person-display.component';
+import { EditorHeaderComponent } from './editor-header.component';
 
-describe('PersonDisplayComponent', () => {
-  let component: PersonDisplayComponent;
-  let fixture: ComponentFixture<PersonDisplayComponent>;
+describe('EditorHeaderComponent', () => {
+  let component: EditorHeaderComponent;
+  let fixture: ComponentFixture<EditorHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PersonDisplayComponent ]
+      declarations: [ EditorHeaderComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PersonDisplayComponent);
+    fixture = TestBed.createComponent(EditorHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

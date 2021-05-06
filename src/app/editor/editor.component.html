@@ -31,5 +31,14 @@
   </form>
   <hr>
 </div>
-
-<div #graphContainer id="graphContainer" [hidden]="!stammbaum" ></div>
+<div id="tree-container" >
+  <ngx-graph
+    *ngIf="stammbaum"
+    class="graph"
+    [view]="[1000,400]"
+    [showMiniMap]="true"
+    [links]="links"
+    [nodes]="nodes"
+  >
+  </ngx-graph>
+</div>

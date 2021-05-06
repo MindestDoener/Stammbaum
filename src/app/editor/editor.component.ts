@@ -5,6 +5,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ContextMenuContentComponent} from './context-menu-content/context-menu-content.component';
 import { ActivatedRoute } from '@angular/router';
+import {Edge, Node} from '@swimlane/ngx-graph';
 
 @Component({
   selector: 'app-editor',
@@ -33,9 +34,10 @@ export class EditorComponent implements OnInit{
 
   stammbaum?: Stammbaum;
 
+  nodes: Node[] = [];
+  links: Edge[] = [];
+
   genders = ['Male', 'Female', 'Diverse'];
-
-
 
   private static getValue(person: Person): string {
     if (person.deathDate) {
@@ -44,21 +46,6 @@ export class EditorComponent implements OnInit{
     }
     return person.firstName + ' ' + person.lastName + '\n * ' + convertDate(person.birthDate);
   }
-
-  // initDiagram(): void {
-  //   this.graph = new mx.mxGraph(this.graphContainer?.nativeElement);
-  //   if (!this.graph) {
-  //     return;
-  //   }
-  //
-  //   try {
-  //     this.graph.getModel().beginUpdate();
-  //     this.graph.addListener(mx.mxEvent.DOUBLE_CLICK, this.doubleClickEvent);
-  //   } finally {
-  //     this.graph.getModel().endUpdate();
-  //     new mx.mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
-  //   }
-  // }
 
   doubleClickEvent = (sender: any, event: any) => {
     const cell = event.getProperty('cell');
@@ -76,30 +63,13 @@ export class EditorComponent implements OnInit{
     personRequest.gender = Gender.getById(this.addPersonForm.value.gender);
     const person = this.stammbaumService.addPerson(personRequest, this.stammbaum!.id);
     this.addPersonForm.reset();
-
-    // if (!(this.graph && this.stammbaum)) {
-    //   return;
-    // }
-    //
-    // try {
-    //   const parent = this.graph.getDefaultParent();
-    //   this.graph.getModel().beginUpdate();
-    //
-    //   person.cell = this.graph.insertVertex(
-    //     parent,
-    //     person.id.toString(),
-    //     EditorComponent.getValue(person),
-    //     0,
-    //     0,
-    //     200,
-    //     80,
-    //     'rounded=1;html=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + person.gender.color
-    //   );
-    //
-    // } finally {
-    //   this.graph.getModel().endUpdate();
-    //   new mx.mxHierarchicalLayout(this.graph).execute(this.graph.getDefaultParent());
-    // }
+    const node: Node = {
+      id: person.id.toString(),
+      label: EditorComponent.getValue(person),
+    };
+    person.node = node;
+    this.nodes.push(node);
+    this.nodes = [...this.nodes];
   }
 
   onOpenContextMenu(person: Person): void {
@@ -107,7 +77,6 @@ export class EditorComponent implements OnInit{
     modalRef.componentInstance.person = person;
     modalRef.componentInstance.deletePerson.subscribe((personToDelete: Person) => {
       this.stammbaumService.deletePerson(personToDelete, this.stammbaum!.id);
-      // this.graph?.removeCells([personToDelete.cell]);
       modalRef.close();
     });
     modalRef.componentInstance.updatePerson.subscribe(this.updatePersonEvent);
@@ -115,32 +84,5 @@ export class EditorComponent implements OnInit{
 
   updatePersonEvent = (personToUpdate: Person) => {
     this.stammbaumService.updatePerson(personToUpdate, this.stammbaum!.id);
-    // if (personToUpdate.cell != null && this.graph) {
-    //   const parent = this.graph.getDefaultParent();
-    //   try {
-    //     this.graph.getModel().beginUpdate();
-    //
-    //     this.graph.model.setValue(personToUpdate.cell, EditorComponent.getValue(personToUpdate));
-    //     this.graph.model.setStyle(personToUpdate.cell,
-    //       'rounded=1;arcSize=50;fillColor=#F9F9F9;strokeWidth=3;strokeColor=' + personToUpdate.gender.color);
-    //     if (personToUpdate.children && personToUpdate.children.length > 0) {
-    //       this.graph.model.getEdges(personToUpdate.cell, false, true, false)
-    //         .forEach(edge => this.graph?.model.remove(edge));
-    //       for (const child of personToUpdate.children) {
-    //         this.graph.insertEdge(
-    //           parent,
-    //           personToUpdate.id.toString() + child.id.toString(),
-    //           '',
-    //           personToUpdate.cell,
-    //           // tslint:disable-next-line:no-non-null-assertion
-    //           child.cell!,
-    //           'strokeColor=#B3B3B3;');
-    //       }
-    //     }
-    //   } finally {
-    //     this.graph.getModel().endUpdate();
-    //     new mx.mxHierarchicalLayout(this.graph).execute(parent);
-    //   }
-    // }
   }
 }

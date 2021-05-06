@@ -5,29 +5,33 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EditorComponent } from './editor/editor.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { PersonDisplayComponent } from './editor/person-display/person-display.component';
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuContentComponent } from './editor/context-menu-content/context-menu-content.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { TreeListComponent } from './tree-list/tree-list.component';
 import { TreeListItemComponent } from './tree-list/tree-list-item/tree-list-item.component';
+import {NgxGraphModule} from '@swimlane/ngx-graph';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorComponent,
-    PersonDisplayComponent,
     ContextMenuContentComponent,
     LandingPageComponent,
     TreeListComponent,
     TreeListItemComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        NgbModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    NgbModule,
+    NgxGraphModule,
+    BrowserAnimationsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

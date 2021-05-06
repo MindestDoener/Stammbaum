@@ -1,3 +1,5 @@
+import * as ngx from '@swimlane/ngx-graph';
+
 export interface Stammbaum {
   name: string;
   persons: Map<number, Person>;
@@ -12,6 +14,7 @@ export interface Person {
   deathDate?: Date;
   birthDate: Date;
   children?: Person[];
+  node?: ngx.Node;
 }
 
 export interface CreatePersonRequest {
@@ -29,17 +32,21 @@ export class Gender {
   public static readonly DIVERSE = new Gender(2, '#b3ec69');
   public static readonly UNKNOWN = new Gender(-1, '#000000');
 
-  private constructor(public readonly id: number, public readonly color: string) {}
+  private constructor(public readonly id: number, public readonly color: string) {
+  }
 
   public static getById(id: number): Gender {
     switch (id) {
-      case 0: return this.MALE;
-      case 1: return this.FEMALE;
-      case 2: return this.DIVERSE;
-      default: return this.UNKNOWN;
+      case 0:
+        return this.MALE;
+      case 1:
+        return this.FEMALE;
+      case 2:
+        return this.DIVERSE;
+      default:
+        return this.UNKNOWN;
     }
   }
-
 }
 
 export function convertDate(date: Date): string {
