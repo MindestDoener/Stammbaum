@@ -1,5 +1,7 @@
 # StammbaumApp
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/MindestDoener/stammbaum-app?branch=develop)](https://bettercodehub.com/)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.7.
 
 ## Development server
