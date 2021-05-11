@@ -1,15 +1,12 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CreatePersonRequest, Person, Stammbaum} from './types';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StammbaumServiceService{
+export class StammbaumServiceService {
 
-  stammbaumList?: Map<string, Stammbaum> = new Map<string, Stammbaum>();
-
-    constructor() {
-  }
+  stammbaumList: Map<string, Stammbaum> = new Map<string, Stammbaum>();
 
   private makeUUID(treeId: string): number {
     let uuid = '';
@@ -26,14 +23,14 @@ export class StammbaumServiceService{
     return num;
   }
 
-  createEmptyStammbaum(name: string, id: string){
-    let stammbaum = {
+  createEmptyStammbaum(name: string, id: string): void {
+    const stammbaum = {
       name,
       persons: new Map<number, Person>(),
       id
     };
 
-    this.stammbaumList?.set(id , stammbaum);
+    this.stammbaumList.set(id, stammbaum);
   }
 
   addPerson(personRequest: CreatePersonRequest, treeId: string): Person {
@@ -67,15 +64,18 @@ export class StammbaumServiceService{
     return undefined;
   }
 
-  getTreeList(): Map<string, Stammbaum> | undefined {
-      return this.stammbaumList;
+  getTreeList(): Map<string, Stammbaum> {
+    return this.stammbaumList;
   }
 
-  getSingleTree(id: string | null): Stammbaum | undefined{
-    if(id !== null){
-      return this.stammbaumList!.get(id);
-    }else{
-      return undefined;
+  getSingleTree(id: string | null): Stammbaum {
+    let stammbaum;
+    if (id !== null) {
+     stammbaum = this.stammbaumList.get(id);
     }
+    if (stammbaum) {
+      return stammbaum;
+    }
+    throw new Error('invalid Tree ID');
   }
 }
