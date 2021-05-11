@@ -37,8 +37,8 @@
     class="graph"
     [view]="[1000,400]"
     [showMiniMap]="true"
-    [links]="links"
-    [nodes]="nodes"
+    [links]="graphManager.edges"
+    [nodes]="graphManager.nodes"
     xmlns:svg="http://www.w3.org/2000/svg"
   >
     <ng-template #nodeTemplate let-node>
