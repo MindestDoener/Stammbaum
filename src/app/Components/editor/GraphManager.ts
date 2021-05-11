@@ -14,7 +14,12 @@ export class GraphManager {
       id: person.id.toString(),
       label: GraphManager.buildLabel(person),
       dimension: {width: 200, height: 40},
-      data: {customColor: person.gender.color},
+      data: {
+        customColor: person.gender.color,
+        birthDate: person.birthDate,
+        deathDate: person.deathDate,
+        toolTipActive: false,
+      },
     };
   }
 

@@ -46,6 +46,10 @@ export class EditorComponent {
     }
   }
 
+  toggleTooltip = (node: Node) => {
+    node.data.toolTipActive = !node.data.toolTipActive;
+  }
+
   onAddPerson(): void {
     const personRequest: CreatePersonRequest = {...this.addPersonForm.value};
     personRequest.gender = Gender.getById(this.addPersonForm.value.gender);
