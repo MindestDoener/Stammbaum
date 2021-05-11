@@ -68,6 +68,9 @@ export class EditorComponent {
 
   updatePersonEvent = (personToUpdate: Person) => {
     this.graphManager.updateNode(personToUpdate);
+    if (personToUpdate.children) {
+      this.graphManager.updateEdges(personToUpdate);
+    }
     this.stammbaumService.updatePerson(personToUpdate, this.stammbaum.id);
   }
 

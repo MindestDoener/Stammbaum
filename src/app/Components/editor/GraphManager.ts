@@ -53,13 +53,26 @@ export class GraphManager {
     }
   }
 
-  findNodeById(id: number): Node | undefined {
+  public updateEdges(person: Person): void {
+    this.edges = this.edges.filter((edge) => +edge.source !== person.id); // clear existing edges
+    if (person.children) {
+      for (const child of person.children) {
+        const edge: Edge = {
+          source: person.id.toString(),
+          target: child.id.toString(),
+        };
+        this.edges.push(edge);
+      }
+    }
+    this.updateTree();
+  }
+
+  public findNodeById(id: number): Node | undefined {
     return this.nodes.find((node) => +node.id === id);
   }
 
-  updateTree(): void {
+  private updateTree(): void {
     this.nodes = [...this.nodes];
     this.edges = [...this.edges];
   }
-
 }
