@@ -1,8 +1,8 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EditorComponent } from './editor/editor.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { TreeListComponent } from './tree-list/tree-list.component';
+import { EditorComponent } from './Components/editor/editor.component';
+import { LandingPageComponent } from './Components/landing-page/landing-page.component';
+import { TreeListComponent } from './Components/tree-list/tree-list.component';
 
 const routes: Routes = [
   {

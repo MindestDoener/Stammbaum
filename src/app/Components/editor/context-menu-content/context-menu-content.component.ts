@@ -1,8 +1,8 @@
 import {AfterContentInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Gender, Person, Stammbaum} from '../../shared/types';
+import {Gender, Person, Stammbaum} from '../../../shared/types';
 import {FormControl, FormGroup} from '@angular/forms';
-import {StammbaumServiceService} from '../../shared/stammbaum-service.service';
+import {StammbaumServiceService} from '../../../shared/stammbaum-service.service';
 
 @Component({
   selector: 'app-context-menu-content',
@@ -40,8 +40,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    // tslint:disable-next-line:no-non-null-assertion
-    this.possibleChildren = Array.from(this.stammbaum!.persons.values()).filter(it => this.isPossibleChild(it));
+    this.possibleChildren = Array.from(this.stammbaum.persons.values()).filter(it => this.isPossibleChild(it));
     this.setForm();
   }
 
@@ -76,7 +75,8 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.gender = Gender.getById(this.editPersonForm.value.gender);
     this.person.birthDate = this.editPersonForm.value.birthDate;
     this.person.deathDate = this.editPersonForm.value.deathDate;
-    this.person.children = this.editPersonForm.value.children.map((id: number) => this.stammbaumService.getPersonById(id, this.stammbaum!.id));
+    this.person.children = this.editPersonForm.value.children
+      .map((id: number) => this.stammbaumService.getPersonById(id, this.stammbaum.id));
     this.updatePerson.emit(this.person);
   }
 }
