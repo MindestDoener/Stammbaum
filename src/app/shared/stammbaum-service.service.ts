@@ -12,21 +12,6 @@ export class StammbaumServiceService {
     ['3', { id: '3', name: 'Stammbaum4', persons: new Map() }],
   ]);
 
-  private makeUUID(treeId: string): number {
-    let uuid = '';
-    for (let i = 0; i < 10; i++) {
-      uuid += Math.round(Math.random() * 9).toString();
-    }
-    const num = parseInt(uuid, 10);
-    // check for duplicate ids
-    if (this.stammbaumList?.get(treeId)) {
-      if (this.stammbaumList.get(treeId)?.persons.has(num)) {
-        return this.makeUUID(treeId);
-      }
-    }
-    return num;
-  }
-
   createEmptyStammbaum(name: string, id: string): void {
     const stammbaum = {
       name,
@@ -81,5 +66,20 @@ export class StammbaumServiceService {
       return stammbaum;
     }
     throw new Error('invalid Tree ID');
+  }
+
+  private makeUUID(treeId: string): number {
+    let uuid = '';
+    for (let i = 0; i < 10; i++) {
+      uuid += Math.round(Math.random() * 9).toString();
+    }
+    const num = parseInt(uuid, 10);
+    // check for duplicate ids
+    if (this.stammbaumList?.get(treeId)) {
+      if (this.stammbaumList.get(treeId)?.persons.has(num)) {
+        return this.makeUUID(treeId);
+      }
+    }
+    return num;
   }
 }

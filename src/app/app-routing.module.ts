@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { EditorComponent } from './Components/editor/editor.component';
 import { LandingPageComponent } from './Components/landing-page/landing-page.component';
 import { TreeListComponent } from './Components/tree-list/tree-list.component';
@@ -8,24 +8,25 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
-    component: LandingPageComponent
+    component: LandingPageComponent,
   },
   {
     path: 'trees',
-    component: TreeListComponent
+    component: TreeListComponent,
   },
   {
     path: 'trees/:id',
-    component: EditorComponent
-  }
+    component: EditorComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

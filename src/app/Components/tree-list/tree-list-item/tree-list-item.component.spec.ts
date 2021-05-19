@@ -8,9 +8,9 @@ describe('TreeListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TreeListItemComponent ]
+      declarations: [TreeListItemComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

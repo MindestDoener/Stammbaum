@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { StammbaumServiceService } from '../../shared/stammbaum-service.service';
 import { Stammbaum } from '../../shared/types';
 
@@ -21,7 +21,8 @@ export class TreeListComponent {
   constructor(
     private stammbaumService: StammbaumServiceService,
     private router: Router,
-  ) {}
+  ) {
+  }
 
   onCreateStammbaum(): void {
     const sbID =
@@ -30,7 +31,7 @@ export class TreeListComponent {
         : this.stammbaumService.stammbaumList.size.toString();
     this.stammbaumService.createEmptyStammbaum(
       this.createStammbaumForm.controls.treeName.value,
-      sbID
+      sbID,
     );
     this.setMode('view');
     this.router.navigate(['trees/' + sbID]);

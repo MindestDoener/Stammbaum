@@ -1,13 +1,13 @@
-import {AfterContentInit, Component, EventEmitter, Input, Output} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Gender, Person, Stammbaum} from '../../../shared/types';
-import {FormControl, FormGroup} from '@angular/forms';
-import {StammbaumServiceService} from '../../../shared/stammbaum-service.service';
+import { AfterContentInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Gender, Person, Stammbaum } from '../../../shared/types';
+import { FormControl, FormGroup } from '@angular/forms';
+import { StammbaumServiceService } from '../../../shared/stammbaum-service.service';
 
 @Component({
   selector: 'app-context-menu-content',
   templateUrl: './context-menu-content.component.html',
-  styleUrls: ['./context-menu-content.component.scss']
+  styleUrls: ['./context-menu-content.component.scss'],
 })
 export class ContextMenuContentComponent implements AfterContentInit {
 
@@ -31,7 +31,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     gender: new FormControl(),
     birthDate: new FormControl(),
     deathDate: new FormControl(),
-    children: new FormControl([])
+    children: new FormControl([]),
   });
 
   possibleChildren: Person[] = [];
@@ -57,14 +57,6 @@ export class ContextMenuContentComponent implements AfterContentInit {
     return true;
   }
 
-  private setForm(): void {
-    this.editPersonForm.patchValue(this.person);
-    this.editPersonForm.patchValue({gender: this.person.gender.id});
-    if (this.person.children) {
-      this.editPersonForm.patchValue({children: this.person.children.map(person => person.id)});
-    }
-  }
-
   onDeletePerson(): void {
     this.deletePerson.emit(this.person);
   }
@@ -78,5 +70,13 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.children = this.editPersonForm.value.children
       .map((id: number) => this.stammbaumService.getPersonById(id, this.stammbaum.id));
     this.updatePerson.emit(this.person);
+  }
+
+  private setForm(): void {
+    this.editPersonForm.patchValue(this.person);
+    this.editPersonForm.patchValue({ gender: this.person.gender.id });
+    if (this.person.children) {
+      this.editPersonForm.patchValue({ children: this.person.children.map(person => person.id) });
+    }
   }
 }

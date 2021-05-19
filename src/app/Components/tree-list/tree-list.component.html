@@ -1,28 +1,35 @@
-<div class="container">
-<h1 class="text-center my-4">Meine Stammb<i class="bi bi-tree-fill text-gradient tree"></i>ume</h1>
-<hr>
-  <button *ngIf="mode !== 'add' " class="btn btn-outline-dark my-2" (click)="setMode('add');"><i class="bi bi-plus"></i><i class="bi bi-tree-fill"></i></button>
-  <button *ngIf="mode === 'add' " class="btn btn-outline-dark my-2" (click)="setMode('view');"><i class="bi bi-x"></i></button>
-  <div class="card item" *ngIf="mode === 'add'">
-    <div class="d-flex p-2 card-body">
-      <div class="item-title">
-        <h4 class="border-right pr-4 title"><i class="bi bi-tree-fill"></i> 
+<div class='container'>
+  <h1 class='text-center my-4'>Meine Stammb<i class='bi bi-tree-fill text-gradient tree'></i>ume</h1>
+  <hr>
+  <button (click)="setMode('add');" *ngIf="mode !== 'add' " class='btn btn-outline-dark my-2'>
+    <i class='bi bi-plus'></i>
+    <i class='bi bi-tree-fill'></i>
+  </button>
+  <button (click)="setMode('view');" *ngIf="mode === 'add' " class='btn btn-outline-dark my-2'>
+    <i class='bi bi-x'></i>
+  </button>
+  <div *ngIf="mode === 'add'" class='card item'>
+    <div class='d-flex p-2 card-body'>
+      <div class='item-title'>
+        <h4 class='border-right pr-4 title'><i class='bi bi-tree-fill'></i>
         </h4>
       </div>
-      <div class="border-left px-4">
-      <form class="form-row" [formGroup]="createStammbaumForm" (ngSubmit)="onCreateStammbaum()">
-        <label class="m-1">
-          Tree Name:
-          <input class="form-control" formControlName="treeName" placeholder="Untitled Tree" type="text" required>
-        </label>
-        <button class="btn btn-dark m-1" type="submit" [disabled]="createStammbaumForm.status == 'INVALID'">Create</button>
-      </form>
+      <div class='border-left px-4'>
+        <form (ngSubmit)='onCreateStammbaum()' [formGroup]='createStammbaumForm' class='form-row'>
+          <label class='m-1'>
+            Tree Name:
+            <input class='form-control' formControlName='treeName' placeholder='Untitled Tree' required type='text'>
+          </label>
+          <button [disabled]="createStammbaumForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
+            Create
+          </button>
+        </form>
       </div>
     </div>
   </div>
-  <div *ngFor="let tree of treeList | keyvalue">
-    <a class="list-group-item-action" [routerLink]="tree.key" [ngClass]="{'disabled': mode !== 'view'}">
-      <app-tree-list-item [stammbaum]="tree.value">
+  <div *ngFor='let tree of treeList | keyvalue'>
+    <a [ngClass]="{'disabled': mode !== 'view'}" [routerLink]='tree.key' class='list-group-item-action'>
+      <app-tree-list-item [stammbaum]='tree.value'>
       </app-tree-list-item>
     </a>
   </div>
