@@ -1,94 +1,100 @@
-<div style="height: 90vh">
-  <div *ngIf="stammbaum">
-    <div class="pb-1 tree-name-heading">
+<div style='height: 90vh'>
+  <div *ngIf='stammbaum'>
+    <div class='pb-1 tree-name-heading'>
       Tree: {{stammbaum.name}}
     </div>
-    <form class="form-row" [formGroup]="addPersonForm" (ngSubmit)="onAddPerson()">
-      <label class="m-1">
+    <form (ngSubmit)='onAddPerson()' [formGroup]='addPersonForm' class='form-row'>
+      <label class='m-1'>
         First Name:
-        <input class="form-control" formControlName="firstName" placeholder="First Name" type="text" required>
+        <input class='form-control' formControlName='firstName' placeholder='First Name' required type='text'>
       </label>
-      <label class="m-1">
+      <label class='m-1'>
         Last Name:
-        <input class="form-control" formControlName="lastName" placeholder="Last Name" type="text" required>
+        <input class='form-control' formControlName='lastName' placeholder='Last Name' required type='text'>
       </label>
-      <label class="m-1">
+      <label class='m-1'>
         Gender:
-        <select class="form-control" formControlName="gender" required>
-          <option value="" disabled selected>Choose Gender</option>
-          <option *ngFor="let gender of genders; index as i" [ngValue]="i">{{gender}}</option>
+        <select class='form-control' formControlName='gender' required>
+          <option disabled selected value=''>
+            Choose Gender
+          </option>
+          <option *ngFor='let gender of genders; index as i' [ngValue]='i'>
+            {{gender}}
+          </option>
         </select>
       </label>
-      <label class="m-1">
+      <label class='m-1'>
         Birth Date:
-        <input class="form-control" formControlName="birthDate" type="date" required>
+        <input class='form-control' formControlName='birthDate' required type='date'>
       </label>
-      <label class="m-1">
+      <label class='m-1'>
         Death Date:
-        <input class="form-control" formControlName="deathDate" type="date"
-               [min]="addPersonForm.controls.birthDate.value">
+        <input [min]='addPersonForm.controls.birthDate.value' class='form-control' formControlName='deathDate'
+               type='date'>
       </label>
-      <button class="btn btn-dark m-1" type="submit" [disabled]="addPersonForm.status == 'INVALID'">Add</button>
+      <button [disabled]="addPersonForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
+        Add
+      </button>
     </form>
     <hr>
   </div>
-  <div id="tree-container" style="height: 80%;">
+  <div id='tree-container' style='height: 80%;'>
     <ngx-graph
-      *ngIf="stammbaum"
-      class="graph"
+      *ngIf='stammbaum'
       [layoutSettings]="{orientation: 'TB'}"
-      [showMiniMap]="true"
-      [links]="graphManager.edges"
-      [nodes]="graphManager.nodes"
-      xmlns:svg="http://www.w3.org/2000/svg"
+      [links]='graphManager.edges'
+      [nodes]='graphManager.nodes'
+      [showMiniMap]='true'
+      class='graph'
+      xmlns:svg='http://www.w3.org/2000/svg'
     >
       <ng-template #nodeTemplate let-node>
-        <svg:g class="node" (mouseenter)="toggleTooltip(node)" (mouseleave)="toggleTooltip(node)"
-               (dblclick)="dblClickEvent(node)">
+        <svg:g (dblclick)='dblClickEvent(node)' (mouseenter)='toggleTooltip(node)' (mouseleave)='toggleTooltip(node)'
+               class='node'>
           <svg:rect
-            rx="10"
-            [attr.width]="node.dimension.width"
-            [attr.height]="node.dimension.height"
             [attr.fill]="'#fff'"
-            [attr.stroke]="node.data.customColor"
-            stroke-width="2"
+            [attr.height]='node.dimension.height'
+            [attr.stroke]='node.data.customColor'
+            [attr.width]='node.dimension.width'
+            rx='10'
+            stroke-width='2'
           />
           <svg:text
-            alignment-baseline="central"
-            text-anchor="middle"
-            [attr.x]="node.dimension.width / 2"
-            [attr.y]="node.dimension.height / 2 + 5"
+            [attr.x]='node.dimension.width / 2'
+            [attr.y]='node.dimension.height / 2 + 5'
+            alignment-baseline='central'
+            text-anchor='middle'
           >
             {{node.label}}
           </svg:text>
-          <svg:g *ngIf="node.data.toolTipActive">
+          <svg:g *ngIf='node.data.toolTipActive'>
             <svg:rect
-              rx="10"
-              [attr.width]="node.dimension.width"
-              [attr.height]="node.dimension.height"
               [attr.fill]="'#6c6c6c'"
+              [attr.height]='node.dimension.height'
+              [attr.width]='node.dimension.width'
+              rx='10'
             />
             <svg:text
-              *ngIf="!node.data.deathDate"
-              alignment-baseline="central"
-              text-anchor="middle"
-              [attr.x]="node.dimension.width / 2"
-              [attr.y]="node.dimension.height / 2 + 5"
+              *ngIf='!node.data.deathDate'
               [attr.fill]="'#fff'"
+              [attr.x]='node.dimension.width / 2'
+              [attr.y]='node.dimension.height / 2 + 5'
+              alignment-baseline='central'
+              text-anchor='middle'
             >
               {{ '&#x2733;&#xFE0F; ' + node.data.birthDate}}
             </svg:text>
             <svg:text
-              *ngIf="node.data.deathDate"
-              alignment-baseline="central"
-              text-anchor="middle"
-              [attr.x]="node.dimension.width / 2"
-              [attr.y]="node.dimension.height / 2 - 3"
+              *ngIf='node.data.deathDate'
               [attr.fill]="'#fff'"
+              [attr.x]='node.dimension.width / 2'
+              [attr.y]='node.dimension.height / 2 - 3'
+              alignment-baseline='central'
+              text-anchor='middle'
             >
               <svg:tspan>{{ '&#x2733;&#xFE0F; ' + node.data.birthDate}}</svg:tspan>
-              <svg:tspan [attr.x]="node.dimension.width / 2"
-                         dy="1.2em">{{ '&#x271D;&#xFE0F; ' + node.data.deathDate}}</svg:tspan>
+              <svg:tspan [attr.x]='node.dimension.width / 2'
+                         dy='1.2em'>{{ '&#x271D;&#xFE0F; ' + node.data.deathDate}}</svg:tspan>
             </svg:text>
           </svg:g>
         </svg:g>

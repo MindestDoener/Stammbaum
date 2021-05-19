@@ -8,9 +8,9 @@ describe('ContextMenuContentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContextMenuContentComponent ]
+      declarations: [ContextMenuContentComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

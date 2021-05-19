@@ -1,62 +1,69 @@
-<div class="modal-header">
-  <h4 class="modal-title">Update Person: {{person.firstName}} {{person.lastName}}</h4>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-    <span aria-hidden="true">&times;</span>
+<div class='modal-header'>
+  <h4 class='modal-title'>Update Person: {{person.firstName}} {{person.lastName}}</h4>
+  <button (click)="activeModal.dismiss('Cross click')" aria-label='Close' class='close' type='button'>
+    <span aria-hidden='true'>&times;</span>
   </button>
 </div>
-<div class="modal-body">
+<div class='modal-body'>
 
-  <form [formGroup]="editPersonForm" (ngSubmit)="onUpdatePerson()">
-    <div class="form-row nowrap">
-      <label class="m-1">
+  <form (ngSubmit)='onUpdatePerson()' [formGroup]='editPersonForm'>
+    <div class='form-row nowrap'>
+      <label class='m-1'>
         First Name:
-        <input class="form-control" formControlName="firstName" placeholder="First Name" type="text" required>
+        <input class='form-control' formControlName='firstName' placeholder='First Name' required type='text'>
       </label>
-      <label class="m-1">
+      <label class='m-1'>
         Last Name:
-        <input class="form-control" formControlName="lastName" placeholder="Last Name" type="text" required>
+        <input class='form-control' formControlName='lastName' placeholder='Last Name' required type='text'>
       </label>
     </div>
-    <div class="form-row nowrap">
-      <label class="m-1">
+    <div class='form-row nowrap'>
+      <label class='m-1'>
         Gender:
-        <select class="form-control" formControlName="gender" required>
-          <option value="" disabled selected>Choose Gender</option>
-          <option *ngFor="let gender of genders; index as i" [ngValue]="i">{{gender}}</option>
+        <select class='form-control' formControlName='gender' required>
+          <option disabled selected value=''>Choose Gender</option>
+          <option *ngFor='let gender of genders; index as i' [ngValue]='i'>{{gender}}</option>
         </select>
       </label>
-      <label class="m-1">
+      <label class='m-1'>
         Birth Date:
-        <input class="form-control" formControlName="birthDate" type="date" required>
+        <input class='form-control' formControlName='birthDate' required type='date'>
       </label>
-      <label class="m-1">
+      <label class='m-1'>
         Death Date:
-        <input class="form-control" formControlName="deathDate" type="date"
-               [min]="editPersonForm.controls.birthDate.value">
+        <input [min]='editPersonForm.controls.birthDate.value' class='form-control' formControlName='deathDate'
+               type='date'>
       </label>
     </div>
-    <div class="form-row nowrap">
-      <label class="m-1">
+    <div class='form-row nowrap'>
+      <label class='m-1'>
         Children:
-        <select multiple class="form-control" formControlName="children" >
+        <select class='form-control' formControlName='children' multiple>
           <option
-            *ngFor="let child of possibleChildren"
-            [ngValue]="child.id">
+            *ngFor='let child of possibleChildren'
+            [ngValue]='child.id'
+          >
             {{child.firstName + " " + child.lastName}}
           </option>
-          <option *ngIf="possibleChildren.length === 0" disabled>
+          <option *ngIf='possibleChildren.length === 0' disabled>
             No added person is a possible child
           </option>
         </select>
       </label>
     </div>
-    <div class="form-row nowrap">
-      <button class="btn btn-dark m-1" type="submit" [disabled]="editPersonForm.status == 'INVALID'">Update</button>
-      <div class="btn btn-danger m-1" (click)="onDeletePerson()">Delete Person</div>
+    <div class='form-row nowrap'>
+      <button [disabled]="editPersonForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
+        Update
+      </button>
+      <div (click)='onDeletePerson()' class='btn btn-danger m-1'>
+        Delete Person
+      </div>
     </div>
   </form>
 
 </div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+<div class='modal-footer'>
+  <button (click)="activeModal.close('Close click')" class='btn btn-outline-dark' type='button'>
+    Close
+  </button>
 </div>

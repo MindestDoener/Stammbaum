@@ -1,5 +1,5 @@
-import {Edge, Node} from '@swimlane/ngx-graph';
-import {Person} from '../../shared/types';
+import { Edge, Node } from '@swimlane/ngx-graph';
+import { Person } from '../../shared/types';
 
 export class GraphManager {
   nodes: Node[] = [];
@@ -13,7 +13,7 @@ export class GraphManager {
     return {
       id: person.id.toString(),
       label: GraphManager.buildLabel(person),
-      dimension: {width: 200, height: 40},
+      dimension: { width: 200, height: 40 },
       data: {
         customColor: person.gender.color,
         birthDate: person.birthDate,
