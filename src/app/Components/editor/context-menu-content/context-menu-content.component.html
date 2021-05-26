@@ -1,5 +1,5 @@
 <div class='modal-header'>
-  <h4 class='modal-title'>Update Person: {{person.firstName}} {{person.lastName}}</h4>
+  <h4 class='modal-title'>Person bearbeiten: {{person.firstName}} {{person.lastName}}</h4>
   <button (click)="activeModal.dismiss('Cross click')" aria-label='Close' class='close' type='button'>
     <span aria-hidden='true'>&times;</span>
   </button>
@@ -9,35 +9,35 @@
   <form (ngSubmit)='onUpdatePerson()' [formGroup]='editPersonForm'>
     <div class='form-row nowrap'>
       <label class='m-1'>
-        First Name:
-        <input class='form-control' formControlName='firstName' placeholder='First Name' required type='text'>
+        Vorname:
+        <input class='form-control' formControlName='firstName' placeholder='Vorname' required type='text'>
       </label>
       <label class='m-1'>
-        Last Name:
-        <input class='form-control' formControlName='lastName' placeholder='Last Name' required type='text'>
+        Nachname:
+        <input class='form-control' formControlName='lastName' placeholder='Nachname' required type='text'>
       </label>
     </div>
     <div class='form-row nowrap'>
       <label class='m-1'>
-        Gender:
+        Geschlecht:
         <select class='form-control' formControlName='gender' required>
-          <option disabled selected value=''>Choose Gender</option>
+          <option disabled selected value=''>Wähle ein Geschlecht</option>
           <option *ngFor='let gender of genders; index as i' [ngValue]='i'>{{gender}}</option>
         </select>
       </label>
       <label class='m-1'>
-        Birth Date:
+        Geburtstag:
         <input class='form-control' formControlName='birthDate' required type='date'>
       </label>
       <label class='m-1'>
-        Death Date:
+        Todestag:
         <input [min]='editPersonForm.controls.birthDate.value' class='form-control' formControlName='deathDate'
                type='date'>
       </label>
     </div>
     <div class='form-row nowrap'>
       <label class='m-1'>
-        Children:
+        Kinder:
         <select class='form-control' formControlName='children' multiple>
           <option
             *ngFor='let child of possibleChildren'
@@ -46,17 +46,17 @@
             {{child.firstName + " " + child.lastName}}
           </option>
           <option *ngIf='possibleChildren.length === 0' disabled>
-            No added person is a possible child
+            Keine möglichen Kinder
           </option>
         </select>
       </label>
     </div>
     <div class='form-row nowrap'>
       <button [disabled]="editPersonForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
-        Update
+        Aktualisieren
       </button>
       <div (click)='onDeletePerson()' class='btn btn-danger m-1'>
-        Delete Person
+        Person entfernen
       </div>
     </div>
   </form>
@@ -64,6 +64,6 @@
 </div>
 <div class='modal-footer'>
   <button (click)="activeModal.close('Close click')" class='btn btn-outline-dark' type='button'>
-    Close
+    Schließen
   </button>
 </div>

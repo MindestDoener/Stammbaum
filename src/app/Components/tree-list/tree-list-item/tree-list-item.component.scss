@@ -1,0 +1,28 @@
+.item {
+  margin-bottom: 1rem;
+}
+
+.card {
+  border-width: 0.15rem;
+}
+
+.card-body {
+  flex-direction: row;
+  justify-content: center;
+}
+
+.item-title {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  width: 50%;
+}
+
+.title {
+  margin-bottom: 0 !important;
+}
+
+.item-info {
+  margin: 0.5rem !important;
+}

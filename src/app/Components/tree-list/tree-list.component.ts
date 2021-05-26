@@ -1,41 +1,41 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { StammbaumServiceService } from '../../shared/stammbaum-service.service';
-import { Stammbaum } from '../../shared/types';
+import { FamilyTreeService } from '../../shared/family-tree.service';
+import { FamilyTree } from '../../shared/types';
 
 @Component({
   selector: 'app-tree-list',
   templateUrl: './tree-list.component.html',
-  styleUrls: ['./tree-list.component.css'],
+  styleUrls: ['./tree-list.component.scss'],
 })
 export class TreeListComponent {
-  treeList?: Map<string, Stammbaum> = this.stammbaumService.getTreeList();
+  treeList?: Map<string, FamilyTree> = this.familyTreeService.getTreeList();
 
-  createStammbaumForm = new FormGroup({
+  createFamilyTreeForm = new FormGroup({
     treeName: new FormControl(),
   });
 
   mode: 'edit' | 'view' | 'add' = 'view';
 
   constructor(
-    private stammbaumService: StammbaumServiceService,
+    private familyTreeService: FamilyTreeService,
     private router: Router,
   ) {
   }
 
-  onCreateStammbaum(): void {
-    const sbID =
-      this.stammbaumService.stammbaumList === undefined
+  onCreateFamilyTree(): void {
+    const TreeId =
+      this.familyTreeService.familyTreeList === undefined
         ? '0'
-        : this.stammbaumService.stammbaumList.size.toString();
-    this.stammbaumService.createEmptyStammbaum(
-      this.createStammbaumForm.controls.treeName.value,
-      sbID,
+        : this.familyTreeService.familyTreeList.size.toString();
+    this.familyTreeService.createEmptyFamilyTree(
+      this.createFamilyTreeForm.controls.treeName.value,
+      TreeId,
     );
     this.setMode('view');
-    this.router.navigate(['trees/' + sbID]);
-    this.treeList = this.stammbaumService.getTreeList();
+    this.router.navigate(['trees/' + TreeId]);
+    this.treeList = this.familyTreeService.getTreeList();
   }
 
   setMode(mode: 'edit' | 'view' | 'add'): void {

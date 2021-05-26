@@ -15,13 +15,13 @@
         </h4>
       </div>
       <div class='border-left px-4'>
-        <form (ngSubmit)='onCreateStammbaum()' [formGroup]='createStammbaumForm' class='form-row'>
+        <form (ngSubmit)='onCreateFamilyTree()' [formGroup]='createFamilyTreeForm' class='form-row'>
           <label class='m-1'>
-            Tree Name:
+            Stammbaum Name:
             <input class='form-control' formControlName='treeName' placeholder='Untitled Tree' required type='text'>
           </label>
-          <button [disabled]="createStammbaumForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
-            Create
+          <button [disabled]="createFamilyTreeForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
+            Erstellen
           </button>
         </form>
       </div>
@@ -29,7 +29,7 @@
   </div>
   <div *ngFor='let tree of treeList | keyvalue'>
     <a [ngClass]="{'disabled': mode !== 'view'}" [routerLink]='tree.key' class='list-group-item-action'>
-      <app-tree-list-item [stammbaum]='tree.value'>
+      <app-tree-list-item [familyTree]='tree.value'>
       </app-tree-list-item>
     </a>
   </div>

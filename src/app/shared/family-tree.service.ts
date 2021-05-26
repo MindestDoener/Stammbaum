@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
-import { CreatePersonRequest, Person, Stammbaum } from './types';
+import { CreatePersonRequest, Person, FamilyTree } from './types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StammbaumServiceService {
-  stammbaumList: Map<string, Stammbaum> = new Map<string, Stammbaum>([
+export class FamilyTreeService {
+  familyTreeList: Map<string, FamilyTree> = new Map<string, FamilyTree>([
     ['0', { id: '0', name: 'Stammbaum1', persons: new Map() }],
     ['1', { id: '1', name: 'Stammbaum2', persons: new Map() }],
     ['2', { id: '2', name: 'Stammbaum3', persons: new Map() }],
     ['3', { id: '3', name: 'Stammbaum4', persons: new Map() }],
   ]);
 
-  createEmptyStammbaum(name: string, id: string): void {
-    const stammbaum = {
+  createEmptyFamilyTree(name: string, id: string): void {
+    const familyTree = {
       name,
       persons: new Map<number, Person>(),
       id,
     };
 
-    this.stammbaumList.set(id, stammbaum);
+    this.familyTreeList.set(id, familyTree);
   }
 
   addPerson(personRequest: CreatePersonRequest, treeId: string): Person {
@@ -27,43 +27,43 @@ export class StammbaumServiceService {
       id: this.makeUUID(treeId),
       ...personRequest,
     };
-    if (this.stammbaumList !== undefined) {
-      this.stammbaumList.get(treeId)?.persons.set(person.id, person);
+    if (this.familyTreeList !== undefined) {
+      this.familyTreeList.get(treeId)?.persons.set(person.id, person);
     }
     return person;
   }
 
   // Takes Person as input and changes data of person in map with same id to data of person in parameter
   updatePerson(person: Person, treeId: string): void {
-    if (this.stammbaumList !== undefined) {
-      this.stammbaumList.get(treeId)?.persons.set(person.id, person);
+    if (this.familyTreeList !== undefined) {
+      this.familyTreeList.get(treeId)?.persons.set(person.id, person);
     }
   }
 
   deletePerson(person: Person, treeId: string): void {
-    if (this.stammbaumList !== undefined) {
-      this.stammbaumList.get(treeId)?.persons.delete(person.id);
+    if (this.familyTreeList !== undefined) {
+      this.familyTreeList.get(treeId)?.persons.delete(person.id);
     }
   }
 
   getPersonById(id: number, treeId: string): Person | undefined {
-    if (this.stammbaumList !== undefined) {
-      return this.stammbaumList.get(treeId)?.persons.get(id);
+    if (this.familyTreeList !== undefined) {
+      return this.familyTreeList.get(treeId)?.persons.get(id);
     }
     return undefined;
   }
 
-  getTreeList(): Map<string, Stammbaum> {
-    return this.stammbaumList;
+  getTreeList(): Map<string, FamilyTree> {
+    return this.familyTreeList;
   }
 
-  getSingleTree(id: string | null): Stammbaum {
-    let stammbaum;
+  getSingleTree(id: string | null): FamilyTree {
+    let familyTree;
     if (id !== null) {
-      stammbaum = this.stammbaumList.get(id);
+      familyTree = this.familyTreeList.get(id);
     }
-    if (stammbaum) {
-      return stammbaum;
+    if (familyTree) {
+      return familyTree;
     }
     throw new Error('invalid Tree ID');
   }
@@ -75,8 +75,8 @@ export class StammbaumServiceService {
     }
     const num = parseInt(uuid, 10);
     // check for duplicate ids
-    if (this.stammbaumList?.get(treeId)) {
-      if (this.stammbaumList.get(treeId)?.persons.has(num)) {
+    if (this.familyTreeList?.get(treeId)) {
+      if (this.familyTreeList.get(treeId)?.persons.has(num)) {
         return this.makeUUID(treeId);
       }
     }

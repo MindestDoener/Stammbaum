@@ -1,5 +1,5 @@
 import { Edge, Node } from '@swimlane/ngx-graph';
-import { Person, Stammbaum } from '../../shared/types';
+import { FamilyTree, Person } from '../../shared/types';
 
 export class GraphManager {
   nodes: Node[] = [];
@@ -23,8 +23,8 @@ export class GraphManager {
     };
   }
 
-  public init(stammbaum: Stammbaum): void {
-    const persons = stammbaum.persons.values();
+  public init(familyTree: FamilyTree): void {
+    const persons = familyTree.persons.values();
     for (const person of persons) {
       const node = GraphManager.createNode(person);
       this.nodes.push(node);

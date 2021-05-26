@@ -1,6 +1,6 @@
 import * as ngx from '@swimlane/ngx-graph';
 
-export interface Stammbaum {
+export interface FamilyTree {
   name: string;
   persons: Map<number, Person>;
   id: string;
