@@ -1,22 +1,22 @@
 <div style='height: 90vh'>
   <div *ngIf='familyTree'>
     <div class='pb-1 tree-name-heading'>
-      Tree: {{familyTree.name}}
+      Stammbaum: {{familyTree.name}}
     </div>
     <form (ngSubmit)='onAddPerson()' [formGroup]='addPersonForm' class='form-row'>
       <label class='m-1'>
-        First Name:
-        <input class='form-control' formControlName='firstName' placeholder='First Name' required type='text'>
+        Vorname:
+        <input class='form-control' formControlName='firstName' placeholder='Vorname' required type='text'>
       </label>
       <label class='m-1'>
-        Last Name:
-        <input class='form-control' formControlName='lastName' placeholder='Last Name' required type='text'>
+        Nachname:
+        <input class='form-control' formControlName='lastName' placeholder='Nachname' required type='text'>
       </label>
       <label class='m-1'>
-        Gender:
+        Geschlecht:
         <select class='form-control' formControlName='gender' required>
           <option disabled selected value=''>
-            Choose Gender
+            Wähle ein Geschlecht
           </option>
           <option *ngFor='let gender of genders; index as i' [ngValue]='i'>
             {{gender}}
@@ -24,16 +24,16 @@
         </select>
       </label>
       <label class='m-1'>
-        Birth Date:
+        Geburtstag:
         <input class='form-control' formControlName='birthDate' required type='date'>
       </label>
       <label class='m-1'>
-        Death Date:
+        Todestag:
         <input [min]='addPersonForm.controls.birthDate.value' class='form-control' formControlName='deathDate'
                type='date'>
       </label>
       <button [disabled]="addPersonForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
-        Add
+        Hinzufügen
       </button>
     </form>
     <hr>
@@ -45,6 +45,7 @@
       [links]='graphManager.edges'
       [nodes]='graphManager.nodes'
       [showMiniMap]='true'
+      [draggingEnabled]='false'
       class='graph'
       xmlns:svg='http://www.w3.org/2000/svg'
     >

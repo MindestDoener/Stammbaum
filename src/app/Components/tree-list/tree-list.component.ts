@@ -7,7 +7,7 @@ import { FamilyTree } from '../../shared/types';
 @Component({
   selector: 'app-tree-list',
   templateUrl: './tree-list.component.html',
-  styleUrls: ['./tree-list.component.css'],
+  styleUrls: ['./tree-list.component.scss'],
 })
 export class TreeListComponent {
   treeList?: Map<string, FamilyTree> = this.familyTreeService.getTreeList();

@@ -24,7 +24,7 @@ export class EditorComponent {
   });
   familyTree!: FamilyTree;
   graphManager: GraphManager = new GraphManager();
-  genders = ['Male', 'Female', 'Diverse'];
+  genders = ['Männlich', 'Weiblich', 'Divers'];
 
   constructor(private familyTreeService: FamilyTreeService, private modalService: NgbModal,
               private route: ActivatedRoute, private router: Router) {

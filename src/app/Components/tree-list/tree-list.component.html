@@ -17,11 +17,11 @@
       <div class='border-left px-4'>
         <form (ngSubmit)='onCreateFamilyTree()' [formGroup]='createFamilyTreeForm' class='form-row'>
           <label class='m-1'>
-            Tree Name:
+            Stammbaum Name:
             <input class='form-control' formControlName='treeName' placeholder='Untitled Tree' required type='text'>
           </label>
           <button [disabled]="createFamilyTreeForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
-            Create
+            Erstellen
           </button>
         </form>
       </div>

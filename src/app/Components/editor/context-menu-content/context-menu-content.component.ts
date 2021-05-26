@@ -23,7 +23,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
   @Output()
   updatePerson: EventEmitter<Person> = new EventEmitter();
 
-  genders = ['Male', 'Female', 'Diverse'];
+  genders = ['Männlich', 'Weiblich', 'Divers'];
 
   editPersonForm = new FormGroup({
     firstName: new FormControl(),
