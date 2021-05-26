@@ -31,6 +31,7 @@ export class EditorComponent {
     const params = this.route.snapshot.paramMap;
     try {
       this.stammbaum = this.stammbaumService.getSingleTree(params.get('id'));
+      this.graphManager.init(this.stammbaum)
     } catch (e) {
       router.navigate(['/home']); // redirect home when invalid tree id
     }

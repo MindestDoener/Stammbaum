@@ -1,5 +1,5 @@
 import { Edge, Node } from '@swimlane/ngx-graph';
-import { Person } from '../../shared/types';
+import { Person, Stammbaum } from '../../shared/types';
 
 export class GraphManager {
   nodes: Node[] = [];
@@ -21,6 +21,16 @@ export class GraphManager {
         toolTipActive: false,
       },
     };
+  }
+
+  public init(stammbaum: Stammbaum): void {
+    const persons = stammbaum.persons.values();
+    for (const person of persons) {
+      const node = GraphManager.createNode(person);
+      this.nodes.push(node);
+      person.node = node;
+      this.updateEdges(person);
+    }
   }
 
   public updateNode(person: Person): void {
