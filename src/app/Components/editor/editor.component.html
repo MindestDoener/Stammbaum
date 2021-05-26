@@ -1,7 +1,7 @@
 <div style='height: 90vh'>
-  <div *ngIf='stammbaum'>
+  <div *ngIf='familyTree'>
     <div class='pb-1 tree-name-heading'>
-      Tree: {{stammbaum.name}}
+      Tree: {{familyTree.name}}
     </div>
     <form (ngSubmit)='onAddPerson()' [formGroup]='addPersonForm' class='form-row'>
       <label class='m-1'>
@@ -40,7 +40,7 @@
   </div>
   <div id='tree-container' style='height: 80%;'>
     <ngx-graph
-      *ngIf='stammbaum'
+      *ngIf='familyTree'
       [layoutSettings]="{orientation: 'TB'}"
       [links]='graphManager.edges'
       [nodes]='graphManager.nodes'

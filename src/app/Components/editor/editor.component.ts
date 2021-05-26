@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { StammbaumServiceService } from '../../shared/stammbaum-service.service';
-import { CreatePersonRequest, Gender, Person, Stammbaum } from '../../shared/types';
+import { FamilyTreeService } from '../../shared/family-tree.service';
+import { CreatePersonRequest, FamilyTree, Gender, Person } from '../../shared/types';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuContentComponent } from './context-menu-content/context-menu-content.component';
@@ -22,23 +22,25 @@ export class EditorComponent {
     birthDate: new FormControl(),
     deathDate: new FormControl(),
   });
-  stammbaum!: Stammbaum;
+  familyTree!: FamilyTree;
   graphManager: GraphManager = new GraphManager();
   genders = ['Male', 'Female', 'Diverse'];
 
-  constructor(private stammbaumService: StammbaumServiceService, private modalService: NgbModal,
+  constructor(private familyTreeService: FamilyTreeService, private modalService: NgbModal,
               private route: ActivatedRoute, private router: Router) {
+
     const params = this.route.snapshot.paramMap;
     try {
-      this.stammbaum = this.stammbaumService.getSingleTree(params.get('id'));
-      this.graphManager.init(this.stammbaum)
+      this.familyTree = this.familyTreeService.getSingleTree(params.get('id'));
+      this.graphManager.init(this.familyTree)
     } catch (e) {
       router.navigate(['/home']); // redirect home when invalid tree id
     }
+
   }
 
   dblClickEvent = (node: Node) => {
-    const person = this.stammbaumService.getPersonById(+node.id, this.stammbaum.id);
+    const person = this.familyTreeService.getPersonById(+node.id, this.familyTree.id);
     if (person) {
       this.onOpenContextMenu(person);
     }
@@ -51,7 +53,7 @@ export class EditorComponent {
   onAddPerson(): void {
     const personRequest: CreatePersonRequest = { ...this.addPersonForm.value };
     personRequest.gender = Gender.getById(this.addPersonForm.value.gender);
-    const person = this.stammbaumService.addPerson(personRequest, this.stammbaum.id);
+    const person = this.familyTreeService.addPerson(personRequest, this.familyTree.id);
     this.addPersonForm.reset();
     this.graphManager.createNewNode(person);
   }
@@ -59,7 +61,7 @@ export class EditorComponent {
   onOpenContextMenu(person: Person): void {
     const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
     modalRef.componentInstance.person = person;
-    modalRef.componentInstance.stammbaum = this.stammbaum;
+    modalRef.componentInstance.familyTree = this.familyTree;
     modalRef.componentInstance.deletePerson.subscribe((personToDelete: Person) => this.deletePersonEvent(personToDelete, modalRef));
     modalRef.componentInstance.updatePerson.subscribe(this.updatePersonEvent);
   }
@@ -69,11 +71,11 @@ export class EditorComponent {
     if (personToUpdate.children) {
       this.graphManager.updateEdges(personToUpdate);
     }
-    this.stammbaumService.updatePerson(personToUpdate, this.stammbaum.id);
+    this.familyTreeService.updatePerson(personToUpdate, this.familyTree.id);
   };
 
   deletePersonEvent = (personToDelete: Person, modalRef: NgbModalRef) => {
-    this.stammbaumService.deletePerson(personToDelete, this.stammbaum.id);
+    this.familyTreeService.deletePerson(personToDelete, this.familyTree.id);
     this.graphManager.removeNode(personToDelete);
     modalRef.close();
   };

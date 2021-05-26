@@ -1,8 +1,8 @@
 import { AfterContentInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Gender, Person, Stammbaum } from '../../../shared/types';
+import { Gender, Person, FamilyTree } from '../../../shared/types';
 import { FormControl, FormGroup } from '@angular/forms';
-import { StammbaumServiceService } from '../../../shared/stammbaum-service.service';
+import { FamilyTreeService } from '../../../shared/family-tree.service';
 
 @Component({
   selector: 'app-context-menu-content',
@@ -15,7 +15,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
   person!: Person;
 
   @Input()
-  stammbaum!: Stammbaum;
+  familyTree!: FamilyTree;
 
   @Output()
   deletePerson: EventEmitter<Person> = new EventEmitter();
@@ -36,11 +36,11 @@ export class ContextMenuContentComponent implements AfterContentInit {
 
   possibleChildren: Person[] = [];
 
-  constructor(public activeModal: NgbActiveModal, private stammbaumService: StammbaumServiceService) {
+  constructor(public activeModal: NgbActiveModal, private familyTreeService: FamilyTreeService) {
   }
 
   ngAfterContentInit(): void {
-    this.possibleChildren = Array.from(this.stammbaum.persons.values()).filter(it => this.isPossibleChild(it));
+    this.possibleChildren = Array.from(this.familyTree.persons.values()).filter(it => this.isPossibleChild(it));
     this.setForm();
   }
 
@@ -68,7 +68,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.birthDate = this.editPersonForm.value.birthDate;
     this.person.deathDate = this.editPersonForm.value.deathDate;
     this.person.children = this.editPersonForm.value.children
-      .map((id: number) => this.stammbaumService.getPersonById(id, this.stammbaum.id));
+      .map((id: number) => this.familyTreeService.getPersonById(id, this.familyTree.id));
     this.updatePerson.emit(this.person);
   }
 

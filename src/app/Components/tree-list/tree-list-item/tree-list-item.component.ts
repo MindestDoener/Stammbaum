@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Stammbaum } from '../../../shared/types';
+import { FamilyTree } from '../../../shared/types';
 
 @Component({
   selector: 'app-tree-list-item',
@@ -9,6 +9,6 @@ import { Stammbaum } from '../../../shared/types';
 export class TreeListItemComponent {
 
   @Input()
-  stammbaum!: Stammbaum;
+  familyTree!: FamilyTree;
 
 }
