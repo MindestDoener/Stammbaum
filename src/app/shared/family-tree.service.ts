@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
-import { CreatePersonRequest, Person, FamilyTree } from './types';
+import { CreatePersonRequest, FamilyTree, makeUUID, Person } from './types';
+import { TestData } from './testData';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FamilyTreeService {
-  familyTreeList: Map<string, FamilyTree> = new Map<string, FamilyTree>([
-    ['0', { id: '0', name: 'Stammbaum1', persons: new Map() }],
-    ['1', { id: '1', name: 'Stammbaum2', persons: new Map() }],
-    ['2', { id: '2', name: 'Stammbaum3', persons: new Map() }],
-    ['3', { id: '3', name: 'Stammbaum4', persons: new Map() }],
-  ]);
+
+  familyTreeList: Map<string, FamilyTree> = TestData.testList;
 
   createEmptyFamilyTree(name: string, id: string): void {
     const familyTree = {
@@ -69,11 +66,7 @@ export class FamilyTreeService {
   }
 
   private makeUUID(treeId: string): number {
-    let uuid = '';
-    for (let i = 0; i < 10; i++) {
-      uuid += Math.round(Math.random() * 9).toString();
-    }
-    const num = parseInt(uuid, 10);
+    const num = makeUUID();
     // check for duplicate ids
     if (this.familyTreeList?.get(treeId)) {
       if (this.familyTreeList.get(treeId)?.persons.has(num)) {

@@ -50,6 +50,18 @@ export class Gender {
 }
 
 export function convertDate(date: Date): string {
-  const temp = date.toString().split('-');
-  return `${temp[2]}.${temp[1]}.${temp[0]}`;
+  try {
+    return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
+  } catch (e) {
+    const temp = date.toString().split('-');
+    return `${temp[2]}.${temp[1]}.${temp[0]}`;
+  }
+}
+
+export function makeUUID(): number {
+  let uuid = '';
+  for (let i = 0; i < 10; i++) {
+    uuid += Math.round(Math.random() * 9).toString();
+  }
+  return parseInt(uuid, 10);
 }

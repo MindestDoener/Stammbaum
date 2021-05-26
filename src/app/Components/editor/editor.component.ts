@@ -6,7 +6,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuContentComponent } from './context-menu-content/context-menu-content.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Node } from '@swimlane/ngx-graph';
-import { GraphManager } from './GraphManager';
+import { GraphManager } from './Graph/GraphManager';
 
 @Component({
   selector: 'app-editor',
