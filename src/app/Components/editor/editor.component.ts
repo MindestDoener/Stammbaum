@@ -29,13 +29,16 @@ export class EditorComponent {
   constructor(private familyTreeService: FamilyTreeService, private modalService: NgbModal,
               private route: ActivatedRoute, private router: Router) {
 
-    const params = this.route.snapshot.paramMap;
-    try {
-      this.familyTree = this.familyTreeService.getSingleTree(params.get('id'));
-      this.graphManager.init(this.familyTree)
-    } catch (e) {
-      router.navigate(['/home']); // redirect home when invalid tree id
-    }
+    router.events.subscribe(() => {
+      const params = this.route.snapshot.paramMap;
+      try {
+        this.graphManager.clear()
+        this.familyTree = this.familyTreeService.getSingleTree(params.get('id'));
+        this.graphManager.init(this.familyTree)
+      } catch (e) {
+        router.navigate(['/home']); // redirect home when invalid tree id
+      }
+    })
 
   }
 

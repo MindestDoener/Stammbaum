@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FamilyTreeService } from './shared/family-tree.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'stammbaum-app';
+  treeList;
+
+  constructor(familyTreeService: FamilyTreeService) {
+    this.treeList = familyTreeService.getTreeList();
+  }
 }

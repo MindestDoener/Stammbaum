@@ -21,6 +21,14 @@
           Stammbäume
         </a>
       </li>
+      <li class='nav-item' ngbDropdown>
+        <a class='nav-link' id='navbarDropdownMenuLink' ngbDropdownToggle>
+          Editor
+        </a>
+        <div ngbDropdownMenu aria-labelledby='navbarDropdownMenuLink'>
+          <a ngbDropdownItem *ngFor='let tree of treeList | keyvalue' [routerLink]='"/trees/" + tree.key'>{{tree.value.name}}</a>
+        </div>
+      </li>
     </ul>
   </div>
 </nav>
