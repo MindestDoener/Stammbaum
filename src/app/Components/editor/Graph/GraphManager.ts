@@ -1,9 +1,13 @@
 import { Edge, Node } from '@swimlane/ngx-graph';
-import { FamilyTree, Person } from '../../shared/types';
+import { convertDate, FamilyTree, Person } from '../../../shared/types';
+import { treeCurve } from './TreeCurve';
+import { TreeLayout } from './TreeLayout';
 
 export class GraphManager {
   nodes: Node[] = [];
   edges: Edge[] = [];
+  curve = treeCurve;
+  layout = new TreeLayout();
 
   private static buildLabel(person: Person): string {
     return person.firstName + ' ' + person.lastName;
@@ -16,8 +20,8 @@ export class GraphManager {
       dimension: { width: 200, height: 40 },
       data: {
         customColor: person.gender.color,
-        birthDate: person.birthDate,
-        deathDate: person.deathDate,
+        birthDate: convertDate(person.birthDate),
+        deathDate: person.deathDate ? convertDate(person.deathDate) : undefined,
         toolTipActive: false,
       },
     };
@@ -55,6 +59,7 @@ export class GraphManager {
 
   public removeNode(person: Person): void {
     if (person.node) {
+      this.edges = this.edges.filter((edge) => +edge.source !== person.id && +edge.target !== person.id); // clear edges
       const index = this.nodes.indexOf(person.node, 0);
       if (index > -1) {
         this.nodes.splice(index, 1);
