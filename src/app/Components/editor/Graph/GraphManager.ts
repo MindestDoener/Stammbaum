@@ -37,6 +37,11 @@ export class GraphManager {
     }
   }
 
+  public clear(): void {
+    this.nodes = [];
+    this.edges = [];
+  }
+
   public updateNode(person: Person): void {
     const oldNode = this.findNodeById(person.id);
     const newNode = GraphManager.createNode(person);
