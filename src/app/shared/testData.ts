@@ -1,4 +1,5 @@
 import { FamilyTree, Gender, Person } from './types';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 export class TestData {
   static testSon: Person = {
@@ -6,28 +7,28 @@ export class TestData {
     firstName: 'Sören',
     lastName: 'Sohn',
     gender: Gender.MALE,
-    birthDate: new Date(2010, 1, 1),
+    birthDate: new NgbDate(2010, 1, 1),
   };
   static testDaughter: Person = {
     id: 1432,
     firstName: 'Tanja',
     lastName: 'Tochter',
     gender: Gender.FEMALE,
-    birthDate: new Date(2010, 1, 1),
+    birthDate: new NgbDate(2010, 1, 1),
   };
   static testDiverseKid: Person = {
     id: 6969,
     firstName: 'AEX12rÈ',
     lastName: 'Abkömmling',
     gender: Gender.DIVERSE,
-    birthDate: new Date(2015, 4, 20),
+    birthDate: new NgbDate(2015, 4, 20),
   };
   static testFather: Person = {
     id: 1234,
     firstName: 'Volker',
     lastName: 'Vater',
     gender: Gender.MALE,
-    birthDate: new Date(2000, 1, 1),
+    birthDate: new NgbDate(2000, 1, 1),
     children: [TestData.testSon, TestData.testDaughter, TestData.testDiverseKid],
   };
   static testMother: Person = {
@@ -35,7 +36,7 @@ export class TestData {
     firstName: 'Marianne',
     lastName: 'Mutter',
     gender: Gender.FEMALE,
-    birthDate: new Date(2000, 1, 1),
+    birthDate: new NgbDate(2000, 1, 1),
     children: [TestData.testSon, TestData.testDaughter, TestData.testDiverseKid],
   };
   static testGrandFather: Person = {
@@ -43,8 +44,8 @@ export class TestData {
     firstName: 'Gustaf',
     lastName: 'Großvater',
     gender: Gender.MALE,
-    birthDate: new Date(1969, 1, 1),
-    deathDate: new Date(2020, 1, 1),
+    birthDate: new NgbDate(1969, 1, 1),
+    deathDate: new NgbDate(2020, 1, 1),
     children: [TestData.testFather],
   };
   static testGrandMother: Person = {
@@ -52,8 +53,8 @@ export class TestData {
     firstName: 'Gundula',
     lastName: 'Großmutter',
     gender: Gender.FEMALE,
-    birthDate: new Date(1420, 1, 1),
-    deathDate: new Date(2010, 1, 1),
+    birthDate: new NgbDate(1420, 1, 1),
+    deathDate: new NgbDate(2010, 1, 1),
     children: [TestData.testFather],
   };
 

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FamilyTreeService } from '../../shared/family-tree.service';
-import { CreatePersonRequest, FamilyTree, Gender, Person } from '../../shared/types';
-import { FormControl, FormGroup } from '@angular/forms';
+import { CreatePersonRequest, FamilyTree, Person } from '../../shared/types';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuContentComponent } from './context-menu-content/context-menu-content.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,13 +14,6 @@ import { GraphManager } from './Graph/GraphManager';
 })
 export class EditorComponent {
 
-  addPersonForm = new FormGroup({
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    gender: new FormControl(),
-    birthDate: new FormControl(),
-    deathDate: new FormControl(),
-  });
   familyTree!: FamilyTree;
   graphManager: GraphManager = new GraphManager();
   genders = ['Männlich', 'Weiblich', 'Divers'];
@@ -32,20 +24,20 @@ export class EditorComponent {
     router.events.subscribe(() => {
       const params = this.route.snapshot.paramMap;
       try {
-        this.graphManager.clear()
+        this.graphManager.clear();
         this.familyTree = this.familyTreeService.getSingleTree(params.get('id'));
-        this.graphManager.init(this.familyTree)
+        this.graphManager.init(this.familyTree);
       } catch (e) {
         router.navigate(['/home']); // redirect home when invalid tree id
       }
-    })
+    });
 
   }
 
   dblClickEvent = (node: Node) => {
     const person = this.familyTreeService.getPersonById(+node.id, this.familyTree.id);
     if (person) {
-      this.onOpenContextMenu(person);
+      this.openUpdateMenu(person);
     }
   };
 
@@ -53,18 +45,18 @@ export class EditorComponent {
     node.data.toolTipActive = !node.data.toolTipActive;
   };
 
-  onAddPerson(): void {
-    const personRequest: CreatePersonRequest = { ...this.addPersonForm.value };
-    personRequest.gender = Gender.getById(this.addPersonForm.value.gender);
-    const person = this.familyTreeService.addPerson(personRequest, this.familyTree.id);
-    this.addPersonForm.reset();
-    this.graphManager.createNewNode(person);
+  openCreateMenu(): void {
+    const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
+    modalRef.componentInstance.familyTree = this.familyTree;
+    modalRef.componentInstance.mode = 'ADD';
+    modalRef.componentInstance.addPerson.subscribe(this.addPersonEvent);
   }
 
-  onOpenContextMenu(person: Person): void {
+  openUpdateMenu(person: Person): void {
     const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
     modalRef.componentInstance.person = person;
     modalRef.componentInstance.familyTree = this.familyTree;
+    modalRef.componentInstance.mode = 'UPDATE';
     modalRef.componentInstance.deletePerson.subscribe((personToDelete: Person) => this.deletePersonEvent(personToDelete, modalRef));
     modalRef.componentInstance.updatePerson.subscribe(this.updatePersonEvent);
   }
@@ -81,5 +73,13 @@ export class EditorComponent {
     this.familyTreeService.deletePerson(personToDelete, this.familyTree.id);
     this.graphManager.removeNode(personToDelete);
     modalRef.close();
+  };
+
+  addPersonEvent = (newPerson: CreatePersonRequest) => {
+    const person = this.familyTreeService.addPerson(newPerson, this.familyTree.id);
+    this.graphManager.createNewNode(person);
+    if (person.children) {
+      this.graphManager.updateEdges(person);
+    }
   };
 }

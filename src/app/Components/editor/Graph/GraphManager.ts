@@ -1,9 +1,12 @@
 import { Edge, Node } from '@swimlane/ngx-graph';
-import { convertDate, FamilyTree, Person } from '../../../shared/types';
+import { DateConverter, FamilyTree, Person } from '../../../shared/types';
 import { treeCurve } from './TreeCurve';
 import { TreeLayout } from './TreeLayout';
 
 export class GraphManager {
+
+  private static dateConverter: DateConverter = new DateConverter();
+
   nodes: Node[] = [];
   edges: Edge[] = [];
   curve = treeCurve;
@@ -20,8 +23,8 @@ export class GraphManager {
       dimension: { width: 200, height: 40 },
       data: {
         customColor: person.gender.color,
-        birthDate: convertDate(person.birthDate),
-        deathDate: person.deathDate ? convertDate(person.deathDate) : undefined,
+        birthDate: this.dateConverter.format(person.birthDate),
+        deathDate: person.deathDate ? this.dateConverter.format(person.deathDate) : undefined,
         toolTipActive: false,
       },
     };
