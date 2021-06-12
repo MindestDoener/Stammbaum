@@ -1,10 +1,11 @@
-import { AfterContentInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CreatePersonRequest, DateConverter, FamilyTree, Gender, Person } from '../../../shared/types';
 import { FamilyTreeService } from '../../../shared/family-tree.service';
 import { Observable, OperatorFunction } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { NgbActiveModal, NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MultiselectComponent } from '../multiselect/multiselect.component';
 
 @Component({
   selector: 'app-context-menu-content',
@@ -13,6 +14,9 @@ import { FormControl, FormGroup } from '@angular/forms';
   providers: [{ provide: NgbDateParserFormatter, useClass: DateConverter }],
 })
 export class ContextMenuContentComponent implements AfterContentInit {
+
+  @ViewChild('childSelect')
+  multiselect!: MultiselectComponent;
 
   @Input()
   person?: Person;
@@ -40,15 +44,16 @@ export class ContextMenuContentComponent implements AfterContentInit {
     gender: new FormControl(),
     birthDate: new FormControl(NgbDate),
     deathDate: new FormControl(NgbDate.from(null)), // needed for deathDate to be optional
-    children: new FormControl([]),
   });
+
+  children: number[] = [];
 
   addMoreCheckBox = new FormControl();
 
-  possibleChildren: Person[] = [];
+  possibleChildren: { label: string, id: number }[] = [];
 
   today: NgbDateStruct = this.calender.getToday();
-  minBirthDate: NgbDateStruct = new NgbDate(1000,1,1) // should be enough for the start (can be changed if needed)
+  minBirthDate: NgbDateStruct = new NgbDate(1000, 1, 1); // should be enough for the start (can be changed if needed)
 
   constructor(public activeModal: NgbActiveModal, private familyTreeService: FamilyTreeService, private calender: NgbCalendar) {
   }
@@ -63,13 +68,16 @@ export class ContextMenuContentComponent implements AfterContentInit {
   };
 
   ngAfterContentInit(): void {
-    this.possibleChildren = Array.from(this.familyTree.persons.values()).filter(it => this.isPossibleChild(it));
+    if (this.person) {
+      this.editPersonForm.patchValue(this.person);
+    }
+    this.possibleChildren = this.getPossibleChildren();
     this.setForm();
   }
 
   updatePossibleChildren(): void {
     if (!this.editPersonForm.invalid) {
-      this.possibleChildren = Array.from(this.familyTree.persons.values()).filter(it => this.isPossibleChild(it));
+      this.possibleChildren = this.getPossibleChildren();
     }
   }
 
@@ -100,18 +108,22 @@ export class ContextMenuContentComponent implements AfterContentInit {
   onAddPerson(): void {
     const newPerson: CreatePersonRequest = {
       ...this.editPersonForm.value,
-      children: this.editPersonForm.value.children
-        .map((id: number) => this.familyTreeService.getPersonById(id, this.familyTree.id)).filter((child: Person) => this.isPossibleChild(child)),
+      children: this.children
+        // tslint:disable-next-line:no-non-null-assertion
+        .map((id: number) => this.familyTreeService.getPersonById(id, this.familyTree.id)!)
+        .filter((child: Person) => this.isPossibleChild(child)),
       gender: Gender.getById(this.editPersonForm.value.gender),
     };
     // tslint:disable-next-line:no-non-null-assertion
     newPerson.birthDate = NgbDate.from(this.editPersonForm.value.birthDate)!;
     // tslint:disable-next-line:no-non-null-assertion
-    newPerson.deathDate = this.editPersonForm.value.deathDate ? NgbDate.from(this.editPersonForm.value.deathDate)! : undefined  ;
+    newPerson.deathDate = this.editPersonForm.value.deathDate ? NgbDate.from(this.editPersonForm.value.deathDate)! : undefined;
     this.addPerson.emit(newPerson);
     if (this.addMoreCheckBox.value) {
       this.editPersonForm.reset();
-      this.editPersonForm.controls.children.reset([]);
+      this.possibleChildren = [];
+      this.children = [];
+      this.multiselect.reset();
     } else {
       this.activeModal.close();
     }
@@ -130,14 +142,29 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.gender = Gender.getById(this.editPersonForm.value.gender);
     this.person.birthDate = this.editPersonForm.value.birthDate;
     this.person.deathDate = this.editPersonForm.value.deathDate;
-    this.person.children = this.editPersonForm.value.children
-      .map((id: number) => this.familyTreeService.getPersonById(id, this.familyTree.id)).filter((person: Person) => this.isPossibleChild(person));
+    this.person.children = this.children
+      // tslint:disable-next-line:no-non-null-assertion
+      .map((id: number) => this.familyTreeService.getPersonById(id, this.familyTree.id)!)
+      .filter((child: Person) => this.isPossibleChild(child));
     this.updatePerson.emit(this.person);
   }
 
   isUpdateMode = () => {
     return this.mode === 'UPDATE';
   };
+
+  setChildren(event: number[]): void {
+    this.children = event;
+  }
+
+  private getPossibleChildren(): { label: string, id: number }[] {
+    return Array.from(this.familyTree.persons.values())
+      .filter(it => this.isPossibleChild(it))
+      .map(person => ({
+        label: person.firstName + ' ' + person.lastName,
+        id: person.id,
+      }));
+  }
 
   private setForm(): void {
     if (!this.person) {
@@ -146,7 +173,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.editPersonForm.patchValue(this.person);
     this.editPersonForm.patchValue({ gender: this.person.gender.id });
     if (this.person.children) {
-      this.editPersonForm.patchValue({ children: this.person.children.map(person => person.id) });
+      this.children = this.person.children.map(person => person.id);
     }
   }
 }
