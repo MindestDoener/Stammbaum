@@ -1,5 +1,10 @@
 .item {
   margin-bottom: 1rem;
+
+  &:hover {
+    color: gray;
+    cursor: pointer;
+  }
 }
 
 .card {

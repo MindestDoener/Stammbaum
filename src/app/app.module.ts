@@ -13,6 +13,7 @@ import { TreeListComponent } from './Components/tree-list/tree-list.component';
 import { TreeListItemComponent } from './Components/tree-list/tree-list-item/tree-list-item.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MultiselectComponent } from './Components/editor/multiselect/multiselect.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LandingPageComponent,
     TreeListComponent,
     TreeListItemComponent,
+    MultiselectComponent,
   ],
   imports: [
     BrowserModule,

@@ -28,9 +28,9 @@
     </div>
   </div>
   <div *ngFor='let tree of treeList | keyvalue'>
-    <a [ngClass]="{'disabled': mode !== 'view'}" [routerLink]='tree.key' class='list-group-item-action'>
+    <div [ngClass]="{'disabled': mode !== 'view'}" [routerLink]='tree.key' class='list-group-item-action'>
       <app-tree-list-item [familyTree]='tree.value'>
       </app-tree-list-item>
-    </a>
+    </div>
   </div>
 </div>

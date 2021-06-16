@@ -1,0 +1,28 @@
+<label style='width: 100%'>
+  {{ label }}
+  <div ngbDropdown>
+    <input class='form-control' [ngClass]='{"bg-white": !disabled}' [placeholder]='placeholder' type='text'
+           [value]='text ? text : null' readonly ngbDropdownToggle>
+    <div ngbDropdownMenu>
+      <div *ngIf='disabled' class='mx-3'>{{disabledText}}</div>
+      <div *ngIf='!disabled'>
+        <div *ngIf='options.length > 0' class='input-group input-group-sm mx-3 mb-2 search'>
+          <input type='text' class='form-control' [formControl]='searchInput' (input)='filterOptions()'>
+          <i class='input-group-text bi bi-search bg-white'></i>
+        </div>
+        <div class='scrollable'>
+          <div class='form-check my-1 mx-3' *ngFor='let option of optionsFiltered ? optionsFiltered : options'>
+            <input class='form-check-input' type='checkbox' [checked]='selectedValues.includes(option.id)'
+                   (change)='toggle($event, option.id)' id='toggle'>
+            <label class='form-check-label' for='toggle'>
+              {{ option.label }}
+            </label>
+          </div>
+        </div>
+        <div *ngIf='options.length === 0' class='mx-3'>
+          {{ emptyText }}
+        </div>
+      </div>
+    </div>
+  </div>
+</label>

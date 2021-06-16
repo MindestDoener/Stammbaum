@@ -1,4 +1,6 @@
 import * as ngx from '@swimlane/ngx-graph';
+import { NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Injectable } from '@angular/core';
 
 export interface FamilyTree {
   name: string;
@@ -11,8 +13,8 @@ export interface Person {
   firstName: string;
   lastName: string;
   gender: Gender;
-  deathDate?: Date;
-  birthDate: Date;
+  deathDate?: NgbDate;
+  birthDate: NgbDate;
   children?: Person[];
   node?: ngx.Node;
 }
@@ -21,8 +23,8 @@ export interface CreatePersonRequest {
   firstName: string;
   lastName: string;
   gender: Gender;
-  deathDate?: Date;
-  birthDate: Date;
+  deathDate?: NgbDate;
+  birthDate: NgbDate;
   children?: Person[];
 }
 
@@ -49,19 +51,32 @@ export class Gender {
   }
 }
 
-export function convertDate(date: Date): string {
-  try {
-    return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`;
-  } catch (e) {
-    const temp = date.toString().split('-');
-    return `${temp[2]}.${temp[1]}.${temp[0]}`;
-  }
-}
-
 export function makeUUID(): number {
   let uuid = '';
   for (let i = 0; i < 10; i++) {
     uuid += Math.round(Math.random() * 9).toString();
   }
   return parseInt(uuid, 10);
+}
+
+@Injectable()
+export class DateConverter extends NgbDateParserFormatter {
+
+  readonly DELIMITER = '.';
+
+  parse(value: string): NgbDateStruct | null {
+    if (value) {
+      const date = value.split(this.DELIMITER);
+      return {
+        day: parseInt(date[0], 10),
+        month: parseInt(date[1], 10),
+        year: parseInt(date[2], 10),
+      };
+    }
+    return null;
+  }
+
+  format(date: NgbDateStruct | null): string {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
+  }
 }
