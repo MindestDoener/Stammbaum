@@ -1,4 +1,4 @@
-import * as ngx from '@swimlane/ngx-graph';
+import { Node } from '@swimlane/ngx-graph';
 import { NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
 
@@ -16,7 +16,7 @@ export interface Person {
   deathDate?: NgbDate;
   birthDate: NgbDate;
   children?: Person[];
-  node?: ngx.Node;
+  node?: Node;
 }
 
 export interface CreatePersonRequest {
