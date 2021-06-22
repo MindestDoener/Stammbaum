@@ -42,4 +42,14 @@ export class TreeListComponent {
     console.log(mode);
     this.mode = mode;
   }
+
+  deleteTree(id: string): void {
+    this.familyTreeService.deleteFamilyTree(id);
+  }
+
+  openTree(id: string): void {
+    if (this.mode === 'view') {
+      this.router.navigate(['/trees/' + id])
+    }
+  }
 }

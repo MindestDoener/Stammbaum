@@ -1,11 +1,14 @@
 <div class='container'>
   <h1 class='text-center my-4'>Meine Stammb<i class='bi bi-tree-fill text-gradient tree'></i>ume</h1>
   <hr>
-  <button (click)="setMode('add');" *ngIf="mode !== 'add' " class='btn btn-outline-dark my-2'>
+  <button (click)="setMode('add');" *ngIf="mode === 'view' " class='btn btn-outline-dark my-2'>
     <i class='bi bi-plus'></i>
     <i class='bi bi-tree-fill'></i>
   </button>
-  <button (click)="setMode('view');" *ngIf="mode === 'add' " class='btn btn-outline-dark my-2'>
+  <button (click)="setMode('edit');" *ngIf="mode === 'view' " class='btn btn-outline-dark my-2 ms-1'>
+    <i class='bi bi-pen-fill'></i>
+  </button>
+  <button (click)="setMode('view');" *ngIf="mode === 'add' || mode === 'edit' " class='btn btn-outline-dark my-2'>
     <i class='bi bi-x'></i>
   </button>
   <div *ngIf="mode === 'add'" class='card item'>
@@ -28,8 +31,8 @@
     </div>
   </div>
   <div *ngFor='let tree of treeList | keyvalue'>
-    <div [ngClass]="{'disabled': mode !== 'view'}" [routerLink]='tree.key' class='list-group-item-action'>
-      <app-tree-list-item [familyTree]='tree.value'>
+    <div [ngClass]="{'disabled': mode !== 'view'}" (click)='openTree(tree.key)' class='list-group-item-action'>
+      <app-tree-list-item [mode]='mode' [familyTree]='tree.value' (delete)='deleteTree($event)'>
       </app-tree-list-item>
     </div>
   </div>

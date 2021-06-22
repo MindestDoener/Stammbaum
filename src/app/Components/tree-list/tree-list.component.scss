@@ -1,6 +1,5 @@
-a.disabled {
-  pointer-events: none;
-  cursor: default;
+.disabled {
+  cursor: default !important;
   color: gray;
 }
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FamilyTree } from '../../../shared/types';
 
 @Component({
@@ -10,5 +10,11 @@ export class TreeListItemComponent {
 
   @Input()
   familyTree!: FamilyTree;
+
+  @Input()
+  mode: 'edit' | 'view' | 'add' | undefined;
+
+  @Output()
+  delete: EventEmitter<string> = new EventEmitter<string>();
 
 }

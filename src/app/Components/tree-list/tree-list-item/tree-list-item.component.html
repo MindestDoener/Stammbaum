@@ -6,14 +6,19 @@
         {{ familyTree.name }}
       </h4>
     </div>
-    <div class='border-left px-4' style='width: 50%;'>
-      <p class='card-text item-info'>
-        <i class='bi bi-people-fill'></i>
-        {{ familyTree.persons.size }}
-      </p>
-      <p class='card-text item-info'>
-        Zuletzt Geändert: 10/02/2021 10:10:10
-      </p>
+    <div class='infobox px-4 d-flex' style='width: 50%;'>
+      <div>
+        <p class='card-text item-info'>
+          <i class='bi bi-people-fill'></i>
+          {{ familyTree.persons.size }}
+        </p>
+        <p class='card-text item-info'>
+          Zuletzt Geändert: 10/02/2021 10:10:10
+        </p>
+      </div>
+      <div *ngIf='mode === "edit"' class='btn btn-outline-danger d-inline-flex align-items-center' (click)='delete.emit(familyTree.id)'>
+        <i class='bi-trash-fill'></i>
+      </div>
     </div>
   </div>
 </div>
