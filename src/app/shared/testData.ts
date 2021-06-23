@@ -1,4 +1,4 @@
-import { FamilyTree, Gender, Person } from './types';
+import { FamilyTree, Gender, Person, Time } from './types';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 export class TestData {
@@ -69,9 +69,14 @@ export class TestData {
   ]);
 
   static testList: Map<string, FamilyTree> = new Map<string, FamilyTree>([
-    ['0', { id: '0', name: 'Stammbaum1', persons: new Map(TestData.testPersons) }],
-    ['1', { id: '1', name: 'Stammbaum2', persons: new Map() }],
-    ['2', { id: '2', name: 'Stammbaum3', persons: new Map() }],
-    ['3', { id: '3', name: 'Stammbaum4', persons: new Map() }],
+    ['0', {
+      id: '0',
+      name: 'Stammbaum1',
+      persons: new Map(TestData.testPersons),
+      lastChanged: {date: new NgbDate(2021, 6, 9), time: new Time(12,34,56)},
+    }],
+    ['1', { id: '1', name: 'Stammbaum2', persons: new Map(), lastChanged: {date: new NgbDate(2021, 4, 9), time: new Time(12,34,56)} }],
+    ['2', { id: '2', name: 'Stammbaum3', persons: new Map(), lastChanged: {date: new NgbDate(2021, 2, 9), time: new Time(12,34,56)} }],
+    ['3', { id: '3', name: 'Stammbaum4', persons: new Map(), lastChanged: {date: new NgbDate(2021, 5, 9), time: new Time(12,34,56)} }],
   ]);
 }
