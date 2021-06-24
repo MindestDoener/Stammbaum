@@ -19,6 +19,10 @@ export class FamilyTreeService {
     this.familyTreeList.set(id, familyTree);
   }
 
+  deleteFamilyTree(id: string): void {
+    this.familyTreeList.delete(id);
+  }
+
   addPerson(personRequest: CreatePersonRequest, treeId: string): Person {
     const person = {
       id: this.makeUUID(treeId),
