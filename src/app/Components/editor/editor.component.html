@@ -1,4 +1,4 @@
-<div style='height: 90vh'>
+<div class='content'>
   <div *ngIf='familyTree'>
     <div class='pb-1 tree-name-heading'>
       Stammbaum: {{familyTree.name}}
@@ -8,7 +8,7 @@
     </button>
     <hr>
   </div>
-  <div id='tree-container' style='height: 80%;'>
+  <div id='tree-container' style='height: 97.5%;'>
     <ngx-graph
       *ngIf='familyTree'
       [layoutSettings]="{orientation: 'TB'}"

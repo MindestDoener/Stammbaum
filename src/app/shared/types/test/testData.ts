@@ -82,6 +82,13 @@ export class TestData {
     ['0', TestData.testTree],
     ['1', { id: '1', name: 'Stammbaum2', persons: new Map(), lastChanged: {date: new NgbDate(2021, 4, 9), time: new Time(12,34,56)} }],
     ['2', { id: '2', name: 'Stammbaum3', persons: new Map(), lastChanged: {date: new NgbDate(2021, 2, 9), time: new Time(12,34,56)} }],
-    ['3', { id: '3', name: 'Stammbaum4', persons: new Map(), lastChanged: {date: new NgbDate(2021, 5, 9), time: new Time(12,34,56)} }],
+    ['3', { id: '3', name: 'Stammbaum4', persons: new Map(), lastChanged: {date: new NgbDate(2021, 5, 9), time: new Time(12,10,56)} }],
+    ['4', { id: '4', name: 'Stammbaum5', persons: new Map(), lastChanged: {date: new NgbDate(2021, 5, 9), time: new Time(12,34,56)} }],
+    ['5', { id: '5', name: 'Stammbaum6', persons: new Map(), lastChanged: {date: new NgbDate(2021, 4, 9), time: new Time(12,34,56)} }],
+    ['6', { id: '6', name: 'Stammbaum7', persons: new Map(), lastChanged: {date: new NgbDate(2021, 5, 9), time: new Time(12,34,56)} }],
+    ['7', { id: '7', name: 'Stammbaum8', persons: new Map(), lastChanged: {date: new NgbDate(2021, 5, 23), time: new Time(12,10,56)} }],
+    ['8', { id: '8', name: 'Stammbaum9', persons: new Map(), lastChanged: {date: new NgbDate(2021, 5, 9), time: new Time(12,34,56)} }],
+    ['9', { id: '9', name: 'Stammbaum10', persons: new Map(), lastChanged: {date: new NgbDate(2021, 8, 12), time: new Time(12,34,56)} }],
+    ['10', { id: '10', name: 'Stammbaum11', persons: new Map(), lastChanged: {date: new NgbDate(2021, 5, 9), time: new Time(12,34,56)} }],
   ]);
 }

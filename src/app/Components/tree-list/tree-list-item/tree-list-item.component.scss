@@ -1,5 +1,6 @@
+@import "src/styles";
+
 .item {
-  margin-bottom: 1rem;
 
   &:hover {
     color: gray;
@@ -9,6 +10,7 @@
 
 .card {
   border-width: 0.15rem;
+  color: $dark;
 }
 
 .card-body {
