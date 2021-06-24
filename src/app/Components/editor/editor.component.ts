@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { FamilyTreeService } from '../../shared/family-tree.service';
-import { CreatePersonRequest, FamilyTree, Person } from '../../shared/types';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuContentComponent } from './context-menu-content/context-menu-content.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Node } from '@swimlane/ngx-graph';
 import { GraphManager } from './Graph/GraphManager';
+import { FamilyTree } from '../../shared/types/familyTree';
+import { Person } from '../../shared/types/person';
+import { CreatePersonRequest } from '../../shared/types/createPersonRequest';
 
 @Component({
   selector: 'app-editor',

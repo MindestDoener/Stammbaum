@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FamilyTreeService } from './shared/family-tree.service';
-import { SortMode } from './shared/types';
+import { SortMode } from './shared/types/sortMode';
 
 @Component({
   selector: 'app-root',

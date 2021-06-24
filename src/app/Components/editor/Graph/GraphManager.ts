@@ -1,7 +1,9 @@
 import { Edge, Node } from '@swimlane/ngx-graph';
-import { DateConverter, FamilyTree, Person } from '../../../shared/types';
 import { treeCurve } from './TreeCurve';
 import { TreeLayout } from './TreeLayout';
+import { FamilyTree } from '../../../shared/types/familyTree';
+import { Person } from '../../../shared/types/person';
+import { DateConverter } from '../../../shared/types/dateConverter';
 
 export class GraphManager {
 

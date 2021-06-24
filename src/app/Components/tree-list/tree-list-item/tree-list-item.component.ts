@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DateConverter, FamilyTree, getToday } from '../../../shared/types';
+import { FamilyTree } from '../../../shared/types/familyTree';
+import { DateConverter } from '../../../shared/types/dateConverter';
+import { getToday } from '../../../shared/types/time';
 
 @Component({
   selector: 'app-tree-list-item',

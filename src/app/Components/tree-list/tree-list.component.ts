@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FamilyTreeService } from '../../shared/family-tree.service';
-import { FamilyTree, SortMode } from '../../shared/types';
+import { FamilyTree } from '../../shared/types/familyTree';
+import { SortMode } from '../../shared/types/sortMode';
 
 @Component({
   selector: 'app-tree-list',

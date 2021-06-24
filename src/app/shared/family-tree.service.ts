@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CreatePersonRequest, FamilyTree, getNow, getToday, makeUUID, Person, SortMode } from './types';
-import { TestData } from './testData';
+import { TestData } from './types/test/testData';
+import { FamilyTree } from './types/familyTree';
+import { Person } from './types/person';
+import { CreatePersonRequest } from './types/createPersonRequest';
+import { SortMode } from './types/sortMode';
+import { makeUUID } from './types/uuid';
+import { getNow, getToday } from './types/time';
 
 @Injectable({
   providedIn: 'root',
