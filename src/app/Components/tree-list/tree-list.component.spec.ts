@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TreeListComponent } from './tree-list.component';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TreeListComponent', () => {
   let component: TreeListComponent;
@@ -9,6 +11,7 @@ describe('TreeListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [TreeListComponent],
+      providers: [{provide: Router, useValue: RouterTestingModule}]
     })
       .compileComponents();
   });

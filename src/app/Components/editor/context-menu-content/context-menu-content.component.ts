@@ -1,11 +1,15 @@
 import { AfterContentInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { CreatePersonRequest, DateConverter, FamilyTree, Gender, Person } from '../../../shared/types';
 import { FamilyTreeService } from '../../../shared/family-tree.service';
 import { Observable, OperatorFunction } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { NgbActiveModal, NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MultiselectComponent } from '../multiselect/multiselect.component';
+import { FamilyTree } from '../../../shared/types/familyTree';
+import { Gender } from '../../../shared/types/gender';
+import { Person } from '../../../shared/types/person';
+import { CreatePersonRequest } from '../../../shared/types/createPersonRequest';
+import { DateConverter } from '../../../shared/types/dateConverter';
 
 @Component({
   selector: 'app-context-menu-content',

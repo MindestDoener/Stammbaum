@@ -26,7 +26,7 @@
           Editor
         </a>
         <div ngbDropdownMenu aria-labelledby='navbarDropdownMenuLink'>
-          <a ngbDropdownItem *ngFor='let tree of treeList | keyvalue' [routerLink]='"/trees/" + tree.key'>{{tree.value.name}}</a>
+          <a ngbDropdownItem *ngFor='let tree of getTreeList()' [routerLink]='"/trees/" + tree.id'>{{tree.name}}</a>
         </div>
       </li>
     </ul>

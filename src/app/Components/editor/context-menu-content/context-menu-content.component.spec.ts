@@ -1,25 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContextMenuContentComponent } from './context-menu-content.component';
+import { TestData } from '../../../shared/types/test/testData';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('ContextMenuContentComponent', () => {
   let component: ContextMenuContentComponent;
   let fixture: ComponentFixture<ContextMenuContentComponent>;
 
+  class ModalServiceMock {
+    public close = () => {};
+  }
+
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [ContextMenuContentComponent],
-    })
-      .compileComponents();
-  });
+      providers: [{provide: NgbActiveModal, useValue: ModalServiceMock}]
+    });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ContextMenuContentComponent);
+
     component = fixture.componentInstance;
-    fixture.detectChanges();
+
+    component.person = TestData.testFather;
+    component.mode = 'UPDATE';
+    component.familyTree = TestData.testTree;
+
   });
 
-  it('should create', () => {
+  xit('should create', () => {
     expect(component).toBeTruthy();
   });
 });

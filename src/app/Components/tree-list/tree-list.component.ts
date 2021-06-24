@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FamilyTreeService } from '../../shared/family-tree.service';
-import { FamilyTree } from '../../shared/types';
+import { FamilyTree } from '../../shared/types/familyTree';
+import { SortMode } from '../../shared/types/sortMode';
 
 @Component({
   selector: 'app-tree-list',
@@ -10,7 +11,9 @@ import { FamilyTree } from '../../shared/types';
   styleUrls: ['./tree-list.component.scss'],
 })
 export class TreeListComponent {
-  treeList?: Map<string, FamilyTree> = this.familyTreeService.getTreeList();
+
+  sortMode: SortMode = SortMode.lastChanged;
+  treeList?: FamilyTree[] = this.familyTreeService.getTreeListSorted(this.sortMode);
 
   createFamilyTreeForm = new FormGroup({
     treeName: new FormControl(),
@@ -26,21 +29,25 @@ export class TreeListComponent {
 
   onCreateFamilyTree(): void {
     const TreeId =
-      this.familyTreeService.familyTreeList === undefined
+      this.familyTreeService.familyTreeMap === undefined
         ? '0'
-        : this.familyTreeService.familyTreeList.size.toString();
+        : this.familyTreeService.familyTreeMap.size.toString();
     this.familyTreeService.createEmptyFamilyTree(
       this.createFamilyTreeForm.controls.treeName.value,
       TreeId,
     );
     this.setMode('view');
     this.router.navigate(['trees/' + TreeId]);
-    this.treeList = this.familyTreeService.getTreeList();
+    this.treeList = this.familyTreeService.getTreeListSorted(this.sortMode);
   }
 
   setMode(mode: 'edit' | 'view' | 'add'): void {
-    console.log(mode);
     this.mode = mode;
+  }
+
+  setSortMode(sortMode: number): void {
+    this.sortMode = sortMode;
+    this.treeList = this.familyTreeService.getTreeListSorted(this.sortMode);
   }
 
   deleteTree(id: string): void {
@@ -49,7 +56,7 @@ export class TreeListComponent {
 
   openTree(id: string): void {
     if (this.mode === 'view') {
-      this.router.navigate(['/trees/' + id])
+      this.router.navigate(['/trees/' + id]);
     }
   }
 }

@@ -1,22 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TreeListItemComponent } from './tree-list-item.component';
+import { TestData } from '../../../shared/types/test/testData';
 
 describe('TreeListItemComponent', () => {
   let component: TreeListItemComponent;
   let fixture: ComponentFixture<TreeListItemComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [TreeListItemComponent],
-    })
-      .compileComponents();
-  });
+    });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TreeListItemComponent);
+
     component = fixture.componentInstance;
-    fixture.detectChanges();
+
+    component.familyTree = TestData.testTree;
+    component.mode = "view";
+
   });
 
   it('should create', () => {

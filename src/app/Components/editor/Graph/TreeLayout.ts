@@ -1,6 +1,6 @@
 import { Edge, Graph, Layout } from '@swimlane/ngx-graph';
 import * as dagre from 'dagre';
-import { makeUUID } from '../../../shared/types';
+import { makeUUID } from '../../../shared/types/uuid';
 
 export enum Orientation {
   LEFT_TO_RIGHT = 'LR',

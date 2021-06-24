@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FamilyTreeService } from './shared/family-tree.service';
+import { SortMode } from './shared/types/sortMode';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,11 @@ import { FamilyTreeService } from './shared/family-tree.service';
 })
 export class AppComponent {
   title = 'stammbaum-app';
-  treeList;
 
-  constructor(familyTreeService: FamilyTreeService) {
-    this.treeList = familyTreeService.getTreeList();
+  constructor(private familyTreeService: FamilyTreeService) {
+  }
+
+  getTreeList = () => {
+    return this.familyTreeService.getTreeListSorted(SortMode.lastChanged).slice(0,5);
   }
 }
