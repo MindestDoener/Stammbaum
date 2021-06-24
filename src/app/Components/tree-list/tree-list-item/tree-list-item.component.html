@@ -13,7 +13,7 @@
           {{ familyTree.persons.size }}
         </p>
         <p class='card-text item-info'>
-          Zuletzt Geändert: 10/02/2021 10:10:10
+          Zuletzt Geändert: {{ getLastChanged() }}
         </p>
       </div>
       <div *ngIf='mode === "edit"' class='btn btn-outline-danger d-inline-flex align-items-center' (click)='delete.emit(familyTree.id)'>

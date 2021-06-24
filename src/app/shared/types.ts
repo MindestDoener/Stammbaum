@@ -1,11 +1,12 @@
 import { Node } from '@swimlane/ngx-graph';
-import { NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendarGregorian, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
 
 export interface FamilyTree {
   name: string;
   persons: Map<number, Person>;
   id: string;
+  lastChanged: { date: NgbDate, time: Time };
 }
 
 export interface Person {
@@ -51,6 +52,12 @@ export class Gender {
   }
 }
 
+export enum SortMode {
+  lastChanged,
+  alphabetic,
+  persons,
+}
+
 export function makeUUID(): number {
   let uuid = '';
   for (let i = 0; i < 10; i++) {
@@ -79,4 +86,84 @@ export class DateConverter extends NgbDateParserFormatter {
   format(date: NgbDateStruct | null): string {
     return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
   }
+}
+
+export function getToday(): NgbDate {
+  return new NgbCalendarGregorian().getToday();
+}
+
+export function getNow(): Time {
+  const now = new Date();
+  return new Time(now.getHours(), now.getMinutes(), now.getSeconds());
+}
+
+export class Time {
+  minutes: number;
+  hours: number;
+  seconds?: number;
+
+  constructor(hours: number, minutes: number, seconds?: number) {
+    this.hours = hours;
+    this.minutes = minutes;
+    this.seconds = seconds;
+  }
+
+  /**
+   * Checks if the current time is before another time.
+   */
+  before = (time: Time) => {
+    if (time.hours > this.hours) {
+      return true;
+    }
+    if (time.hours === this.hours && time.minutes > this.minutes) {
+      return true;
+    }
+    if (time.seconds && this.seconds && time.hours === this.hours && time.minutes === this.minutes && time.seconds > this.seconds) {
+      return true;
+    }
+    return false;
+  };
+
+  /**
+   * Checks if the current time is after another time.
+   */
+  after = (time: Time) => {
+    if (time.hours < this.hours) {
+      return true;
+    }
+    if (time.hours === this.hours && time.minutes < this.minutes) {
+      return true;
+    }
+    if (time.seconds && this.seconds && time.hours === this.hours && time.minutes === this.minutes && time.seconds < this.seconds) {
+      return true;
+    }
+    return false;
+  };
+
+  /**
+   * Checks if the current time is equal to another time.
+   */
+  equals = (time: Time) => {
+    if (time.seconds && this.seconds && time.hours === this.hours && time.minutes === this.minutes && time.seconds === this.seconds) {
+      return true;
+    }
+    if (!time.seconds && !this.seconds && time.hours === this.hours && time.minutes === this.minutes) {
+      return true;
+    }
+    return false;
+  };
+
+  toString = (includeSeconds?: boolean) => {
+    if (this.seconds && includeSeconds) {
+      return `${this.makeTwoDigit(this.hours)}:${this.makeTwoDigit(this.minutes)}:${this.makeTwoDigit(this.seconds)}`;
+    }
+    return `${this.makeTwoDigit(this.hours)}:${this.makeTwoDigit(this.minutes)}`;
+  };
+
+  private makeTwoDigit = (num: number) => {
+    if (num < 10) {
+      return `0${num}`;
+    }
+    return num;
+  };
 }
