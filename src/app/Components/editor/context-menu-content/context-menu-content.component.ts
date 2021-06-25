@@ -85,14 +85,14 @@ export class ContextMenuContentComponent implements AfterContentInit {
     }
   }
 
-  isPossibleChild(person: Person): boolean {
-    if (this.isUpdateMode() && this.person && person.id === this.person.id) { // child cant be the person itself
-      return false;
-    }
-    if (this.isUpdateMode() && this.person && person.children && person.children.indexOf(this.person) > -1) { // child cant be parent of person
-      return false;
-    }
-    if (this.isUpdateMode() && this.person) {
+  isPossibleChildOfExistingPerson(person: Person): boolean {
+    if (this.person) {
+      if (person.id === this.person.id) { // child cant be the person itself
+        return false;
+      }
+      if (person.children && person.children.indexOf(this.person) > -1) { // child cant be parent of person
+        return false;
+      }
       if (this.editPersonForm.value.birthDate === null) {
         if (person.birthDate.before(this.person.birthDate)) {
           return false;
@@ -103,8 +103,16 @@ export class ContextMenuContentComponent implements AfterContentInit {
         }
       }
     }
-    if (!this.isUpdateMode() && (this.editPersonForm.value.birthDate === null || person.birthDate.before(this.editPersonForm.value.birthDate))) { // child cant be born before person
-      return false;
+    return true;
+  }
+
+  isPossibleChild(person: Person): boolean {
+    if (this.isUpdateMode()) {
+      return this.isPossibleChildOfExistingPerson(person);
+    } else {
+      if (this.editPersonForm.value.birthDate === null || person.birthDate.before(this.editPersonForm.value.birthDate)) { // child cant be born before person
+        return false;
+      }
     }
     return true;
   }
