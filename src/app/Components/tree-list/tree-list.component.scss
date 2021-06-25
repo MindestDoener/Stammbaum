@@ -1,10 +1,26 @@
+@import "src/styles";
+
+.trees {
+  display: flex; /* this enables flex layout */
+  flex-direction: column;
+  height: 100%;
+}
+
+.size-fixed {
+  flex: 0 0 auto;
+}
+
 .disabled {
   cursor: default !important;
   color: gray;
 }
 
 .item {
-  margin-bottom: 1rem;
+  margin-top: .5rem;
+
+  &:last-child {
+    margin-bottom: .5rem;
+  }
 }
 
 .card {
@@ -29,4 +45,23 @@
 
 .item-info {
   margin: 0.5rem !important;
+}
+
+ngb-pagination ::ng-deep ul > li:not(.active) > a {
+  color: $dark !important;
+}
+
+ngb-pagination ::ng-deep ul > li.active > a {
+  background-color: $dark !important;
+  border-color: $dark !important;
+}
+
+.list {
+  overflow: auto;
+  border-color: $gray-300;
+  border-width: 2px;
+  border-style: solid;
+  padding: 0 5px;
+  border-radius: 5px;
+  flex: 1 1 auto;
 }

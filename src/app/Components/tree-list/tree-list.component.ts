@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FamilyTreeService } from '../../shared/family-tree.service';
 import { FamilyTree } from '../../shared/types/familyTree';
 import { SortMode } from '../../shared/types/sortMode';
@@ -13,7 +13,10 @@ import { SortMode } from '../../shared/types/sortMode';
 export class TreeListComponent {
 
   sortMode: SortMode = SortMode.lastChanged;
-  treeList?: FamilyTree[] = this.familyTreeService.getTreeListSorted(this.sortMode);
+  treeList: FamilyTree[] = this.familyTreeService.getTreeListSorted(this.sortMode);
+
+  page = 1;
+  pageSize = 5;
 
   createFamilyTreeForm = new FormGroup({
     treeName: new FormControl(),
@@ -43,6 +46,11 @@ export class TreeListComponent {
 
   setMode(mode: 'edit' | 'view' | 'add'): void {
     this.mode = mode;
+    if (mode === 'add') {
+      this.pageSize = 4;
+    } else {
+      this.pageSize = 5;
+    }
   }
 
   setSortMode(sortMode: number): void {
@@ -52,6 +60,7 @@ export class TreeListComponent {
 
   deleteTree(id: string): void {
     this.familyTreeService.deleteFamilyTree(id);
+    this.treeList = this.familyTreeService.getTreeListSorted(this.sortMode);
   }
 
   openTree(id: string): void {
