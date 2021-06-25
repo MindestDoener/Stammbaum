@@ -1,6 +1,5 @@
 # StammbaumApp
 [![CodeFactor](https://www.codefactor.io/repository/github/mindestdoener/stammbaum-app/badge)](https://www.codefactor.io/repository/github/mindestdoener/stammbaum-app)
-![Heroku](https://heroku-badge.herokuapp.com/?app=stammbaum-portal&root=home)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.7.
 
