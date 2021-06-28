@@ -24,7 +24,11 @@ const routes: Routes = [
     component: EditorComponent,
   },
   {
-    path: 'login',
+    path: 'Anmelden',
+    component: LoginPageComponent,
+  },
+  {
+    path: 'Registrieren',
     component: LoginPageComponent,
   }
 ];
