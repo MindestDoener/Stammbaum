@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EditorComponent } from './Components/editor/editor.component';
 import { LandingPageComponent } from './Components/landing-page/landing-page.component';
 import { TreeListComponent } from './Components/tree-list/tree-list.component';
+import { LoginPageComponent } from './Components/login-page/login-page.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
     path: 'trees/:id',
     component: EditorComponent,
   },
+  {
+    path: 'login',
+    component: LoginPageComponent,
+  }
 ];
 
 @NgModule({

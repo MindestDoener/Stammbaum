@@ -15,6 +15,7 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MultiselectComponent } from './Components/editor/multiselect/multiselect.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginPageComponent } from './Components/login-page/login-page.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     TreeListComponent,
     TreeListItemComponent,
     MultiselectComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
