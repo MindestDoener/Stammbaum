@@ -14,6 +14,7 @@ import { TreeListItemComponent } from './Components/tree-list/tree-list-item/tre
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MultiselectComponent } from './Components/editor/multiselect/multiselect.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { MultiselectComponent } from './Components/editor/multiselect/multiselec
     NgxGraphModule,
     BrowserAnimationsModule,
     NgbModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
