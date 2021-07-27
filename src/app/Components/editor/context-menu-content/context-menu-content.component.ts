@@ -86,7 +86,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
   }
 
   isPossibleChildOfExistingPerson(person: Person): boolean {
-    if (this.person) {
+    if (this.person && this.person.birthDate.before && person.birthDate.before) {
       if (person.id === this.person.id) { // child cant be the person itself
         return false;
       }
@@ -110,11 +110,12 @@ export class ContextMenuContentComponent implements AfterContentInit {
     if (this.isUpdateMode()) {
       return this.isPossibleChildOfExistingPerson(person);
     } else {
-      if (this.editPersonForm.value.birthDate === null || person.birthDate.before(this.editPersonForm.value.birthDate)) { // child cant be born before person
+      if (this.editPersonForm.value.birthDate === null || person.birthDate.before && person.birthDate.before(this.editPersonForm.value.birthDate)) { // child cant be born before person
         return false;
+      } else {
+        return true;
       }
     }
-    return true;
   }
 
   onAddPerson(): void {
@@ -122,7 +123,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
       ...this.editPersonForm.value,
       children: this.children
         // tslint:disable-next-line:no-non-null-assertion
-        .map((id: number) => this.familyTreeService.getPersonById(id, this.familyTree.id)!)
+        .map((id: number) => this.familyTreeService.getPersonById(this.familyTree, id)!)
         .filter((child: Person) => this.isPossibleChild(child)),
       gender: Gender.getById(this.editPersonForm.value.gender),
     };
@@ -156,7 +157,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.deathDate = this.editPersonForm.value.deathDate;
     this.person.children = this.children
       // tslint:disable-next-line:no-non-null-assertion
-      .map((id: number) => this.familyTreeService.getPersonById(id, this.familyTree.id)!)
+      .map((id: number) => this.familyTreeService.getPersonById(this.familyTree, id)!)
       .filter((child: Person) => this.isPossibleChild(child));
     this.updatePerson.emit(this.person);
   }
