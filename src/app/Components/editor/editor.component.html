@@ -1,5 +1,5 @@
 <div class='content'>
-  <div *ngIf='familyTree'>
+  <div *ngIf='(familyTree$ | async) as familyTree'>
     <div class='pb-1 tree-name-heading'>
       Stammbaum: {{familyTree.name}}
     </div>
@@ -10,7 +10,6 @@
   </div>
   <div id='tree-container' style='height: 97.5%;'>
     <ngx-graph
-      *ngIf='familyTree'
       [layoutSettings]="{orientation: 'TB'}"
       [layout]='graphManager.layout'
       [links]='graphManager.edges'

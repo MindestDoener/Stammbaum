@@ -8,6 +8,8 @@ import { GraphManager } from './Graph/GraphManager';
 import { FamilyTree } from '../../shared/types/familyTree';
 import { Person } from '../../shared/types/person';
 import { CreatePersonRequest } from '../../shared/types/createPersonRequest';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-editor',
@@ -16,7 +18,7 @@ import { CreatePersonRequest } from '../../shared/types/createPersonRequest';
 })
 export class EditorComponent {
 
-  familyTree!: FamilyTree;
+  familyTree$!: Observable<FamilyTree>;
   graphManager: GraphManager = new GraphManager();
   genders = ['Männlich', 'Weiblich', 'Divers'];
 
@@ -27,8 +29,8 @@ export class EditorComponent {
       const params = this.route.snapshot.paramMap;
       try {
         this.graphManager.clear();
-        this.familyTree = this.familyTreeService.getSingleTree(params.get('id'));
-        this.graphManager.init(this.familyTree);
+        this.familyTree$ = this.familyTreeService.getSingleTree(params.get('id'));
+        this.familyTree$.pipe(tap(tree => this.graphManager.init(tree)))
       } catch (e) {
         router.navigate(['/home']); // redirect home when invalid tree id
       }
@@ -37,10 +39,12 @@ export class EditorComponent {
   }
 
   dblClickEvent = (node: Node) => {
-    const person = this.familyTreeService.getPersonById(+node.id, this.familyTree.id);
-    if (person) {
-      this.openUpdateMenu(person);
-    }
+    this.familyTree$.pipe(tap(tree => {
+      const person = this.familyTreeService.getPersonById(+node.id, tree.id);
+      if (person) {
+        this.openUpdateMenu(person);
+      }
+    }))
   };
 
   toggleTooltip = (node: Node) => {
@@ -48,40 +52,52 @@ export class EditorComponent {
   };
 
   openCreateMenu(): void {
-    const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
-    modalRef.componentInstance.familyTree = this.familyTree;
-    modalRef.componentInstance.mode = 'ADD';
-    modalRef.componentInstance.addPerson.subscribe(this.addPersonEvent);
+    this.familyTree$.pipe(tap(tree => {
+      const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
+      modalRef.componentInstance.familyTree = tree;
+      modalRef.componentInstance.mode = 'ADD';
+      modalRef.componentInstance.addPerson.subscribe(this.addPersonEvent);
+    }))
+
   }
 
   openUpdateMenu(person: Person): void {
-    const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
-    modalRef.componentInstance.person = person;
-    modalRef.componentInstance.familyTree = this.familyTree;
-    modalRef.componentInstance.mode = 'UPDATE';
-    modalRef.componentInstance.deletePerson.subscribe((personToDelete: Person) => this.deletePersonEvent(personToDelete, modalRef));
-    modalRef.componentInstance.updatePerson.subscribe(this.updatePersonEvent);
+    this.familyTree$.pipe(tap(tree => {
+      const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
+      modalRef.componentInstance.person = person;
+      modalRef.componentInstance.familyTree = tree;
+      modalRef.componentInstance.mode = 'UPDATE';
+      modalRef.componentInstance.deletePerson.subscribe((personToDelete: Person) => this.deletePersonEvent(personToDelete, modalRef));
+      modalRef.componentInstance.updatePerson.subscribe(this.updatePersonEvent);
+    }))
+
   }
 
   updatePersonEvent = (personToUpdate: Person) => {
-    this.graphManager.updateNode(personToUpdate);
-    if (personToUpdate.children) {
-      this.graphManager.updateEdges(personToUpdate);
-    }
-    this.familyTreeService.updatePerson(personToUpdate, this.familyTree.id);
+    this.familyTree$.pipe(tap(tree => {
+      this.graphManager.updateNode(personToUpdate);
+      if (personToUpdate.children) {
+        this.graphManager.updateEdges(personToUpdate);
+      }
+      this.familyTreeService.updatePerson(personToUpdate, tree.id);
+    }))
   };
 
   deletePersonEvent = (personToDelete: Person, modalRef: NgbModalRef) => {
-    this.familyTreeService.deletePerson(personToDelete, this.familyTree.id);
-    this.graphManager.removeNode(personToDelete);
-    modalRef.close();
+    this.familyTree$.pipe(tap(tree => {
+      this.familyTreeService.deletePerson(personToDelete, tree.id);
+      this.graphManager.removeNode(personToDelete);
+      modalRef.close();
+    }))
   };
 
   addPersonEvent = (newPerson: CreatePersonRequest) => {
-    const person = this.familyTreeService.addPerson(newPerson, this.familyTree.id);
-    this.graphManager.createNewNode(person);
-    if (person.children) {
-      this.graphManager.updateEdges(person);
-    }
+    this.familyTree$.pipe(tap(tree => {
+      const person = this.familyTreeService.addPerson(newPerson, tree.id);
+      this.graphManager.createNewNode(person);
+      if (person.children) {
+        this.graphManager.updateEdges(person);
+      }
+    }))
   };
 }

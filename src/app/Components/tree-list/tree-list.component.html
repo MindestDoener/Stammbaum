@@ -16,11 +16,11 @@
       <button class='btn btn-outline-dark' id='sortDropdown' ngbDropdownToggle><i class='bi bi-sort-down'></i></button>
       <div ngbDropdownMenu aria-labelledby='sortDropdown'>
         <button ngbDropdownItem (click)='setSortMode(0)'>Zuletzt Geändert <i *ngIf='sortMode === 0'
-                                                                             class='bi bi-check'></i></button>
+            class='bi bi-check'></i></button>
         <button ngbDropdownItem (click)='setSortMode(1)'>Alphabetisch <i *ngIf='sortMode === 1' class='bi bi-check'></i>
         </button>
         <button ngbDropdownItem (click)='setSortMode(2)'>Anzahl Personen <i *ngIf='sortMode === 2'
-                                                                            class='bi bi-check'></i></button>
+            class='bi bi-check'></i></button>
       </div>
     </div>
   </div>
@@ -45,16 +45,18 @@
         </div>
       </div>
     </div>
-    <div *ngFor='let tree of treeList | slice: (page-1) * pageSize : page * pageSize' class='item'>
-      <div [ngClass]="{'disabled': mode !== 'view'}" (click)='openTree(tree.id)' class='list-group-item-action'>
-        <app-tree-list-item [mode]='mode' [familyTree]='tree' (delete)='deleteTree($event)'>
-        </app-tree-list-item>
+    <div *ngIf="(treeList$ | async) as treeList">
+      <div *ngFor='let tree of treeList | slice: (page-1) * pageSize : page * pageSize' class='item'>
+        <div [ngClass]="{'disabled': mode !== 'view'}" (click)='openTree(tree.id)' class='list-group-item-action'>
+          <app-tree-list-item [mode]='mode' [familyTree]='tree' (delete)='deleteTree($event)'>
+          </app-tree-list-item>
+        </div>
+      </div>
+
+      <div class='my-3 size-fixed'>
+        <ngb-pagination *ngIf='treeList.length > pageSize' [collectionSize]='treeList.length' [(page)]='page'
+          [pageSize]='pageSize' [directionLinks]='false'></ngb-pagination>
       </div>
     </div>
-  </div>
-
-  <div class='my-3 size-fixed'>
-    <ngb-pagination *ngIf='treeList.length > pageSize' [collectionSize]='treeList.length' [(page)]='page'
-                    [pageSize]='pageSize' [directionLinks]='false'></ngb-pagination>
   </div>
 </div>
