@@ -79,3 +79,9 @@ export function getNow(): Time {
   const now = new Date();
   return new Time(now.getHours(), now.getMinutes(), now.getSeconds());
 }
+
+export interface TimeStruct {
+  minutes: number;
+  hours: number;
+  seconds?: number;
+}
