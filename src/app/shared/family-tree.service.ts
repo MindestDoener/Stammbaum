@@ -12,47 +12,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { throwError } from 'rxjs';
-
-interface FamilyTreeResponseType {
-    id: number;
-    config: {
-        name: string;
-        persons: [Person, number][];
-        lastChanged: {
-            date: {
-                year: number;
-                month: number;
-                day: number;
-            };
-            time: {
-                hours: number;
-                minutes: number;
-                seconds: number;
-            };
-        };
-    };
-    username: string;
-}
-
-interface CreateFamilyTreeType {
-    config: {
-        name: string;
-        persons: [Person, number][];
-        lastChanged: {
-            date: {
-                year: number;
-                month: number;
-                day: number;
-            };
-            time: {
-                hours: number;
-                minutes: number;
-                seconds?: number;
-            };
-        };
-    };
-    username: string;
-}
+import { CreateFamilyTreeModel, FamilyTreeModel } from './api/models/familyTreeModel';
 
 @Injectable({
     providedIn: 'root',
@@ -94,17 +54,39 @@ export class FamilyTreeService {
         });
     }
 
-    createEmptyFamilyTree(name: string): Observable<FamilyTreeResponseType> {
-        const familyTree: CreateFamilyTreeType = {
+  private static mapModelToObject(tree: FamilyTreeModel): FamilyTree {
+      const lastChanged = tree.config.lastChanged;
+      const personMap: Map<number, Person> = new Map(tree.config.persons);
+      return {
+          ...tree.config,
+          id: tree.id.toString(),
+          persons: personMap,
+          lastChanged: {
+              date: new NgbDate(
+                  lastChanged.date.year,
+                  lastChanged.date.month,
+                  lastChanged.date.day
+              ),
+              time: new Time(
+                  lastChanged.time.hours,
+                  lastChanged.time.minutes,
+                  lastChanged.time.seconds
+              ),
+          },
+      };
+  }
+
+    createEmptyFamilyTree(name: string): Observable<FamilyTreeModel> {
+        const familyTree: CreateFamilyTreeModel = {
           config: {
             name,
-            persons: Array.from(new Map<Person, number>()),
+            persons: Array.from(new Map<number, Person>()),
             lastChanged: { date: getToday(), time: { hours: getNow().hours, minutes: getNow().minutes, seconds: getNow().seconds || 0 } },
             },
           username: 'Peter01'
         };
         return this.http
-            .post<FamilyTreeResponseType>(
+            .post<FamilyTreeModel>(
                 apiUrl + 'trees',
                 familyTree,
                 apiHttpOptions
@@ -151,13 +133,13 @@ export class FamilyTreeService {
 
     getTreeList(): Observable<FamilyTree[]> {
         return this.http
-            .get<FamilyTreeResponseType[]>(
+            .get<FamilyTreeModel[]>(
                 apiUrl + 'trees/user/' + 'Peter01',
                 apiHttpOptions
             )
             .pipe(
               map((trees) =>
-                  trees.map(tree => this.mapResponseToFamilyTree(tree))
+                  trees.map(tree => FamilyTreeService.mapModelToObject(tree))
                 )
             );
     }
@@ -179,33 +161,29 @@ export class FamilyTreeService {
 
     getSingleTree(id: string | null): Observable<FamilyTree> {
       return this.http
-      .get<FamilyTreeResponseType>(
+      .get<FamilyTreeModel>(
           apiUrl + 'trees/' + id,
           apiHttpOptions
       )
       .pipe(
         map(tree =>
-            this.mapResponseToFamilyTree(tree)
+            FamilyTreeService.mapModelToObject(tree)
           )
       );
     }
 
     updateLastChanged(familyTree: FamilyTree): Observable<any> {
         familyTree.lastChanged = { date: getToday(), time: getNow() };
-        const invertedPersons = new Map<Person, number>();
-        familyTree.persons.forEach(person => {
-            invertedPersons.set(person, person.id);
-        })
-        const updateFamilyTree: CreateFamilyTreeType = {
+        const updateFamilyTree: CreateFamilyTreeModel = {
             config: {
              name: familyTree.name,
-              persons: Array.from(invertedPersons),
+              persons: Array.from(familyTree.persons),
               lastChanged: { date: familyTree.lastChanged.date, time: familyTree.lastChanged.time },
               },
             username: 'Peter01'
           };
         return this.http
-          .put<FamilyTreeResponseType>(
+          .put<FamilyTreeModel>(
               apiUrl + 'trees/' + familyTree.id,
               updateFamilyTree,
               apiHttpOptions
@@ -222,30 +200,5 @@ export class FamilyTreeService {
             }
         }
         return num;
-  }
-  
-  private mapResponseToFamilyTree(tree: FamilyTreeResponseType): FamilyTree {
-      const lastChanged = tree.config.lastChanged;
-      const personMap: Map<number, Person> = new Map();
-      tree.config.persons.forEach((person) => {
-          personMap.set(person[1], person[0]);
-      });
-      return {
-          ...tree.config,
-          id: tree.id.toString(),
-          persons: personMap,
-          lastChanged: {
-              date: new NgbDate(
-                  lastChanged.date.year,
-                  lastChanged.date.month,
-                  lastChanged.date.day
-              ),
-              time: new Time(
-                  lastChanged.time.hours,
-                  lastChanged.time.minutes,
-                  lastChanged.time.seconds
-              ),
-          },
-      };
   }
 }

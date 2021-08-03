@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { User } from './models/user';
+import { UserModel } from './models/userModel';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -22,27 +22,27 @@ export class UserApiService {
 
   // --------------------------------------------------- ENDPOINT CALLS --------------------------------------------------------------------
 
-  login(user: User): Observable<any> {
+  login(user: UserModel): Observable<any> {
     return this.http.post(apiUrl + 'login', user, {...apiHttpOptions, responseType: 'text'}).pipe(
       catchError(UserApiService.handleError),
     );
   }
 
-  createUser(user: User): Observable<User> {
-    return this.http.post<User>(apiUrl + 'users', user, apiHttpOptions).pipe(
+  createUser(user: UserModel): Observable<UserModel> {
+    return this.http.post<UserModel>(apiUrl + 'users', user, apiHttpOptions).pipe(
       catchError(UserApiService.handleError),
     );
   }
 
-  deleteUser(user: User): Observable<any> {
+  deleteUser(user: UserModel): Observable<any> {
     return this.http.request('delete', apiUrl + 'users', { body: user, ...apiHttpOptions }).pipe(
       catchError(UserApiService.handleError),
     );
   }
 
-  updatePassword(user: User, newPassword: string): Observable<User> {
+  updatePassword(user: UserModel, newPassword: string): Observable<UserModel> {
     const body = { oldPassword: user.password, newPassword };
-    return this.http.put<User>(apiUrl + 'users/' + user.username, body, apiHttpOptions).pipe(
+    return this.http.put<UserModel>(apiUrl + 'users/' + user.username, body, apiHttpOptions).pipe(
       catchError(UserApiService.handleError),
     );
   }
