@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FamilyTreeService } from '../../shared/family-tree.service';
 import { FamilyTree } from '../../shared/types/familyTree';
 import { SortMode } from '../../shared/types/sortMode';

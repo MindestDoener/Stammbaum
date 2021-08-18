@@ -30,11 +30,14 @@
         </div>
       </li>
     </ul>
-    <form class="d-flex ms-auto me-2">
-      <button routerLink='/Anmelden' class="btn btn-outline-secondary" type="submit">Einloggen</button>
+    <form class='d-flex ms-auto me-2' *ngIf='!auth.isAuthenticated()'>
+      <button routerLink='/login' class='btn btn-outline-secondary' type='submit'>Einloggen</button>
     </form>
-    <form class="d-flex ms-2 me-3">
-      <button routerLink='/Registrieren' class="btn btn-outline-secondary" type="submit">Registrieren</button>
+    <form class='d-flex ms-2 me-3' *ngIf='!auth.isAuthenticated()'>
+      <button routerLink='/register' class='btn btn-outline-secondary' type='submit'>Registrieren</button>
+    </form>
+    <form class='d-flex ms-auto me-2' (submit)='auth.logout()' *ngIf='auth.isAuthenticated()'>
+      <button class='btn btn-outline-secondary' type='submit'>Ausloggen</button>
     </form>
   </div>
 </nav>

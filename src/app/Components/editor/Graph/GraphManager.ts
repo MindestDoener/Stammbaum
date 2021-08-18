@@ -55,9 +55,9 @@ export class GraphManager {
       const index = this.nodes.indexOf(oldNode);
       if (index > -1) {
         this.nodes[index] = newNode;
-        this.updateTree();
       }
     }
+    this.updateTree();
   }
 
   public createNewNode(person: Person): void {
