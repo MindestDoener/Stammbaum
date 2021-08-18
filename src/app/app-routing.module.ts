@@ -4,6 +4,7 @@ import { EditorComponent } from './Components/editor/editor.component';
 import { LandingPageComponent } from './Components/landing-page/landing-page.component';
 import { TreeListComponent } from './Components/tree-list/tree-list.component';
 import { LoginPageComponent } from './Components/login-page/login-page.component';
+import { AuthService } from './shared/auth.service';
 
 const routes: Routes = [
   {
@@ -18,17 +19,19 @@ const routes: Routes = [
   {
     path: 'trees',
     component: TreeListComponent,
+    canActivate: [AuthService],
   },
   {
     path: 'trees/:id',
     component: EditorComponent,
+    canActivate: [AuthService],
   },
   {
-    path: 'Anmelden',
+    path: 'login',
     component: LoginPageComponent,
   },
   {
-    path: 'Registrieren',
+    path: 'register',
     component: LoginPageComponent,
   }
 ];

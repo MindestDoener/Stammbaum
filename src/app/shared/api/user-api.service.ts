@@ -28,7 +28,7 @@ export class UserApiService {
   // --------------------------------------------------- ENDPOINT CALLS --------------------------------------------------------------------
 
   login(user: User): Observable<any> {
-    return this.http.post(this.baseUrl + 'login', user, this.httpOptions).pipe(
+    return this.http.post(this.baseUrl + 'login', user, {...this.httpOptions, responseType: 'text'}).pipe(
       catchError(UserApiService.handleError),
     );
   }
@@ -47,7 +47,7 @@ export class UserApiService {
 
   updatePassword(user: User, newPassword: string): Observable<User> {
     const body = { oldPassword: user.password, newPassword };
-    return this.http.put<User>(this.baseUrl + 'users/' + user.username, this.httpOptions).pipe(
+    return this.http.put<User>(this.baseUrl + 'users/' + user.username, body, this.httpOptions).pipe(
       catchError(UserApiService.handleError),
     );
   }

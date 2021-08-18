@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FamilyTreeService } from './shared/family-tree.service';
 import { SortMode } from './shared/types/sortMode';
+import { AuthService } from './shared/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { SortMode } from './shared/types/sortMode';
 export class AppComponent {
   title = 'stammbaum-app';
 
-  constructor(private familyTreeService: FamilyTreeService) {
+  constructor(private familyTreeService: FamilyTreeService, public auth: AuthService) {
   }
 
   getTreeList = () => {
