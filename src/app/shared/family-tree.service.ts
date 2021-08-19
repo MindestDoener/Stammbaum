@@ -6,19 +6,18 @@ import { CreatePersonRequest } from './types/createPersonRequest';
 import { SortMode } from './types/sortMode';
 import { makeUUID } from './types/uuid';
 import { getNow, getToday, Time } from './types/time';
-import { HttpClient } from '@angular/common/http';
-import { apiHttpOptions, apiUrl } from './api/api-settings';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { throwError } from 'rxjs';
 import { CreateFamilyTreeModel, FamilyTreeModel } from './api/models/familyTreeModel';
+import { AuthService } from './auth.service';
+import { TreeApiService } from './api/tree-api.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class FamilyTreeService {
-    constructor(private http: HttpClient) {}
+    constructor(private auth: AuthService, private treeApi: TreeApiService) {}
 
     familyTreeMap: Map<string, FamilyTree> = TestData.testList;
 
@@ -54,7 +53,7 @@ export class FamilyTreeService {
         });
     }
 
-  private static mapModelToObject(tree: FamilyTreeModel): FamilyTree {
+  public static mapModelToObject(tree: FamilyTreeModel): FamilyTree {
       const lastChanged = tree.config.lastChanged;
       const personMap: Map<number, Person> = new Map(tree.config.persons);
       return {
@@ -83,28 +82,18 @@ export class FamilyTreeService {
             persons: Array.from(new Map<number, Person>()),
             lastChanged: { date: getToday(), time: { hours: getNow().hours, minutes: getNow().minutes, seconds: getNow().seconds || 0 } },
             },
-          username: 'Peter01'
+          username: this.auth.getUsername()
         };
-        return this.http
-            .post<FamilyTreeModel>(
-                apiUrl + 'trees',
-                familyTree,
-                apiHttpOptions
-            )
-            .pipe(catchError((error) => throwError('Error', error)));
+        return this.treeApi.createTree(familyTree);
     }
 
     deleteFamilyTree(id: string): Observable<any> {
-        return this.http
-        .delete(
-            apiUrl + 'trees/' + id,
-            apiHttpOptions
-        )
+        return this.treeApi.deleteTree(id);
     }
 
     addPerson(familyTree: FamilyTree, personRequest: CreatePersonRequest): Person {
         const person = {
-            id: this.makeUUID(familyTree.id),
+            id: this.makeUUID(familyTree),
             ...personRequest,
         };
         familyTree.persons.set(person.id, person);
@@ -132,16 +121,7 @@ export class FamilyTreeService {
     }
 
     getTreeList(): Observable<FamilyTree[]> {
-        return this.http
-            .get<FamilyTreeModel[]>(
-                apiUrl + 'trees/user/' + 'Peter01',
-                apiHttpOptions
-            )
-            .pipe(
-              map((trees) =>
-                  trees.map(tree => FamilyTreeService.mapModelToObject(tree))
-                )
-            );
+        return this.treeApi.getTreesForUser();
     }
 
     getTreeListSorted(sortMode: SortMode): Observable<FamilyTree[]> {
@@ -160,16 +140,8 @@ export class FamilyTreeService {
     }
 
     getSingleTree(id: string | null): Observable<FamilyTree> {
-      return this.http
-      .get<FamilyTreeModel>(
-          apiUrl + 'trees/' + id,
-          apiHttpOptions
-      )
-      .pipe(
-        map(tree =>
-            FamilyTreeService.mapModelToObject(tree)
-          )
-      );
+      if (!id) { throw new Error("id was null"); }
+      return this.treeApi.getSingleTree(id);
     }
 
     updateLastChanged(familyTree: FamilyTree): Observable<any> {
@@ -180,24 +152,16 @@ export class FamilyTreeService {
               persons: Array.from(familyTree.persons),
               lastChanged: { date: familyTree.lastChanged.date, time: familyTree.lastChanged.time },
               },
-            username: 'Peter01'
+            username: this.auth.getUsername()
           };
-        return this.http
-          .put<FamilyTreeModel>(
-              apiUrl + 'trees/' + familyTree.id,
-              updateFamilyTree,
-              apiHttpOptions
-          )
-          .pipe(catchError((error) => throwError('Error', error)));
+        return this.treeApi.updateTree(familyTree,updateFamilyTree);
     }
 
-    private makeUUID(treeId: string): number {
+    private makeUUID(tree: FamilyTree): number {
         const num = makeUUID();
         // check for duplicate ids
-        if (this.familyTreeMap?.get(treeId)) {
-            if (this.familyTreeMap.get(treeId)?.persons.has(num)) {
-                return this.makeUUID(treeId);
-            }
+        if (tree.persons.has(num)) {
+                return this.makeUUID(tree);
         }
         return num;
   }

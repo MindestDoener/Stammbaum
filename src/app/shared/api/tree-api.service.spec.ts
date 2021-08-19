@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FamilyTreeService } from './family-tree.service';
+import { TreeApiService } from './tree-api.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('FamilyTreeService', () => {
-  let service: FamilyTreeService;
+describe('TreeApiService', () => {
+  let service: TreeApiService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,7 +16,7 @@ describe('FamilyTreeService', () => {
         { provide: Router, useValue: RouterTestingModule },
       ]
     });
-    service = TestBed.inject(FamilyTreeService);
+    service = TestBed.inject(TreeApiService);
   });
 
   it('should be created', () => {

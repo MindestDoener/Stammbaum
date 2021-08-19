@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { FamilyTreeService } from '../../shared/family-tree.service';
 import { FamilyTree } from '../../shared/types/familyTree';
 import { SortMode } from '../../shared/types/sortMode';
@@ -14,8 +13,8 @@ import { SortMode } from '../../shared/types/sortMode';
 })
 export class TreeListComponent {
     sortMode: SortMode = SortMode.lastChanged;
-    treeList$: Observable<FamilyTree[]> =
-        this.familyTreeService.getTreeListSorted(this.sortMode);
+    treeList$: Observable<FamilyTree[]>;
+    treeList: FamilyTree[] = [];
 
     page = 1;
     pageSize = 5;
@@ -29,7 +28,10 @@ export class TreeListComponent {
     constructor(
         private familyTreeService: FamilyTreeService,
         private router: Router
-    ) {}
+    ) {
+      this.treeList$ = this.familyTreeService.getTreeListSorted(this.sortMode);
+      this.treeList$.toPromise().then((value) => this.treeList = value)
+    }
 
     onCreateFamilyTree(): void {
         this.familyTreeService
@@ -43,6 +45,7 @@ export class TreeListComponent {
                     this.sortMode
                 );
             });
+      this.treeList$.toPromise().then((value) => this.treeList = value)
     }
 
     setMode(mode: 'edit' | 'view' | 'add'): void {
@@ -59,6 +62,7 @@ export class TreeListComponent {
         this.treeList$ = this.familyTreeService.getTreeListSorted(
             this.sortMode
         );
+      this.treeList$.toPromise().then((value) => this.treeList = value)
     }
 
     deleteTree(id: string): void {
@@ -71,6 +75,9 @@ export class TreeListComponent {
             },
             () => {}
         );
+      // tslint:disable-next-line:no-non-null-assertion
+      this.treeList.splice(this.treeList.indexOf(this.treeList.find(tree => tree.id = id)!),1)
+      this.treeList$.toPromise().then((value) => this.treeList = value)
     }
 
     openTree(id: string): void {

@@ -3,15 +3,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UserModel } from './models/userModel';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 import { apiHttpOptions, apiUrl } from './api-settings';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserApiService {
-
-  static API_KEY = environment.apiKey;
 
   constructor(private http: HttpClient) {
   }
@@ -23,7 +20,7 @@ export class UserApiService {
   // --------------------------------------------------- ENDPOINT CALLS --------------------------------------------------------------------
 
   login(user: UserModel): Observable<any> {
-    return this.http.post(apiUrl + 'login', user, {...apiHttpOptions, responseType: 'text'}).pipe(
+    return this.http.post(apiUrl + 'login', user, { ...apiHttpOptions, responseType: 'text' }).pipe(
       catchError(UserApiService.handleError),
     );
   }

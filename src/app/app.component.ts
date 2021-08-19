@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { FamilyTreeService } from './shared/family-tree.service';
 import { FamilyTree } from './shared/types/familyTree';
 import { SortMode } from './shared/types/sortMode';
@@ -17,6 +17,14 @@ export class AppComponent {
   treeList$: Observable<FamilyTree[]>;
 
   constructor(private familyTreeService: FamilyTreeService, public auth: AuthService) {
-    this.treeList$ = this.familyTreeService.getTreeListSorted(SortMode.lastChanged).pipe(map(treeList => treeList.slice(0,5)));
+    this.treeList$ = new Observable<FamilyTree[]>();
+    this.getTrees();
   }
+
+  getTrees():void {
+    if (this.auth.isAuthenticated()) {
+      this.treeList$ = this.familyTreeService.getTreeListSorted(SortMode.lastChanged).pipe(map(treeList => treeList.slice(0,5)));
+    }
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FamilyTreeService } from '../../shared/family-tree.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ContextMenuContentComponent } from './context-menu-content/context-menu-content.component';
@@ -8,8 +8,7 @@ import { GraphManager } from './Graph/GraphManager';
 import { FamilyTree } from '../../shared/types/familyTree';
 import { Person } from '../../shared/types/person';
 import { CreatePersonRequest } from '../../shared/types/createPersonRequest';
-import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-editor',
@@ -57,14 +56,14 @@ export class EditorComponent {
 
   openUpdateMenu(person: Person): void {
     if (this.familyTree) {
-  
+
         const modalRef = this.modalService.open(ContextMenuContentComponent, { size: 'lg' });
         modalRef.componentInstance.person = person;
         modalRef.componentInstance.familyTree = this.familyTree;
         modalRef.componentInstance.mode = 'UPDATE';
         modalRef.componentInstance.deletePerson.subscribe((personToDelete: Person) => this.deletePersonEvent(personToDelete, modalRef));
         modalRef.componentInstance.updatePerson.subscribe(this.updatePersonEvent);
-     
+
     }
   }
 
@@ -93,6 +92,6 @@ export class EditorComponent {
         if (person.children) {
           this.graphManager.updateEdges(person);
         }
-    };
+    }
   }
 }
