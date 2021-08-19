@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { User } from './api/models/user';
 import { UserApiService } from './api/user-api.service';
 import { Router } from '@angular/router';
+import { UserModel } from './api/models/userModel';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class AuthService {
     return this.username;
   }
 
-  async login(user: User): Promise<boolean> {
+  async login(user: UserModel): Promise<boolean> {
     try {
       await this.userApi.login(user).toPromise();
       console.log('login successful')
@@ -35,7 +35,7 @@ export class AuthService {
     }
   }
 
-  async register(user: User): Promise<boolean> {
+  async register(user: UserModel): Promise<boolean> {
     try {
       await this.userApi.createUser(user).toPromise();
       console.log('registration successful')
