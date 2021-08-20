@@ -38,13 +38,25 @@ body {
   z-index: 2;
 }
 
-.form-signin input[type="text"] {
-  margin-bottom: 5px;
+.username input {
+  margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.form-signin input[type="password"] {
+.password input{
+  margin-bottom: 15px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.password-register input {
+  margin-bottom: -1px !important;
+  border-radius: 0 !important;
+}
+
+
+.confirm-password input{
   margin-bottom: 15px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
