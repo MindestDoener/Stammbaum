@@ -1,29 +1,32 @@
-<main class='form-signin'>
-  <form [formGroup]='form' (submit)='authenticate()'>
-    <h1 class='h3 mb-3 fw-normal'>{{ translation.get(this.routingName) }}</h1>
-    <div class='form-floating'>
-      <input type='text' class='form-control' formControlName='username' id='floatingInput' placeholder='Benutzername'
-             required>
-      <label for='floatingPassword'>Benutzername</label>
-    </div>
-    <div class='form-floating'>
-      <input type='password' class='form-control' formControlName='password' id='floatingPassword'
-             placeholder='Passwort' required>
-      <label for='floatingPassword'>Passwort</label>
-    </div>
-    <div class='checkbox mb-3' *ngIf="this.routingName === 'login'">
-      <label>
-        <input type='checkbox' value='remember-me'> Angemeldet Bleiben
-      </label>
-    </div>
-    <div *ngIf='!success'>
-      <p style='color: red'>{{ errorMessage }}</p>
-    </div>
-    <button class='w-100 btn btn-lg btn-outline-dark'
-            type='submit'
-            [disabled]="form.status == 'INVALID'">
-      {{ translation.get(this.routingName) }}
-    </button>
-  </form>
-  <div>Neu hier? <a routerLink='/register'>Jetzt registrieren!</a></div>
-</main>
+<div class='login'>
+  <main class='form-signin'>
+    <form [formGroup]='form' (submit)='authenticate()'>
+      <h1 class='h3 mb-3 fw-normal'>{{ translation.get(this.routingName) }}</h1>
+      <div class='form-floating'>
+        <input type='text' class='form-control' formControlName='username' id='floatingInput' placeholder='Benutzername'
+               required>
+        <label for='floatingPassword'>Benutzername</label>
+      </div>
+      <div class='form-floating'>
+        <input type='password' class='form-control' formControlName='password' id='floatingPassword'
+               placeholder='Passwort' required>
+        <label for='floatingPassword'>Passwort</label>
+      </div>
+      <div class='checkbox mb-3' *ngIf="this.routingName === 'login'">
+        <label>
+          <input type='checkbox' value='remember-me'> Angemeldet Bleiben
+        </label>
+      </div>
+      <div *ngIf='!success'>
+        <p style='color: red'>{{ errorMessage }}</p>
+      </div>
+      <button class='w-100 btn btn-lg btn-outline-dark'
+              type='submit'
+              [disabled]="form.status == 'INVALID'">
+        {{ translation.get(this.routingName) }}
+      </button>
+    </form>
+    <div *ngIf="this.routingName === 'login'">Neu hier? <a routerLink='/register'>Jetzt registrieren!</a></div>
+  </main>
+  <div class='waves'></div>
+</div>

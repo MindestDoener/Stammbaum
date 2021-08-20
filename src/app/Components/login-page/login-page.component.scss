@@ -3,6 +3,25 @@ body {
   height: 100%;
 }
 
+.login {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.waves {
+  background-image: url("/assets/img/darktoblue.svg");
+  aspect-ratio: 2/1;
+  width: calc(100% + 1.5rem);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  bottom: 0;
+  margin-left: -0.75rem;
+  z-index: -10;
+  overflow-x: hidden;
+}
 
 .form-signin {
   width: 100%;

@@ -12,11 +12,7 @@ export class EditorResolverService implements Resolve<FamilyTree> {
     private familyTreeService: FamilyTreeService
   ) {}
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-  ): Observable<
-  FamilyTree
-  > {
+  resolve(route: ActivatedRouteSnapshot): Observable<FamilyTree> {
       const id = route.paramMap.get('id');
     return (
       id !== undefined && id !== null
