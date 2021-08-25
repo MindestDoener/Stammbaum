@@ -1,0 +1,21 @@
+<div class='modal-header'>
+  <h4 class='modal-title' >Exportieren</h4>
+  <button (click)="activeModal.dismiss('Cross click')" aria-label='Close' class='btn-close' type='button'>
+    <span aria-hidden='true'></span>
+  </button>
+</div>
+<div class='modal-body'>
+  <button class='btn btn-outline-dark' type='button' (click)='exportJSON()'>
+    als JSON (kann wieder importiert werden)
+  </button>
+  <button class='btn btn-outline-dark' type='button' (click)='exportPNG()'>
+    als PNG
+  </button>
+  <!-- als PDF könnte man noch machen-->
+</div>
+<div class='modal-footer'>
+  <button (click)="activeModal.close('Close click')" class='btn btn-outline-dark' type='button'>
+    Schließen
+  </button>
+</div>
+

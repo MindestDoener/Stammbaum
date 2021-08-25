@@ -9,6 +9,7 @@ import { FamilyTree } from '../../shared/types/familyTree';
 import { Person } from '../../shared/types/person';
 import { CreatePersonRequest } from '../../shared/types/createPersonRequest';
 import { Observable } from 'rxjs';
+import { ExportMenuComponent } from './export-menu/export-menu.component';
 
 @Component({
   selector: 'app-editor',
@@ -93,5 +94,9 @@ export class EditorComponent {
           this.graphManager.updateEdges(person);
         }
     }
+  }
+
+  openExportMenu(): void {
+    this.modalService.open(ExportMenuComponent);
   }
 }

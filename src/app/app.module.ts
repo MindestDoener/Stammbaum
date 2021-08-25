@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MultiselectComponent } from './Components/editor/multiselect/multiselect.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './Components/login-page/login-page.component';
+import { ExportMenuComponent } from './Components/editor/export-menu/export-menu.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { LoginPageComponent } from './Components/login-page/login-page.component
     TreeListItemComponent,
     MultiselectComponent,
     LoginPageComponent,
+    ExportMenuComponent,
   ],
   imports: [
     BrowserModule,
