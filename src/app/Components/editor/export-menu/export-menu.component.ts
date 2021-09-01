@@ -12,26 +12,29 @@ import { FamilyTreeService } from '../../../shared/family-tree.service';
 })
 export class ExportMenuComponent {
 
-  constructor(public activeModal: NgbActiveModal) {
-  }
   loading = false;
 
   @Input()
   familyTree!: FamilyTree;
 
-
+  constructor(public activeModal: NgbActiveModal) {
+  }
 
   exportJSON(): void {
     const blob = FamilyTreeService.tree2Blob(this.familyTree);
     saveAs(blob, this.familyTree.name + '.json');
   }
 
-  exportPNG(): void { // fixme
+  exportPNG(): void {
     this.loading = true;
-    html2canvas(document.getElementById('tree-graph') as HTMLElement)
-      .then((canvas) => {
-        saveAs(canvas.toDataURL(), this.familyTree.name + '.png');
-        this.loading = false;
-      });
+    // tslint:disable-next-line:no-non-null-assertion
+    const graph = document.getElementById('tree-graph')!.firstChild!.firstChild;
+    if (graph) {
+      html2canvas(graph as HTMLElement)
+        .then((canvas) => {
+          saveAs(canvas.toDataURL(), this.familyTree.name + '.png');
+          this.loading = false;
+        });
+    }
   }
 }
