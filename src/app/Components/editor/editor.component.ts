@@ -97,6 +97,7 @@ export class EditorComponent {
   }
 
   openExportMenu(): void {
-    this.modalService.open(ExportMenuComponent);
+    const modalRef = this.modalService.open(ExportMenuComponent);
+    modalRef.componentInstance.familyTree = this.familyTree;
   }
 }

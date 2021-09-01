@@ -86,11 +86,11 @@ export class ContextMenuContentComponent implements AfterContentInit {
   }
 
   isPossibleChildOfExistingPerson(person: Person): boolean {
-    if (this.person && this.person.birthDate.before && person.birthDate.before) {
+    if (this.person) {
       if (person.id === this.person.id) { // child cant be the person itself
         return false;
       }
-      if (person.children && person.children.indexOf(this.person) > -1) { // child cant be parent of person
+      if (person.children && person.children.indexOf(this.person.id) > -1) { // child cant be parent of person
         return false;
       }
       if (this.editPersonForm.value.birthDate === null) {
@@ -98,7 +98,8 @@ export class ContextMenuContentComponent implements AfterContentInit {
           return false;
         }
       } else {
-        if (person.birthDate.before(this.editPersonForm.value.birthDate)) {
+        // tslint:disable-next-line:no-non-null-assertion
+        if (NgbDate.from(person.birthDate)!.before(this.editPersonForm.value.birthDate)) {
           return false;
         }
       }
@@ -110,12 +111,11 @@ export class ContextMenuContentComponent implements AfterContentInit {
     if (this.isUpdateMode()) {
       return this.isPossibleChildOfExistingPerson(person);
     } else {
-      if (this.editPersonForm.value.birthDate === null || person.birthDate.before && person.birthDate.before(this.editPersonForm.value.birthDate)) { // child cant be born before person
+      if (this.editPersonForm.value.birthDate === null || person.birthDate.before(this.editPersonForm.value.birthDate)) { // child cant be born before person
         return false;
-      } else {
-        return true;
       }
     }
+    return true;
   }
 
   onAddPerson(): void {
@@ -123,8 +123,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
       ...this.editPersonForm.value,
       children: this.children
         // tslint:disable-next-line:no-non-null-assertion
-        .map((id: number) => this.familyTreeService.getPersonById(this.familyTree, id)!)
-        .filter((child: Person) => this.isPossibleChild(child)),
+        .filter((childId: number) => this.isPossibleChild(this.familyTreeService.getPersonById(this.familyTree, childId)!)),
       gender: Gender.getById(this.editPersonForm.value.gender),
     };
     // tslint:disable-next-line:no-non-null-assertion
@@ -157,8 +156,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.deathDate = this.editPersonForm.value.deathDate;
     this.person.children = this.children
       // tslint:disable-next-line:no-non-null-assertion
-      .map((id: number) => this.familyTreeService.getPersonById(this.familyTree, id)!)
-      .filter((child: Person) => this.isPossibleChild(child));
+      .filter((childId: number) => this.isPossibleChild(this.familyTreeService.getPersonById(this.familyTree,childId)!));
     this.updatePerson.emit(this.person);
   }
 
@@ -186,7 +184,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.editPersonForm.patchValue(this.person);
     this.editPersonForm.patchValue({ gender: this.person.gender.id });
     if (this.person.children) {
-      this.children = this.person.children.map(person => person.id);
+      this.children = this.person.children;
     }
   }
 }

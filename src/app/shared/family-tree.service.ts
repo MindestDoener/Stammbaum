@@ -75,6 +75,11 @@ export class FamilyTreeService {
       };
   }
 
+  static tree2Blob(tree: FamilyTree): Blob {
+    const parsableTree = { ...tree, persons: Array.from(tree.persons) };
+    return new Blob([JSON.stringify(parsableTree)], { type: 'application/json' });
+  }
+
     createEmptyFamilyTree(name: string): Observable<FamilyTreeModel> {
         const familyTree: CreateFamilyTreeModel = {
           config: {
