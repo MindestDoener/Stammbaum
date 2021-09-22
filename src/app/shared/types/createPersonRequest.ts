@@ -1,6 +1,5 @@
 import { Gender } from './gender';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { Person } from './person';
 
 export interface CreatePersonRequest {
     firstName: string;
@@ -8,5 +7,5 @@ export interface CreatePersonRequest {
     gender: Gender;
     deathDate?: NgbDate;
     birthDate: NgbDate;
-    children?: Person[];
+    children?: number[];
 }

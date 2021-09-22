@@ -6,6 +6,12 @@
     <button class='btn btn-dark m-1' (click)='openCreateMenu()'>
       <i class="bi bi-plus-lg"></i> Person Hinzufügen
     </button>
+    <button class='btn btn-outline-dark m-1' (click)='centerFit()'>
+      <i class="bi bi-arrows-angle-expand"></i> Zentrieren und passend Zoomen
+    </button>
+    <button class='btn btn-outline-dark m-1' (click)='openExportMenu()'>
+      <i class="bi bi-file-earmark-arrow-down"></i> Exportieren
+    </button>
     <hr>
   </div>
   <div id='tree-container' style='height: 97.5%;'>
@@ -14,11 +20,14 @@
       [layout]='graphManager.layout'
       [links]='graphManager.edges'
       [nodes]='graphManager.nodes'
-      [showMiniMap]='true'
+      [showMiniMap]='false'
       [draggingEnabled]='false'
       [curve]='graphManager.curve'
+      [center$]='center$'
+      [zoomToFit$]='zoomToFit$'
       class='graph'
       xmlns:svg='http://www.w3.org/2000/svg'
+      id='tree-graph'
     >
       <ng-template #nodeTemplate let-node>
         <svg:g (dblclick)='dblClickEvent(node)' (mouseenter)='toggleTooltip(node)' (mouseleave)='toggleTooltip(node)'

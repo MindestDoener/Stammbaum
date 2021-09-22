@@ -32,7 +32,7 @@ export class TestData {
     lastName: 'Vater',
     gender: Gender.MALE,
     birthDate: new NgbDate(2000, 1, 1),
-    children: [TestData.testSon, TestData.testDaughter, TestData.testDiverseKid],
+    children: [TestData.testSon.id, TestData.testDaughter.id, TestData.testDiverseKid.id],
   };
   static testMother: Person = {
     id: 1324,
@@ -40,7 +40,7 @@ export class TestData {
     lastName: 'Mutter',
     gender: Gender.FEMALE,
     birthDate: new NgbDate(2000, 1, 1),
-    children: [TestData.testSon, TestData.testDaughter, TestData.testDiverseKid],
+    children: [TestData.testSon.id, TestData.testDaughter.id, TestData.testDiverseKid.id],
   };
   static testGrandFather: Person = {
     id: 1111,
@@ -49,7 +49,7 @@ export class TestData {
     gender: Gender.MALE,
     birthDate: new NgbDate(1969, 1, 1),
     deathDate: new NgbDate(2020, 1, 1),
-    children: [TestData.testFather],
+    children: [TestData.testFather.id],
   };
   static testGrandMother: Person = {
     id: 2222,
@@ -58,7 +58,7 @@ export class TestData {
     gender: Gender.FEMALE,
     birthDate: new NgbDate(1420, 1, 1),
     deathDate: new NgbDate(2010, 1, 1),
-    children: [TestData.testFather],
+    children: [TestData.testFather.id],
   };
 
   static testPersons: Map<number, Person> = new Map<number, Person>([

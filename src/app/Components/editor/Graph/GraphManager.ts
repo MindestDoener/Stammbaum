@@ -81,10 +81,10 @@ export class GraphManager {
   public updateEdges(person: Person): void {
     this.edges = this.edges.filter((edge) => +edge.source !== person.id); // clear existing edges
     if (person.children) {
-      for (const child of person.children) {
+      for (const childId of person.children) {
         const edge: Edge = {
           source: person.id.toString(),
-          target: child.id.toString(),
+          target: childId.toString(),
         };
         this.edges.push(edge);
       }

@@ -85,4 +85,13 @@ export class TreeListComponent {
             this.router.navigate(['/trees/' + id]);
         }
     }
+
+  onFileImport(event: any): void {
+      const file: File = event.target.files[0];
+      this.familyTreeService.importTree(file)
+        .subscribe(() => {
+          this.treeList$ = this.familyTreeService.getTreeListSorted(this.sortMode);
+          this.treeList$.toPromise().then((value) => this.treeList = value);
+        })
+  }
 }

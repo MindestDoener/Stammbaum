@@ -12,6 +12,11 @@
     <button (click)="setMode('view');" *ngIf="mode === 'add' || mode === 'edit' " class='btn btn-outline-danger my-3'>
       <i class='bi bi-x'></i>
     </button>
+    <button (click)="fileUpload.click()" class='btn btn-outline-dark my-3 ms-2'>
+      <i class="bi bi-file-earmark-arrow-up"></i>
+      <input type='file' style='display: none' accept='application/json' (change)='onFileImport($event)' #fileUpload>
+    </button>
+
     <div ngbDropdown class='d-inline-block ms-2 my-3'>
       <button class='btn btn-outline-dark' id='sortDropdown' ngbDropdownToggle><i class='bi bi-sort-down'></i></button>
       <div ngbDropdownMenu aria-labelledby='sortDropdown'>
@@ -36,7 +41,7 @@
           <form (ngSubmit)='onCreateFamilyTree()' [formGroup]='createFamilyTreeForm' class='form-row'>
             <label class='m-1'>
               Stammbaum Name:
-              <input class='form-control' formControlName='treeName' placeholder='Untitled Tree' required type='text'>
+              <input class='form-control' formControlName='treeName' placeholder='Neuer Baum' required type='text'>
             </label>
             <button [disabled]="createFamilyTreeForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
               Erstellen
