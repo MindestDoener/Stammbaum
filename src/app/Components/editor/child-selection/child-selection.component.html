@@ -1,0 +1,73 @@
+<div class="card">
+  <div class="card-body row">
+    <div class="col">
+      <h5 class="card-title">Kinder</h5>
+      <div class="card-text">
+        <div class="d-grid gap-2">
+          <div
+            *ngFor="let child of childrenOfPerson"
+            class="p-2 border flex-box"
+            (click)="removeChild(child)"
+          >
+            <i class="bi bi-dash"></i>
+            <span class="mx-2">{{ child.firstName }} {{ child.lastName }}</span>
+            <ng-container [ngSwitch]="child.gender.id">
+              <ng-container *ngSwitchCase="0"
+                ><i class="bi bi-gender-male"></i
+              ></ng-container>
+              <ng-container *ngSwitchCase="1"
+                ><i class="bi bi-gender-female"></i
+              ></ng-container>
+              <ng-container *ngSwitchCase="2"
+                ><i class="bi bi-gender-ambiguous"></i
+              ></ng-container>
+              <ng-container *ngSwitchDefault></ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <h5 class="card-title">Mögliche Kinder</h5>
+      <div class="input-group input-group-sm my-2 search">
+        <input
+          (keyup)="onSearchInput($event)"
+          type="text"
+          class="form-control"
+        />
+        <i class="input-group-text bi bi-search bg-white"></i>
+      </div>
+      <div class="card-text scrollable">
+        <div class="d-grid gap-2">
+          <div *ngIf="editPersonForm?.invalid; else other">
+            Bitte füllen Sie erst die Pflichtfelder aus!
+          </div>
+          <ng-template #other>
+            <div
+              *ngFor="let person of possiblePersons"
+              class="p-2 border flex-box"
+              (click)="addChild(person)"
+            >
+              <i class="bi bi-plus"></i>
+              <span class="mx-2"
+                >{{ person.firstName }} {{ person.lastName }}</span
+              >
+              <ng-container [ngSwitch]="person.gender.id">
+                <ng-container *ngSwitchCase="0"
+                  ><i class="bi bi-gender-male"></i
+                ></ng-container>
+                <ng-container *ngSwitchCase="1"
+                  ><i class="bi bi-gender-female"></i
+                ></ng-container>
+                <ng-container *ngSwitchCase="2"
+                  ><i class="bi bi-gender-ambiguous"></i
+                ></ng-container>
+                <ng-container *ngSwitchDefault></ng-container>
+              </ng-container>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

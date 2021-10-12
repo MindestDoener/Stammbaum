@@ -1,0 +1,16 @@
+.scrollable {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+}
+
+.card {
+  height: auto;
+  max-height: 320px;
+}
+
+.flex-box {
+  display: flex;
+  align-content: center;
+  flex-direction: row;
+}
