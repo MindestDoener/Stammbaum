@@ -6,7 +6,7 @@
         <div class="d-grid gap-2">
           <div
             *ngFor="let child of childrenOfPerson"
-            class="p-2 border flex-box"
+            class="p-2 border flex-box clickable"
             (click)="removeChild(child)"
           >
             <i class="bi bi-dash"></i>
@@ -45,7 +45,7 @@
           <ng-template #other>
             <div
               *ngFor="let person of possiblePersons"
-              class="p-2 border flex-box"
+              class="p-2 border flex-box clickable"
               (click)="addChild(person)"
             >
               <i class="bi bi-plus"></i>
