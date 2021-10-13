@@ -1,88 +1,144 @@
-<div class='modal-header'>
-  <h4 class='modal-title' *ngIf='isUpdateMode()'>Person bearbeiten: {{person?.firstName}} {{person?.lastName}}</h4>
-  <h4 class='modal-title' *ngIf='!isUpdateMode()'>Person hinzufügen</h4>
-  <button (click)="activeModal.dismiss('Cross click')" aria-label='Close' class='btn-close' type='button'>
-    <span aria-hidden='true'></span>
+<div class="modal-header">
+  <h4 class="modal-title" *ngIf="isUpdateMode()">
+    Person bearbeiten: {{ person?.firstName }} {{ person?.lastName }}
+  </h4>
+  <h4 class="modal-title" *ngIf="!isUpdateMode()">Person hinzufügen</h4>
+  <button
+    (click)="activeModal.dismiss('Cross click')"
+    aria-label="Close"
+    class="btn-close"
+    type="button"
+  >
+    <span aria-hidden="true"></span>
   </button>
 </div>
-<div class='modal-body'>
-
-  <form [formGroup]='editPersonForm'>
-    <div class='row nowrap'>
-      <label class='m-1 col'>
+<div class="modal-body">
+  <form [formGroup]="editPersonForm">
+    <div class="row nowrap">
+      <label class="m-1 col">
         Vorname: *
-        <input class='form-control' formControlName='firstName' placeholder='Vorname' required type='text'>
+        <input
+          class="form-control"
+          formControlName="firstName"
+          placeholder="Vorname"
+          required
+          type="text"
+        />
       </label>
-      <label class='m-1 col'>
+      <label class="m-1 col">
         Nachname: *
-        <input class='form-control' formControlName='lastName' placeholder='Nachname' required type='text'
-               [ngbTypeahead]='searchLastNames'>
+        <input
+          class="form-control"
+          formControlName="lastName"
+          placeholder="Nachname"
+          required
+          type="text"
+          [ngbTypeahead]="searchLastNames"
+        />
       </label>
     </div>
-    <div class='row nowrap'>
-      <label class='m-1 col'>
+    <div class="row nowrap">
+      <label class="m-1 col">
+        Geburtstag: *
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="TT.MM.JJJJ"
+            formControlName="birthDate"
+            ngbDatepicker
+            #birth="ngbDatepicker"
+            [minDate]="minBirthDate"
+            [maxDate]="today"
+            required
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary bi-calendar"
+              (click)="birth.toggle()"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </label>
+      <label class="m-1 col">
+        Todestag:
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="TT.MM.JJJJ"
+            formControlName="deathDate"
+            ngbDatepicker
+            #death="ngbDatepicker"
+            [minDate]="editPersonForm.controls.birthDate.value"
+            [maxDate]="today"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary bi-calendar"
+              (click)="death.toggle()"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </label>
+    </div>
+    <div class="row nowrap">
+      <label class="m-1 col">
         Geschlecht: *
-        <select class='form-select' formControlName='gender' required>
-          <option selected disabled value=''>Wähle ein Geschlecht</option>
-          <option *ngFor='let gender of genders; index as i' [ngValue]='i'>{{gender}}</option>
+        <select class="form-select" formControlName="gender" required>
+          <option selected disabled value="">Wähle ein Geschlecht</option>
+          <option *ngFor="let gender of genders; index as i" [ngValue]="i">
+            {{ gender }}
+          </option>
         </select>
       </label>
-      <label class='m-1 col'>
-        Geburtstag: *
-        <div class='input-group'>
-          <input class='form-control' placeholder='TT.MM.JJJJ' formControlName='birthDate' ngbDatepicker
-                 #birth='ngbDatepicker' [minDate]='minBirthDate' [maxDate]='today'
-                 (ngModelChange)='updatePossibleChildren()' required>
-          <div class='input-group-append'>
-            <button class='btn btn-outline-secondary bi-calendar' (click)='birth.toggle()' type='button'></button>
-          </div>
-        </div>
-      </label>
-      <label class='m-1 col'>
-        Todestag:
-        <div class='input-group'>
-          <input class='form-control' placeholder='TT.MM.JJJJ' formControlName='deathDate' ngbDatepicker
-                 #death='ngbDatepicker' [minDate]='editPersonForm.controls.birthDate.value' [maxDate]='today'>
-          <div class='input-group-append'>
-            <button class='btn btn-outline-secondary bi-calendar' (click)='death.toggle()' type='button'></button>
-          </div>
-        </div>
-      </label>
+      <div class="col m-1"></div>
     </div>
-    <div class='row nowrap'>
-      <app-multiselect
-        #childSelect
-        class='col m-1'
-        label='Kinder:'
-        emptyText='Keine möglichen Kinder'
-        [options]='possibleChildren'
-        [initialValue]='children'
-        placeholder='Kinder Wählen'
-        [collapseThreshold]='5'
-        [disabled]='!isUpdateMode() && editPersonForm.invalid'
-        disabledText='Bitte füllen Sie erst die Pflichtfelder aus!'
-        (valueChange)='setChildren($event)'>
-      </app-multiselect>
+    <div class="row nowrap">
+      <div class="m-1 col mt-2">
+        <app-child-selection
+          [persons]="familyTree?.persons"
+          [selectedPerson]="person"
+          [isUpdateMode]="isUpdateMode()"
+          [editPersonForm]="editPersonForm"
+          (valueChange)="setChildren($event)"
+        ></app-child-selection>
+      </div>
     </div>
   </form>
-
 </div>
-<div class='modal-footer'>
-  <div class='form-check' *ngIf='!isUpdateMode()'>
-    <input class='form-check-input' type='checkbox' value='' id='addMore' [formControl]='addMoreCheckBox'>
-    <label class='form-check-label' for='addMore'>
-      Weitere hinzufügen
-    </label>
+<div class="modal-footer">
+  <div class="form-check" *ngIf="!isUpdateMode()">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      value=""
+      id="addMore"
+      [formControl]="addMoreCheckBox"
+    />
+    <label class="form-check-label" for="addMore"> Weitere hinzufügen </label>
   </div>
-  <button [disabled]="editPersonForm.status == 'INVALID'" class='btn btn-dark m-1'
-          (click)='isUpdateMode() ? onUpdatePerson() : onAddPerson()'
-          type='button'>
-    {{ isUpdateMode() ? "Aktualisieren" : "Hinzufügen" }}
+  <button
+    [disabled]="editPersonForm.status == 'INVALID'"
+    class="btn btn-dark m-1"
+    (click)="isUpdateMode() ? onUpdatePerson() : onAddPerson()"
+    type="button"
+  >
+    {{ isUpdateMode() ? 'Aktualisieren' : 'Hinzufügen' }}
   </button>
-  <button *ngIf='isUpdateMode()' (click)='onDeletePerson()' class='btn btn-danger m-1' type='button'>
+  <button
+    *ngIf="isUpdateMode()"
+    (click)="onDeletePerson()"
+    class="btn btn-danger m-1"
+    type="button"
+  >
     Person entfernen
   </button>
-  <button (click)="activeModal.close('Close click')" class='btn btn-outline-dark' type='button'>
+  <button
+    (click)="activeModal.close('Close click')"
+    class="btn btn-outline-dark"
+    type="button"
+  >
     Schließen
   </button>
 </div>

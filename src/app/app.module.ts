@@ -17,6 +17,7 @@ import { MultiselectComponent } from './Components/editor/multiselect/multiselec
 import { HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './Components/login-page/login-page.component';
 import { ExportMenuComponent } from './Components/editor/export-menu/export-menu.component';
+import { ChildSelectionComponent } from './Components/editor/child-selection/child-selection.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ExportMenuComponent } from './Components/editor/export-menu/export-menu
     MultiselectComponent,
     LoginPageComponent,
     ExportMenuComponent,
+    ChildSelectionComponent,
   ],
   imports: [
     BrowserModule,
