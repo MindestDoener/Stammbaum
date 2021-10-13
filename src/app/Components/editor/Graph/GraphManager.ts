@@ -6,7 +6,6 @@ import { Person } from '../../../shared/types/person';
 import { DateConverter } from '../../../shared/types/dateConverter';
 
 export class GraphManager {
-
   private static dateConverter: DateConverter = new DateConverter();
 
   nodes: Node[] = [];
@@ -22,12 +21,17 @@ export class GraphManager {
     return {
       id: person.id.toString(),
       label: GraphManager.buildLabel(person),
-      dimension: { width: 200, height: 40 },
+      dimension: { width: 200, height: 80 },
       data: {
         customColor: person.gender.color,
         birthDate: this.dateConverter.format(person.birthDate),
-        deathDate: person.deathDate ? this.dateConverter.format(person.deathDate) : undefined,
+        deathDate: person.deathDate
+          ? this.dateConverter.format(person.deathDate)
+          : undefined,
         toolTipActive: false,
+        firstName: person.firstName,
+        lastName: person.lastName,
+        gender: person.gender.id,
       },
     };
   }
@@ -69,7 +73,9 @@ export class GraphManager {
 
   public removeNode(person: Person): void {
     if (person.node) {
-      this.edges = this.edges.filter((edge) => +edge.source !== person.id && +edge.target !== person.id); // clear edges
+      this.edges = this.edges.filter(
+        (edge) => +edge.source !== person.id && +edge.target !== person.id
+      ); // clear edges
       const index = this.nodes.indexOf(person.node, 0);
       if (index > -1) {
         this.nodes.splice(index, 1);
@@ -85,6 +91,9 @@ export class GraphManager {
         const edge: Edge = {
           source: person.id.toString(),
           target: childId.toString(),
+          data: {
+            spouceId: person.spouce,
+          },
         };
         this.edges.push(edge);
       }

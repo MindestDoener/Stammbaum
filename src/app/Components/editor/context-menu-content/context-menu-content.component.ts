@@ -1,8 +1,21 @@
-import { AfterContentInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FamilyTreeService } from '../../../shared/family-tree.service';
 import { Observable, OperatorFunction } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { NgbActiveModal, NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbActiveModal,
+  NgbCalendar,
+  NgbDate,
+  NgbDateParserFormatter,
+  NgbDateStruct,
+} from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MultiselectComponent } from '../multiselect/multiselect.component';
 import { FamilyTree } from '../../../shared/types/familyTree';
@@ -18,7 +31,6 @@ import { DateConverter } from '../../../shared/types/dateConverter';
   providers: [{ provide: NgbDateParserFormatter, useClass: DateConverter }],
 })
 export class ContextMenuContentComponent implements AfterContentInit {
-
   @ViewChild('childSelect')
   multiselect!: MultiselectComponent;
 
@@ -54,28 +66,44 @@ export class ContextMenuContentComponent implements AfterContentInit {
 
   addMoreCheckBox = new FormControl();
 
-  possibleChildren: { label: string, id: number }[] = [];
+  possibleChildren: { label: string; id: number }[] = [];
+
+  possibleSpouces: Person[] = [];
+  selectedSpouce?: number;
 
   today: NgbDateStruct = this.calender.getToday();
   minBirthDate: NgbDateStruct = new NgbDate(1000, 1, 1); // should be enough for the start (can be changed if needed)
 
-  constructor(public activeModal: NgbActiveModal, private familyTreeService: FamilyTreeService, private calender: NgbCalendar) {
-  }
+  constructor(
+    public activeModal: NgbActiveModal,
+    private familyTreeService: FamilyTreeService,
+    private calender: NgbCalendar
+  ) {}
 
-  searchLastNames: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
-    const allLastNames: string[] = Array.from(this.familyTree.persons.values()).map(person => person.lastName);
+  searchLastNames: OperatorFunction<string, readonly string[]> = (
+    text$: Observable<string>
+  ) => {
+    const allLastNames: string[] = Array.from(
+      this.familyTree.persons.values()
+    ).map((person) => person.lastName);
     const lastNames: string[] = [...new Set(allLastNames)];
     return text$.pipe(
       distinctUntilChanged(),
-      map(term => lastNames.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)),
+      map((term) =>
+        lastNames
+          .filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)
+          .slice(0, 10)
+      )
     );
   };
 
   ngAfterContentInit(): void {
     if (this.person) {
       this.editPersonForm.patchValue(this.person);
+      this.selectedSpouce = this.person.spouce;
     }
     this.possibleChildren = this.getPossibleChildren();
+    this.possibleSpouces = this.getPossibleSpouces();
     this.setForm();
   }
 
@@ -87,10 +115,12 @@ export class ContextMenuContentComponent implements AfterContentInit {
 
   isPossibleChildOfExistingPerson(person: Person): boolean {
     if (this.person) {
-      if (person.id === this.person.id) { // child cant be the person itself
+      if (person.id === this.person.id) {
+        // child cant be the person itself
         return false;
       }
-      if (person.children && person.children.indexOf(this.person.id) > -1) { // child cant be parent of person
+      if (person.children && person.children.indexOf(this.person.id) > -1) {
+        // child cant be parent of person
         return false;
       }
       if (this.editPersonForm.value.birthDate === null) {
@@ -99,7 +129,11 @@ export class ContextMenuContentComponent implements AfterContentInit {
         }
       } else {
         // tslint:disable-next-line:no-non-null-assertion
-        if (NgbDate.from(person.birthDate)!.before(this.editPersonForm.value.birthDate)) {
+        if (
+          NgbDate.from(person.birthDate)!.before(
+            this.editPersonForm.value.birthDate
+          )
+        ) {
           return false;
         }
       }
@@ -111,7 +145,11 @@ export class ContextMenuContentComponent implements AfterContentInit {
     if (this.isUpdateMode()) {
       return this.isPossibleChildOfExistingPerson(person);
     } else {
-      if (this.editPersonForm.value.birthDate === null || person.birthDate.before(this.editPersonForm.value.birthDate)) { // child cant be born before person
+      if (
+        this.editPersonForm.value.birthDate === null ||
+        person.birthDate.before(this.editPersonForm.value.birthDate)
+      ) {
+        // child cant be born before person
         return false;
       }
     }
@@ -123,19 +161,27 @@ export class ContextMenuContentComponent implements AfterContentInit {
       ...this.editPersonForm.value,
       children: this.children
         // tslint:disable-next-line:no-non-null-assertion
-        .filter((childId: number) => this.isPossibleChild(this.familyTreeService.getPersonById(this.familyTree, childId)!)),
+        .filter((childId: number) =>
+          this.isPossibleChild(
+            this.familyTreeService.getPersonById(this.familyTree, childId)!
+          )
+        ),
       gender: Gender.getById(this.editPersonForm.value.gender),
+      spouce: this.selectedSpouce,
     };
     // tslint:disable-next-line:no-non-null-assertion
     newPerson.birthDate = NgbDate.from(this.editPersonForm.value.birthDate)!;
     // tslint:disable-next-line:no-non-null-assertion
-    newPerson.deathDate = this.editPersonForm.value.deathDate ? NgbDate.from(this.editPersonForm.value.deathDate)! : undefined;
+    newPerson.deathDate = this.editPersonForm.value.deathDate
+      ? NgbDate.from(this.editPersonForm.value.deathDate)!
+      : undefined;
     this.addPerson.emit(newPerson);
     if (this.addMoreCheckBox.value) {
       this.editPersonForm.reset();
       this.possibleChildren = [];
       this.children = [];
       this.multiselect.reset();
+      this.selectedSpouce = undefined;
     } else {
       this.activeModal.close();
     }
@@ -156,7 +202,12 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.deathDate = this.editPersonForm.value.deathDate;
     this.person.children = this.children
       // tslint:disable-next-line:no-non-null-assertion
-      .filter((childId: number) => this.isPossibleChild(this.familyTreeService.getPersonById(this.familyTree,childId)!));
+      .filter((childId: number) =>
+        this.isPossibleChild(
+          this.familyTreeService.getPersonById(this.familyTree, childId)!
+        )
+      );
+    this.person.spouce = this.selectedSpouce;
     this.updatePerson.emit(this.person);
   }
 
@@ -168,13 +219,28 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.children = event;
   }
 
-  private getPossibleChildren(): { label: string, id: number }[] {
+  isPossibleSpouse(person: Person): boolean {
+    return true;
+  }
+
+  setSpouce(event: any): void {
+    const personId: number = event.target.value;
+    this.selectedSpouce = personId;
+  }
+
+  private getPossibleChildren(): { label: string; id: number }[] {
     return Array.from(this.familyTree.persons.values())
-      .filter(it => this.isPossibleChild(it))
-      .map(person => ({
+      .filter((it) => this.isPossibleChild(it))
+      .map((person) => ({
         label: person.firstName + ' ' + person.lastName,
         id: person.id,
       }));
+  }
+
+  private getPossibleSpouces(): Person[] {
+    return Array.from(this.familyTree.persons.values()).filter((it) =>
+      this.isPossibleSpouse(it)
+    );
   }
 
   private setForm(): void {
