@@ -51,7 +51,7 @@ export class ChildSelectionComponent implements OnInit {
     }
   }
 
-  removeChild(child: Person) {
+  removeChild(child: Person): void {
     this.selectedChildrenIds = this.selectedChildrenIds.filter(
       (id) => id !== child.id
     );
@@ -60,26 +60,28 @@ export class ChildSelectionComponent implements OnInit {
     this.possiblePersons?.push(child);
   }
 
-  addChild(child: Person) {
+  addChild(child: Person): void {
     this.selectedChildrenIds.push(child.id);
     this.valueChange.emit(this.selectedChildrenIds);
     this.getPersonsChildren();
     this.possiblePersons?.splice(this.possiblePersons.indexOf(child), 1);
   }
 
-  getPersonsChildren() {
+  getPersonsChildren(): void {
     this.childrenOfPerson = [];
     this.selectedChildrenIds.forEach((child) => {
       if (this.allPersons) {
         const childAsPerson = this.allPersons?.find(
           (person) => person.id === child
         );
-        childAsPerson && this.childrenOfPerson.push(childAsPerson);
+        if (childAsPerson) {
+          this.childrenOfPerson.push(childAsPerson);
+        }
       }
     });
   }
 
-  filterPossibleChildren() {
+  filterPossibleChildren(): void {
     this.possiblePersons = this.allPersons
       ?.filter((person) => this.isPossibleChild(person))
       .filter((person) => this.selectedPerson?.id !== person.id)
@@ -99,7 +101,7 @@ export class ChildSelectionComponent implements OnInit {
     );
   }
 
-  onSearchInput(event: any) {
+  onSearchInput(event: any): void {
     if (event.target.value === '') {
       this.filterPossibleChildren();
     } else {
