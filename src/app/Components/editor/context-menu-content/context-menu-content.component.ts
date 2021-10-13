@@ -106,11 +106,12 @@ export class ContextMenuContentComponent implements AfterContentInit {
       children: this.children,
       gender: Gender.getById(this.editPersonForm.value.gender),
     };
-    // tslint:disable-next-line:no-non-null-assertion
-    newPerson.birthDate = NgbDate.from(this.editPersonForm.value.birthDate)!;
-    // tslint:disable-next-line:no-non-null-assertion
+
+    newPerson.birthDate =
+      NgbDate.from(this.editPersonForm.value.birthDate) || new NgbDate(0, 0, 0);
+
     newPerson.deathDate = this.editPersonForm.value.deathDate
-      ? NgbDate.from(this.editPersonForm.value.deathDate)!
+      ? NgbDate.from(this.editPersonForm.value.deathDate) || undefined
       : undefined;
     this.addPerson.emit(newPerson);
     if (this.addMoreCheckBox.value) {
