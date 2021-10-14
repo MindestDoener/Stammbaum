@@ -39,15 +39,6 @@
     </div>
     <div class="row nowrap">
       <label class="m-1 col">
-        Geschlecht: *
-        <select class="form-select" formControlName="gender" required>
-          <option selected disabled value="">Wähle ein Geschlecht</option>
-          <option *ngFor="let gender of genders; index as i" [ngValue]="i">
-            {{ gender }}
-          </option>
-        </select>
-      </label>
-      <label class="m-1 col">
         Geburtstag: *
         <div class="input-group">
           <input
@@ -58,7 +49,6 @@
             #birth="ngbDatepicker"
             [minDate]="minBirthDate"
             [maxDate]="today"
-            (ngModelChange)="updatePossibleChildren()"
             required
           />
           <div class="input-group-append">
@@ -93,23 +83,17 @@
       </label>
     </div>
     <div class="row nowrap">
-      <app-multiselect
-        #childSelect
-        class="col m-1"
-        label="Kinder:"
-        emptyText="Keine möglichen Kinder"
-        [options]="possibleChildren"
-        [initialValue]="children"
-        placeholder="Kinder Wählen"
-        [collapseThreshold]="5"
-        [disabled]="!isUpdateMode() && editPersonForm.invalid"
-        disabledText="Bitte füllen Sie erst die Pflichtfelder aus!"
-        (valueChange)="setChildren($event)"
-      >
-      </app-multiselect>
-    </div>
-    <div class="row nowrap">
-      <div class="col m-1">
+      <label class="m-1 col">
+        Geschlecht: *
+        <select class="form-select" formControlName="gender" required>
+          <option selected disabled value="">Wähle ein Geschlecht</option>
+          <option *ngFor="let gender of genders; index as i" [ngValue]="i">
+            {{ gender }}
+          </option>
+        </select>
+      </label>
+      <label class="col m-1">
+        Partner/in
         <select
           class="form-select"
           aria-label="Default select example"
@@ -122,9 +106,34 @@
             *ngFor="let spouce of possibleSpouces"
             [selected]="spouce.id == selectedSpouce"
           >
-            {{ spouce.firstName }}{{ spouce.lastName }}
+            <span class="mx-2">
+              {{ spouce.firstName }} {{ spouce.lastName }}
+              <ng-container [ngSwitch]="spouce.gender.id">
+                <ng-container *ngSwitchCase="0"
+                  ><i class="bi bi-gender-male"></i
+                ></ng-container>
+                <ng-container *ngSwitchCase="1"
+                  ><i class="bi bi-gender-female"></i
+                ></ng-container>
+                <ng-container *ngSwitchCase="2"
+                  ><i class="bi bi-gender-ambiguous"></i
+                ></ng-container>
+                <ng-container *ngSwitchDefault></ng-container>
+              </ng-container>
+            </span>
           </option>
         </select>
+      </label>
+    </div>
+    <div class="row nowrap">
+      <div class="m-1 col mt-2">
+        <app-child-selection
+          [persons]="familyTree?.persons"
+          [selectedPerson]="person"
+          [isUpdateMode]="isUpdateMode()"
+          [editPersonForm]="editPersonForm"
+          (valueChange)="setChildren($event)"
+        ></app-child-selection>
       </div>
     </div>
   </form>

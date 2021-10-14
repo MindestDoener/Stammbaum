@@ -76,7 +76,6 @@ export class ContextMenuContentComponent implements AfterContentInit {
 
   constructor(
     public activeModal: NgbActiveModal,
-    private familyTreeService: FamilyTreeService,
     private calender: NgbCalendar
   ) {}
 
@@ -102,83 +101,27 @@ export class ContextMenuContentComponent implements AfterContentInit {
       this.editPersonForm.patchValue(this.person);
       this.selectedSpouce = this.person.spouce;
     }
-    this.possibleChildren = this.getPossibleChildren();
     this.possibleSpouces = this.getPossibleSpouces();
     this.setForm();
-  }
-
-  updatePossibleChildren(): void {
-    if (!this.editPersonForm.invalid) {
-      this.possibleChildren = this.getPossibleChildren();
-    }
-  }
-
-  isPossibleChildOfExistingPerson(person: Person): boolean {
-    if (this.person) {
-      if (person.id === this.person.id) {
-        // child cant be the person itself
-        return false;
-      }
-      if (person.children && person.children.indexOf(this.person.id) > -1) {
-        // child cant be parent of person
-        return false;
-      }
-      if (this.editPersonForm.value.birthDate === null) {
-        if (person.birthDate.before(this.person.birthDate)) {
-          return false;
-        }
-      } else {
-        // tslint:disable-next-line:no-non-null-assertion
-        if (
-          NgbDate.from(person.birthDate)!.before(
-            this.editPersonForm.value.birthDate
-          )
-        ) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  isPossibleChild(person: Person): boolean {
-    if (this.isUpdateMode()) {
-      return this.isPossibleChildOfExistingPerson(person);
-    } else {
-      if (
-        this.editPersonForm.value.birthDate === null ||
-        person.birthDate.before(this.editPersonForm.value.birthDate)
-      ) {
-        // child cant be born before person
-        return false;
-      }
-    }
-    return true;
   }
 
   onAddPerson(): void {
     const newPerson: CreatePersonRequest = {
       ...this.editPersonForm.value,
-      children: this.children
-        // tslint:disable-next-line:no-non-null-assertion
-        .filter((childId: number) =>
-          this.isPossibleChild(
-            this.familyTreeService.getPersonById(this.familyTree, childId)!
-          )
-        ),
+      children: this.children,
       gender: Gender.getById(this.editPersonForm.value.gender),
       spouce: this.selectedSpouce,
     };
-    // tslint:disable-next-line:no-non-null-assertion
-    newPerson.birthDate = NgbDate.from(this.editPersonForm.value.birthDate)!;
-    // tslint:disable-next-line:no-non-null-assertion
+
+    newPerson.birthDate =
+      NgbDate.from(this.editPersonForm.value.birthDate) || new NgbDate(0, 0, 0);
+
     newPerson.deathDate = this.editPersonForm.value.deathDate
-      ? NgbDate.from(this.editPersonForm.value.deathDate)!
+      ? NgbDate.from(this.editPersonForm.value.deathDate) || undefined
       : undefined;
     this.addPerson.emit(newPerson);
     if (this.addMoreCheckBox.value) {
       this.editPersonForm.reset();
-      this.possibleChildren = [];
       this.children = [];
       this.multiselect.reset();
       this.selectedSpouce = undefined;
@@ -200,13 +143,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.gender = Gender.getById(this.editPersonForm.value.gender);
     this.person.birthDate = this.editPersonForm.value.birthDate;
     this.person.deathDate = this.editPersonForm.value.deathDate;
-    this.person.children = this.children
-      // tslint:disable-next-line:no-non-null-assertion
-      .filter((childId: number) =>
-        this.isPossibleChild(
-          this.familyTreeService.getPersonById(this.familyTree, childId)!
-        )
-      );
+    this.person.children = this.children;
     this.person.spouce = this.selectedSpouce;
     this.updatePerson.emit(this.person);
   }
@@ -226,15 +163,6 @@ export class ContextMenuContentComponent implements AfterContentInit {
   setSpouce(event: any): void {
     const personId: number = event.target.value;
     this.selectedSpouce = personId;
-  }
-
-  private getPossibleChildren(): { label: string; id: number }[] {
-    return Array.from(this.familyTree.persons.values())
-      .filter((it) => this.isPossibleChild(it))
-      .map((person) => ({
-        label: person.firstName + ' ' + person.lastName,
-        id: person.id,
-      }));
   }
 
   private getPossibleSpouces(): Person[] {

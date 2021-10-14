@@ -42,12 +42,7 @@
             stroke-width="2"
             rx="10"
           />
-          <svg
-            viewBox="0 0 node.dimension.width node.dimension.height + 5"
-            xmlns="http://www.w3.org/2000/svg"
-            version="1.1"
-            y="5"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" y="5">
             <path
               stroke-width="2"
               stroke="'#000'"
@@ -136,7 +131,6 @@
             class="bi bi-calendar"
             viewBox="0 0 16 16"
           >
-            <use xlink:href="/all.svg#gg-cross" />
             <path
               d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
             />
@@ -147,9 +141,6 @@
             alignment-baseline="central"
             text-anchor="left"
           >
-            <svg width="16" height="16" x="7" y="53">
-              <use xlink:href="/all.svg#gg-cross" />
-            </svg>
             {{ node.data.birthDate + ' - ' + (node.data.deathDate || '*') }}
           </svg:text>
           <svg:g *ngIf="node.data.toolTipActive">
