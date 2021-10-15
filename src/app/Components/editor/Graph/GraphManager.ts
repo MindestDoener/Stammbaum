@@ -31,18 +31,36 @@ export class GraphManager {
         toolTipActive: false,
         firstName: person.firstName,
         lastName: person.lastName,
+        spouceId: person.spouce,
         gender: person.gender.id,
       },
     };
   }
 
   public init(familyTree: FamilyTree): void {
-    const persons = familyTree.persons.values();
+    const persons = Array.from(familyTree.persons.values());
     for (const person of persons) {
       const node = GraphManager.createNode(person);
-      this.nodes.push(node);
+      this.insertNode(node);
       person.node = node;
       this.updateEdges(person);
+    }
+  }
+
+  insertNode(node: Node) {
+    const nodeIndex = this.nodes.indexOf(node);
+    const containsNode = nodeIndex > -1;
+    const spouceNode = this.nodes.find(
+      (spouce) => spouce.id == node.data.spouceId
+    );
+    const spouceIndex = spouceNode ? this.nodes.indexOf(spouceNode) : -1;
+    const containsSpouce = spouceIndex > -1;
+
+    if (containsSpouce) {
+      this.nodes.splice(spouceIndex, 0, node);
+    }
+    if (!containsSpouce && !containsNode) {
+      this.nodes.splice(0, 0, node);
     }
   }
 
@@ -52,14 +70,25 @@ export class GraphManager {
   }
 
   public updateNode(person: Person): void {
-    const oldNode = this.findNodeById(person.id);
-    const newNode = GraphManager.createNode(person);
-    person.node = newNode;
-    if (oldNode) {
-      const index = this.nodes.indexOf(oldNode);
-      if (index > -1) {
-        this.nodes[index] = newNode;
-      }
+    let node = this.findNodeById(person.id);
+    if (node) {
+      (node.id = person.id.toString()),
+        (node.label = GraphManager.buildLabel(person)),
+        (node.dimension = { width: 200, height: 80 }),
+        (node.data = {
+          customColor: person.gender.color,
+          birthDate: GraphManager.dateConverter.format(person.birthDate),
+          deathDate: person.deathDate
+            ? GraphManager.dateConverter.format(person.deathDate)
+            : undefined,
+          toolTipActive: false,
+          firstName: person.firstName,
+          lastName: person.lastName,
+          spouceId: person.spouce,
+          gender: person.gender.id,
+        });
+      this.insertNode(node);
+      person.node = node;
     }
     this.updateTree();
   }
@@ -67,7 +96,7 @@ export class GraphManager {
   public createNewNode(person: Person): void {
     const node = GraphManager.createNode(person);
     person.node = node;
-    this.nodes.push(node);
+    this.insertNode(node);
     this.updateTree();
   }
 

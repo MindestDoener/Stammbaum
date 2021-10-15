@@ -74,17 +74,21 @@ export class EditorComponent {
         (personToDelete: Person) =>
           this.deletePersonEvent(personToDelete, modalRef)
       );
-      modalRef.componentInstance.updatePerson.subscribe(this.updatePersonEvent);
+      modalRef.componentInstance.updatePerson.subscribe(
+        (personToUpdate: Person) =>
+          this.updatePersonEvent(personToUpdate, modalRef)
+      );
     }
   }
 
-  updatePersonEvent = (personToUpdate: Person) => {
+  updatePersonEvent = (personToUpdate: Person, modalRef: NgbModalRef) => {
     if (this.familyTree) {
       this.graphManager.updateNode(personToUpdate);
       if (personToUpdate.children) {
         this.graphManager.updateEdges(personToUpdate);
       }
       this.familyTreeService.updatePerson(this.familyTree, personToUpdate);
+      modalRef.close();
     }
   };
 

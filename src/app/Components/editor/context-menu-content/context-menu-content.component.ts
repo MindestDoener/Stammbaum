@@ -157,11 +157,18 @@ export class ContextMenuContentComponent implements AfterContentInit {
   }
 
   isPossibleSpouse(person: Person): boolean {
-    return true;
+    const isSamePerson = person.id == this.person?.id;
+    const isChid = this.person?.children?.find((child) => child == person.id)
+      ? true
+      : this.children.find((child) => child == person.id)
+      ? true
+      : false;
+    return !isSamePerson && !isChid;
   }
 
   setSpouce(event: any): void {
-    const personId: number = event.target.value;
+    const personId =
+      event.target.value == 1 ? undefined : (event.target.value as number);
     this.selectedSpouce = personId;
   }
 
