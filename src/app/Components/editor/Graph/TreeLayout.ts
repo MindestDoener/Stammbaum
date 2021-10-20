@@ -85,7 +85,7 @@ export class TreeLayout implements Layout {
   updateEdge(graph: Graph, edge: Edge): Graph {
     const sourceNode = graph.nodes.find((n) => n.id === edge.source);
     const targetNode = graph.nodes.find((n) => n.id === edge.target);
-    const spouceNode = graph.nodes.find((n) => n.id === edge.data.spouceId);
+    const spouseNode = graph.nodes.find((n) => n.id === edge.data.spouseId);
     let endingPoint;
     let startingPoint;
     let middlePoint;
@@ -99,22 +99,21 @@ export class TreeLayout implements Layout {
       targetNode.dimension
     ) {
       const yDir = sourceNode.position.y <= targetNode.position.y ? -1 : 1;
-      const xDir = sourceNode.position.x <= targetNode.position.x ? -1 : 1;
-      if (spouceNode && spouceNode.position && spouceNode.dimension) {
-        const spouceDir =
-          sourceNode.position.x <= spouceNode.position.x ? -1 : 1;
+      if (spouseNode && spouseNode.position && spouseNode.dimension) {
+        const spouseDir =
+          sourceNode.position.x <= spouseNode.position.x ? -1 : 1;
         startingPoint = {
           x:
             sourceNode.position.x -
-            spouceDir * (spouceNode.dimension.width / 2),
+            spouseDir * (spouseNode.dimension.width / 2),
           y: sourceNode.position.y,
         };
         middlePoint1 = {
-          x: TreeLayout.getMiddle(sourceNode.position.x, spouceNode.position.x),
+          x: TreeLayout.getMiddle(sourceNode.position.x, spouseNode.position.x),
           y: sourceNode.position.y,
         };
         middlePoint = {
-          x: TreeLayout.getMiddle(sourceNode.position.x, spouceNode.position.x),
+          x: TreeLayout.getMiddle(sourceNode.position.x, spouseNode.position.x),
           y: TreeLayout.getMiddle(sourceNode.position.y, targetNode.position.y),
         };
         endingPoint = {

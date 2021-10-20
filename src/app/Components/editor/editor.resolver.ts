@@ -22,7 +22,7 @@ export class EditorResolverService implements Resolve<FamilyTree> {
       tap(
         () => {},
         () => {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/trees']);
         },
       ),
     );

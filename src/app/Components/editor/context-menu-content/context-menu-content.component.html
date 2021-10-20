@@ -97,18 +97,18 @@
         <select
           class="form-select"
           aria-label="Default select example"
-          (change)="setSpouce($event)"
+          (change)="setSpouse($event)"
         >
           <option selected disabled>Partner/in Auswählen</option>
           <option value="1"></option>
           <option
-            [value]="spouce.id"
-            *ngFor="let spouce of possibleSpouces"
-            [selected]="spouce.id == selectedSpouce"
+            [value]="spouse.id"
+            *ngFor="let spouse of possibleSpouses"
+            [selected]="spouse.id == selectedSpouse"
           >
             <span class="mx-2">
-              {{ spouce.firstName }} {{ spouce.lastName }}
-              <ng-container [ngSwitch]="spouce.gender.id">
+              {{ spouse.firstName }} {{ spouse.lastName }}
+              <ng-container [ngSwitch]="spouse.gender.id">
                 <ng-container *ngSwitchCase="0"
                   ><i class="bi bi-gender-male"></i
                 ></ng-container>

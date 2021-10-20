@@ -10,6 +10,6 @@ export interface Person {
   deathDate?: NgbDate;
   birthDate: NgbDate;
   children?: number[];
-  spouce?: number;
+  spouse?: number;
   node?: Node;
 }

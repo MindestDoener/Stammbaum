@@ -31,7 +31,7 @@ export class GraphManager {
         toolTipActive: false,
         firstName: person.firstName,
         lastName: person.lastName,
-        spouceId: person.spouce,
+        spouseId: person.spouse,
         gender: person.gender.id,
       },
     };
@@ -47,19 +47,19 @@ export class GraphManager {
     }
   }
 
-  insertNode(node: Node) {
+  insertNode(node: Node): void {
     const nodeIndex = this.nodes.indexOf(node);
     const containsNode = nodeIndex > -1;
-    const spouceNode = this.nodes.find(
-      (spouce) => spouce.id == node.data.spouceId
+    const spouseNode = this.nodes.find(
+      (spouse) => spouse.id === node.data.spouseId
     );
-    const spouceIndex = spouceNode ? this.nodes.indexOf(spouceNode) : -1;
-    const containsSpouce = spouceIndex > -1;
+    const spouseIndex = spouseNode ? this.nodes.indexOf(spouseNode) : -1;
+    const containsSpouse = spouseIndex > -1;
 
-    if (containsSpouce) {
-      this.nodes.splice(spouceIndex, 0, node);
+    if (containsSpouse) {
+      this.nodes.splice(spouseIndex, 0, node);
     }
-    if (!containsSpouce && !containsNode) {
+    if (!containsSpouse && !containsNode) {
       this.nodes.splice(0, 0, node);
     }
   }
@@ -70,12 +70,12 @@ export class GraphManager {
   }
 
   public updateNode(person: Person): void {
-    let node = this.findNodeById(person.id);
+    const node = this.findNodeById(person.id);
     if (node) {
-      (node.id = person.id.toString()),
-        (node.label = GraphManager.buildLabel(person)),
-        (node.dimension = { width: 200, height: 80 }),
-        (node.data = {
+      node.id = person.id.toString();
+      node.label = GraphManager.buildLabel(person);
+      node.dimension = { width: 200, height: 80 };
+      node.data = {
           customColor: person.gender.color,
           birthDate: GraphManager.dateConverter.format(person.birthDate),
           deathDate: person.deathDate
@@ -84,9 +84,9 @@ export class GraphManager {
           toolTipActive: false,
           firstName: person.firstName,
           lastName: person.lastName,
-          spouceId: person.spouce,
+          spouseId: person.spouse,
           gender: person.gender.id,
-        });
+        };
       this.insertNode(node);
       person.node = node;
     }
@@ -121,7 +121,7 @@ export class GraphManager {
           source: person.id.toString(),
           target: childId.toString(),
           data: {
-            spouceId: person.spouce,
+            spouseId: person.spouse,
           },
         };
         this.edges.push(edge);
