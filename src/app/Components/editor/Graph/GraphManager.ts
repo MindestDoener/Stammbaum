@@ -56,6 +56,9 @@ export class GraphManager {
     const spouseIndex = spouseNode ? this.nodes.indexOf(spouseNode) : -1;
     const containsSpouse = spouseIndex > -1;
 
+    if (containsNode) {
+      this.nodes.splice(nodeIndex, 1)
+    }
     if (containsSpouse) {
       this.nodes.splice(spouseIndex, 0, node);
     }
@@ -135,7 +138,7 @@ export class GraphManager {
   }
 
   private updateTree(): void {
-    this.nodes = [...this.nodes];
     this.edges = [...this.edges];
+    this.nodes = [...this.nodes];
   }
 }
