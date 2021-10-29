@@ -40,7 +40,7 @@
     "@angular-devkit/build-angular": "~12.2.0",
     "@angular/cli": "^12.2.0",
     "@angular/compiler-cli": "^12.0.3",
-    "@angular/localize": "^12.0.3",
+    "@angular/localize": "^12.2.12",
     "@types/d3": "^7.0.0",
     "@types/dagre": "^0.7.45",
     "@types/file-saver": "^2.0.3",
