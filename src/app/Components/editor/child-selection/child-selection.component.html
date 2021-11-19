@@ -2,7 +2,7 @@
   <div class="card-body row">
     <div class="col">
       <p class="card-title">Kinder</p>
-      <div class="card-text">
+      <div class="card-text scrollable display">
         <div class="d-grid gap-2">
           <div
             *ngFor="let child of childrenOfPerson"
@@ -37,7 +37,7 @@
         />
         <i class="input-group-text bi bi-search bg-white"></i>
       </div>
-      <div class="card-text scrollable">
+      <div class="card-text scrollable selection">
         <div class="d-grid gap-2">
           <div *ngIf="editPersonForm?.invalid; else other">
             Bitte füllen Sie erst die Pflichtfelder aus!

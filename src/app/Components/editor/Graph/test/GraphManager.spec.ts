@@ -13,12 +13,16 @@ describe('GraphManager', () => {
   const testFatherNode: Node = {
     id: '1234',
     label: 'Volker Vater',
-    dimension: { width: 200, height: 40 },
+    dimension: { width: 200, height: 80 },
     data: {
       customColor: Gender.MALE.color,
       birthDate: '1.1.2000',
       deathDate: undefined,
       toolTipActive: false,
+      firstName: 'Volker',
+      lastName: 'Vater',
+      spouseId: undefined,
+      gender: Gender.MALE.id,
     },
   };
 

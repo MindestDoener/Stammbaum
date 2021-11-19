@@ -92,7 +92,38 @@
           </option>
         </select>
       </label>
-      <div class="col m-1"></div>
+      <label class="col m-1">
+        Partner/in
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          (change)="setSpouse($event)"
+        >
+          <option selected disabled>Partner/in Auswählen</option>
+          <option value="1"></option>
+          <option
+            [value]="spouse.id"
+            *ngFor="let spouse of possibleSpouses"
+            [selected]="spouse.id == selectedSpouse"
+          >
+            <span class="mx-2">
+              {{ spouse.firstName }} {{ spouse.lastName }}
+              <ng-container [ngSwitch]="spouse.gender.id">
+                <ng-container *ngSwitchCase="0"
+                  ><i class="bi bi-gender-male"></i
+                ></ng-container>
+                <ng-container *ngSwitchCase="1"
+                  ><i class="bi bi-gender-female"></i
+                ></ng-container>
+                <ng-container *ngSwitchCase="2"
+                  ><i class="bi bi-gender-ambiguous"></i
+                ></ng-container>
+                <ng-container *ngSwitchDefault></ng-container>
+              </ng-container>
+            </span>
+          </option>
+        </select>
+      </label>
     </div>
     <div class="row nowrap">
       <div class="m-1 col mt-2">

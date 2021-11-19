@@ -6,7 +6,7 @@ export enum Orientation {
   LEFT_TO_RIGHT = 'LR',
   RIGHT_TO_LEFT = 'RL',
   TOP_TO_BOTTOM = 'TB',
-  BOTTOM_TO_TOM = 'BT'
+  BOTTOM_TO_TOM = 'BT',
 }
 
 export enum Alignment {
@@ -14,7 +14,7 @@ export enum Alignment {
   UP_LEFT = 'UL',
   UP_RIGHT = 'UR',
   DOWN_LEFT = 'DL',
-  DOWN_RIGHT = 'DR'
+  DOWN_RIGHT = 'DR',
 }
 
 export interface DagreSettings {
@@ -34,8 +34,8 @@ export interface DagreSettings {
 export class TreeLayout implements Layout {
   defaultSettings: DagreSettings = {
     orientation: Orientation.LEFT_TO_RIGHT,
-    marginX: 20,
-    marginY: 20,
+    marginX: 50,
+    marginY: 50,
     edgePadding: 100,
     rankPadding: 100,
     nodePadding: 50,
@@ -49,7 +49,7 @@ export class TreeLayout implements Layout {
   dagreEdges: any;
 
   private static getMiddle(a: number, b: number): number {
-    return Math.min(a, b) + (Math.abs(a - b) / 2);
+    return Math.min(a, b) + Math.abs(a - b) / 2;
   }
 
   run(graph: Graph): Graph {
@@ -61,7 +61,7 @@ export class TreeLayout implements Layout {
     // tslint:disable-next-line:forin
     for (const dagreNodeId in this.dagreGraph._nodes) {
       const dagreNode = this.dagreGraph._nodes[dagreNodeId];
-      const node = graph.nodes.find(n => n.id === dagreNode.id);
+      const node = graph.nodes.find((n) => n.id === dagreNode.id);
       if (node) {
         node.position = {
           x: dagreNode.x,
@@ -74,7 +74,8 @@ export class TreeLayout implements Layout {
       }
     }
 
-    for (const entry of Object.entries(graph.edgeLabels)) { // important, otherwise faulty points are set for edges
+    for (const entry of Object.entries(graph.edgeLabels)) {
+      // important, otherwise faulty points are set for edges
       this.updateEdge(graph, entry[1] as Edge);
     }
 
@@ -82,36 +83,74 @@ export class TreeLayout implements Layout {
   }
 
   updateEdge(graph: Graph, edge: Edge): Graph {
-    const sourceNode = graph.nodes.find(n => n.id === edge.source);
-    const targetNode = graph.nodes.find(n => n.id === edge.target);
+    const sourceNode = graph.nodes.find((n) => n.id === edge.source);
+    const targetNode = graph.nodes.find((n) => n.id === edge.target);
+    const spouseNode = graph.nodes.find((n) => n.id === edge.data.spouseId);
     let endingPoint;
     let startingPoint;
     let middlePoint;
-
-    if (sourceNode && targetNode && sourceNode.position && targetNode.position && sourceNode.dimension && targetNode.dimension) {
-      const dir = sourceNode.position.y <= targetNode.position.y ? -1 : 1;
-      startingPoint = {
-        x: sourceNode.position.x,
-        y: sourceNode.position.y - dir * (sourceNode.dimension.height / 2),
-      };
-      middlePoint = {
-        x:TreeLayout.getMiddle(sourceNode.position.x, targetNode.position.x),
-        y:TreeLayout.getMiddle(sourceNode.position.y, targetNode.position.y),
-    }
-      endingPoint = {
-        x: targetNode.position.x,
-        y: targetNode.position.y + dir * (targetNode.dimension.height / 2),
-      };
+    let middlePoint1;
+    if (
+      sourceNode &&
+      targetNode &&
+      sourceNode.position &&
+      targetNode.position &&
+      sourceNode.dimension &&
+      targetNode.dimension
+    ) {
+      const yDir = sourceNode.position.y <= targetNode.position.y ? -1 : 1;
+      if (spouseNode && spouseNode.position && spouseNode.dimension) {
+        const spouseDir =
+          sourceNode.position.x <= spouseNode.position.x ? -1 : 1;
+        startingPoint = {
+          x:
+            sourceNode.position.x -
+            spouseDir * (spouseNode.dimension.width / 2),
+          y: sourceNode.position.y,
+        };
+        middlePoint1 = {
+          x: TreeLayout.getMiddle(sourceNode.position.x, spouseNode.position.x),
+          y: sourceNode.position.y,
+        };
+        middlePoint = {
+          x: TreeLayout.getMiddle(sourceNode.position.x, spouseNode.position.x),
+          y: TreeLayout.getMiddle(sourceNode.position.y, targetNode.position.y),
+        };
+        endingPoint = {
+          x: targetNode.position.x,
+          y: targetNode.position.y + yDir * (targetNode.dimension.height / 2),
+        };
+      } else {
+        startingPoint = {
+          x: sourceNode.position.x,
+          y: sourceNode.position.y - yDir * (sourceNode.dimension.height / 2),
+        };
+        middlePoint = {
+          x: TreeLayout.getMiddle(sourceNode.position.x, targetNode.position.x),
+          y: TreeLayout.getMiddle(sourceNode.position.y, targetNode.position.y),
+        };
+        middlePoint1 = {
+          x: TreeLayout.getMiddle(sourceNode.position.x, targetNode.position.x),
+          y: TreeLayout.getMiddle(sourceNode.position.y, targetNode.position.y),
+        };
+        endingPoint = {
+          x: targetNode.position.x,
+          y: targetNode.position.y + yDir * (targetNode.dimension.height / 2),
+        };
+      }
     }
     // generate new points
-    edge.points = [startingPoint, middlePoint, endingPoint];
+    edge.points = [startingPoint, middlePoint1, middlePoint, endingPoint];
 
     return graph;
   }
 
   createDagreGraph(graph: Graph): any {
     const settings = Object.assign({}, this.defaultSettings, this.settings);
-    this.dagreGraph = new dagre.graphlib.Graph({ compound: settings.compound, multigraph: settings.multigraph });
+    this.dagreGraph = new dagre.graphlib.Graph({
+      compound: settings.compound,
+      multigraph: settings.multigraph,
+    });
 
     // noinspection TypeScriptValidateJSTypes
     this.dagreGraph.setGraph({
@@ -135,7 +174,7 @@ export class TreeLayout implements Layout {
       };
     });
 
-    this.dagreNodes = graph.nodes.map(n => {
+    this.dagreNodes = graph.nodes.map((n) => {
       const node: any = Object.assign({}, n);
       if (n && n.dimension && n.position) {
         node.width = n.dimension.width;
@@ -146,7 +185,7 @@ export class TreeLayout implements Layout {
       return node;
     });
 
-    this.dagreEdges = graph.edges.map(l => {
+    this.dagreEdges = graph.edges.map((l) => {
       const newLink: any = Object.assign({}, l);
       if (!newLink.id) {
         newLink.id = makeUUID();

@@ -1,21 +1,7 @@
-import {
-  AfterContentInit,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { FamilyTreeService } from '../../../shared/family-tree.service';
+import { AfterContentInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Observable, OperatorFunction } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import {
-  NgbActiveModal,
-  NgbCalendar,
-  NgbDate,
-  NgbDateParserFormatter,
-  NgbDateStruct,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MultiselectComponent } from '../multiselect/multiselect.component';
 import { FamilyTree } from '../../../shared/types/familyTree';
@@ -68,6 +54,9 @@ export class ContextMenuContentComponent implements AfterContentInit {
 
   possibleChildren: { label: string; id: number }[] = [];
 
+  possibleSpouses: Person[] = [];
+  selectedSpouse?: number;
+
   today: NgbDateStruct = this.calender.getToday();
   minBirthDate: NgbDateStruct = new NgbDate(1000, 1, 1); // should be enough for the start (can be changed if needed)
 
@@ -96,7 +85,9 @@ export class ContextMenuContentComponent implements AfterContentInit {
   ngAfterContentInit(): void {
     if (this.person) {
       this.editPersonForm.patchValue(this.person);
+      this.selectedSpouse = this.person.spouse;
     }
+    this.possibleSpouses = this.getPossibleSpouses();
     this.setForm();
   }
 
@@ -105,6 +96,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
       ...this.editPersonForm.value,
       children: this.children,
       gender: Gender.getById(this.editPersonForm.value.gender),
+      spouse: this.selectedSpouse,
     };
 
     newPerson.birthDate =
@@ -118,6 +110,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
       this.editPersonForm.reset();
       this.children = [];
       this.multiselect.reset();
+      this.selectedSpouse = undefined;
     } else {
       this.activeModal.close();
     }
@@ -137,6 +130,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
     this.person.birthDate = this.editPersonForm.value.birthDate;
     this.person.deathDate = this.editPersonForm.value.deathDate;
     this.person.children = this.children;
+    this.person.spouse = this.selectedSpouse;
     this.updatePerson.emit(this.person);
   }
 
@@ -146,6 +140,24 @@ export class ContextMenuContentComponent implements AfterContentInit {
 
   setChildren(event: number[]): void {
     this.children = event;
+  }
+
+  isPossibleSpouse(person: Person): boolean {
+    const isSamePerson = person.id === this.person?.id;
+    const isChid = this.person?.children?.find((child) => child === person.id)
+      ? true
+      : !!this.children.find((child) => child === person.id);
+    return !isSamePerson && !isChid;
+  }
+
+  setSpouse(event: any): void {
+    this.selectedSpouse = event.target.value === 1 ? undefined : (event.target.value as number);
+  }
+
+  private getPossibleSpouses(): Person[] {
+    return Array.from(this.familyTree.persons.values()).filter((it) =>
+      this.isPossibleSpouse(it)
+    );
   }
 
   private setForm(): void {

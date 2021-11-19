@@ -1,82 +1,158 @@
-<div class='content'>
-  <div *ngIf='familyTree'>
-    <div class='pb-1 tree-name-heading'>
-      Stammbaum: {{familyTree.name}}
-    </div>
-    <button class='btn btn-dark m-1' (click)='openCreateMenu()'>
+<div class="content">
+  <div *ngIf="familyTree">
+    <div class="pb-1 tree-name-heading">Stammbaum: {{ familyTree.name }}</div>
+    <button class="btn btn-dark m-1" (click)="openCreateMenu()">
       <i class="bi bi-plus-lg"></i> Person Hinzufügen
     </button>
-    <button class='btn btn-outline-dark m-1' (click)='centerFit()'>
+    <button class="btn btn-outline-dark m-1" (click)="centerFit()">
       <i class="bi bi-arrows-angle-expand"></i> Zentrieren und passend Zoomen
     </button>
-    <button class='btn btn-outline-dark m-1' (click)='openExportMenu()'>
+    <button class="btn btn-outline-dark m-1" (click)="openExportMenu()">
       <i class="bi bi-file-earmark-arrow-down"></i> Exportieren
     </button>
-    <hr>
+    <hr />
   </div>
-  <div id='tree-container' style='height: 97.5%;'>
+  <div id="tree-container" style="height: 97.5%">
     <ngx-graph
-      [layoutSettings]="{orientation: 'TB'}"
-      [layout]='graphManager.layout'
-      [links]='graphManager.edges'
-      [nodes]='graphManager.nodes'
-      [showMiniMap]='false'
-      [draggingEnabled]='false'
-      [curve]='graphManager.curve'
-      [center$]='center$'
-      [zoomToFit$]='zoomToFit$'
-      class='graph'
-      xmlns:svg='http://www.w3.org/2000/svg'
-      id='tree-graph'
+      [layoutSettings]="{ orientation: 'TB' }"
+      [layout]="graphManager.layout"
+      [links]="graphManager.edges"
+      [nodes]="graphManager.nodes"
+      [showMiniMap]="false"
+      [draggingEnabled]="false"
+      [curve]="graphManager.curve"
+      [center$]="center$"
+      [zoomToFit$]="zoomToFit$"
+      class="graph"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      id="tree-graph"
     >
       <ng-template #nodeTemplate let-node>
-        <svg:g (dblclick)='dblClickEvent(node)' (mouseenter)='toggleTooltip(node)' (mouseleave)='toggleTooltip(node)'
-               class='node'>
+        <svg:g
+          (dblclick)="dblClickEvent(node)"
+          (mouseenter)="toggleTooltip(node)"
+          (mouseleave)="toggleTooltip(node)"
+          class="node"
+        >
           <svg:rect
             [attr.fill]="'#fff'"
-            [attr.height]='node.dimension.height'
-            [attr.stroke]='node.data.customColor'
-            [attr.width]='node.dimension.width'
-            rx='10'
-            stroke-width='2'
+            [attr.height]="node.dimension.height"
+            [attr.stroke]="'#000'"
+            [attr.width]="node.dimension.width"
+            stroke-width="2"
+            rx="10"
           />
-          <svg:text
-            [attr.x]='node.dimension.width / 2'
-            [attr.y]='node.dimension.height / 2'
-            alignment-baseline='central'
-            text-anchor='middle'
-          >
-            {{node.label}}
-          </svg:text>
-          <svg:g *ngIf='node.data.toolTipActive'>
-            <svg:rect
-              [attr.fill]="'#6c6c6c'"
-              [attr.height]='node.dimension.height'
-              [attr.width]='node.dimension.width'
-              rx='10'
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" y="5">
+            <path
+              stroke-width="2"
+              stroke="'#000'"
+              fill-opacity="0.4"
+              [attr.fill]="node.data.customColor"
+              d="M 0,75 C111,76 122,4 200,0 L 200 0  L 200 70 a10,10 0 0 1 -5,5 z"
+              fill="node.data.customColor"
             />
-            <svg:text
-              *ngIf='!node.data.deathDate'
-              [attr.fill]="'#fff'"
-              [attr.x]='node.dimension.width / 2'
-              [attr.y]='node.dimension.height / 2'
-              alignment-baseline='central'
-              text-anchor='middle'
-            >
-              {{ '&#x2733;&#xFE0F; ' + node.data.birthDate}}
-            </svg:text>
-            <svg:text
-              *ngIf='node.data.deathDate'
-              [attr.fill]="'#fff'"
-              [attr.x]='node.dimension.width / 2'
-              [attr.y]='node.dimension.height / 2 - 3'
-              alignment-baseline='central'
-              text-anchor='middle'
-            >
-              <svg:tspan>{{ '&#x2733;&#xFE0F; ' + node.data.birthDate}}</svg:tspan>
-              <svg:tspan [attr.x]='node.dimension.width / 2'
-                         dy='1.2em'>{{ '&#x271D;&#xFE0F; ' + node.data.deathDate}}</svg:tspan>
-            </svg:text>
+          </svg>
+          <svg:rect
+            [attr.fill]="'#fff'"
+            fill-opacity="0"
+            [attr.height]="node.dimension.height"
+            [attr.stroke]="'#000'"
+            [attr.width]="node.dimension.width"
+            stroke-width="2"
+            rx="10"
+          />
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            x="7"
+            y="15"
+            fill="currentColor"
+            class="bi bi-person-circle"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path
+              fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+            />
+          </svg>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            x="175"
+            y="10"
+            fill="currentColor"
+            class="bi bi-gender-male"
+            viewBox="0 0 16 16"
+          >
+            <path
+              *ngIf="node.data.gender == 0"
+              fill-rule="evenodd"
+              d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"
+            />
+            <path
+              *ngIf="node.data.gender == 1"
+              fill-rule="evenodd"
+              d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"
+            />
+            <path
+              *ngIf="node.data.gender == 2"
+              fill-rule="evenodd"
+              d="M11.5 1a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-3.45 3.45A4 4 0 0 1 8.5 10.97V13H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V14H6a.5.5 0 0 1 0-1h1.5v-2.03a4 4 0 1 1 3.471-6.648L14.293 1H11.5zm-.997 4.346a3 3 0 1 0-5.006 3.309 3 3 0 0 0 5.006-3.31z"
+            />
+          </svg>
+          <svg:text
+            [attr.x]="30"
+            [attr.y]="15"
+            alignment-baseline="central"
+            text-anchor="left"
+          >
+            {{ node.data.firstName }}
+          </svg:text>
+          <svg:text
+            [attr.x]="30"
+            [attr.y]="32"
+            alignment-baseline="central"
+            text-anchor="left"
+          >
+            {{ node.data.lastName }}
+          </svg:text>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            x="7"
+            y="53"
+            fill="currentColor"
+            class="bi bi-calendar"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
+            />
+          </svg>
+          <svg:text
+            [attr.x]="30"
+            [attr.y]="60"
+            alignment-baseline="central"
+            text-anchor="left"
+          >
+            {{ node.data.birthDate + ' - ' + (node.data.deathDate || '*') }}
+          </svg:text>
+          <svg:g *ngIf="node.data.toolTipActive">
+            <svg:rect
+              [attr.fill]="'#00FFFFFF'"
+              fill-opacity="0"
+              [attr.height]="node.dimension.height"
+              [attr.stroke]="node.data.customColor"
+              [attr.width]="node.dimension.width"
+              rx="10"
+              stroke-width="4"
+            />
           </svg:g>
         </svg:g>
       </ng-template>

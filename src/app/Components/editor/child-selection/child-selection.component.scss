@@ -1,7 +1,14 @@
 .scrollable {
   height: auto;
-  max-height: 200px;
   overflow-x: hidden;
+
+  &.selection {
+    max-height: 200px;
+  }
+
+  &.display {
+    max-height: 230px;
+  }
 }
 
 .card {
