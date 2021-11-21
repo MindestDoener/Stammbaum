@@ -100,7 +100,7 @@
           (change)="setSpouse($event)"
         >
           <option selected disabled>Partner/in Auswählen</option>
-          <option value="1"></option>
+          <option [value]="0"></option>
           <option
             [value]="spouse.id"
             *ngFor="let spouse of possibleSpouses"
@@ -133,6 +133,7 @@
           [isUpdateMode]="isUpdateMode()"
           [editPersonForm]="editPersonForm"
           (valueChange)="setChildren($event)"
+          #childSelectionComponent
         ></app-child-selection>
       </div>
     </div>

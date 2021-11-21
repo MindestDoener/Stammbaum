@@ -146,17 +146,30 @@ export class FamilyTreeService {
     familyTree.persons.delete(person.id);
 
     familyTree.persons.forEach(
-      otherPerson =>
+      otherPerson => {
         // @ts-ignore
         otherPerson.children = otherPerson.children.filter(
           childId => childId !== person.id,
-        ),
+        )
+        if (otherPerson.spouse === person.id) {
+          otherPerson.spouse = undefined;
+        }
+      }
     );
     this.updateLastChanged(familyTree).subscribe();
   }
 
   getPersonById(familyTree: FamilyTree, id: number): Person | undefined {
     return familyTree.persons.get(id);
+  }
+
+  getPersonIdBySpouseId(familyTree: FamilyTree, spouseId: number): number | undefined {
+    for (const person of familyTree.persons.values()) {
+      if (person.spouse === spouseId) {
+        return person.id
+      }
+    }
+    return undefined
   }
 
   getTreeMap(): Map<string, FamilyTree> {

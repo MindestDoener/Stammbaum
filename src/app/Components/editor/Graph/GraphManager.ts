@@ -56,9 +56,6 @@ export class GraphManager {
     const spouseIndex = spouseNode ? this.nodes.indexOf(spouseNode) : -1;
     const containsSpouse = spouseIndex > -1;
 
-    if (containsNode) {
-      this.nodes.splice(nodeIndex, 1)
-    }
     if (containsSpouse) {
       this.nodes.splice(spouseIndex, 0, node);
     }
@@ -124,7 +121,7 @@ export class GraphManager {
           source: person.id.toString(),
           target: childId.toString(),
           data: {
-            spouseId: person.spouse,
+            spouseId: person.spouse ? person.spouse.toString() : undefined,
           },
         };
         this.edges.push(edge);

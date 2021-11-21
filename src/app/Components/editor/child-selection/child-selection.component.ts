@@ -36,6 +36,10 @@ export class ChildSelectionComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.init();
+  }
+
+  init():void {
     if (this.editPersonForm) {
       this.editPersonForm?.statusChanges.subscribe((status) => {
         if (status === 'VALID') {
@@ -49,6 +53,13 @@ export class ChildSelectionComponent implements OnInit {
       this.getPersonsChildren();
       this.filterPossibleChildren();
     }
+  }
+
+  reset(): void {
+    this.possiblePersons = []
+    this.selectedChildrenIds = []
+    this.childrenOfPerson = []
+    this.init()
   }
 
   removeChild(child: Person): void {

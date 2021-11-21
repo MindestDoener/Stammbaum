@@ -84,6 +84,14 @@ export class EditorComponent {
   updatePersonEvent = (personToUpdate: Person, modalRef: NgbModalRef) => {
     if (this.familyTree) {
       this.graphManager.updateNode(personToUpdate);
+      if (personToUpdate.spouse) {
+          this.updateSpouse(personToUpdate.spouse, personToUpdate.id)
+      } else {
+        const spouseId = this.familyTreeService.getPersonIdBySpouseId(this.familyTree,personToUpdate.id)
+        if (spouseId) {
+          this.updateSpouse(spouseId, undefined);
+        }
+      }
       if (personToUpdate.children) {
         this.graphManager.updateEdges(personToUpdate);
       }
@@ -91,6 +99,17 @@ export class EditorComponent {
       modalRef.close();
     }
   };
+
+  private updateSpouse(spouseId: number, spouseVal: number | undefined): void {
+    if (this.familyTree) {
+      const spouse = this.familyTreeService.getPersonById(this.familyTree, spouseId);
+      if (spouse) {
+        spouse.spouse = spouseVal;
+        this.graphManager.updateNode(spouse);
+        this.graphManager.updateEdges(spouse);
+      }
+    }
+  }
 
   deletePersonEvent = (personToDelete: Person, modalRef: NgbModalRef) => {
     if (this.familyTree) {

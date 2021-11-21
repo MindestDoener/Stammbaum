@@ -3,12 +3,12 @@ import { Observable, OperatorFunction } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { NgbActiveModal, NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MultiselectComponent } from '../multiselect/multiselect.component';
 import { FamilyTree } from '../../../shared/types/familyTree';
 import { Gender } from '../../../shared/types/gender';
 import { Person } from '../../../shared/types/person';
 import { CreatePersonRequest } from '../../../shared/types/createPersonRequest';
 import { DateConverter } from '../../../shared/types/dateConverter';
+import { ChildSelectionComponent } from '../child-selection/child-selection.component';
 
 @Component({
   selector: 'app-context-menu-content',
@@ -17,8 +17,8 @@ import { DateConverter } from '../../../shared/types/dateConverter';
   providers: [{ provide: NgbDateParserFormatter, useClass: DateConverter }],
 })
 export class ContextMenuContentComponent implements AfterContentInit {
-  @ViewChild('childSelect')
-  multiselect!: MultiselectComponent;
+  @ViewChild('childSelectionComponent')
+  multiselect!: ChildSelectionComponent;
 
   @Input()
   person?: Person;
@@ -111,6 +111,7 @@ export class ContextMenuContentComponent implements AfterContentInit {
       this.children = [];
       this.multiselect.reset();
       this.selectedSpouse = undefined;
+      this.possibleSpouses = this.getPossibleSpouses();
     } else {
       this.activeModal.close();
     }
@@ -144,14 +145,15 @@ export class ContextMenuContentComponent implements AfterContentInit {
 
   isPossibleSpouse(person: Person): boolean {
     const isSamePerson = person.id === this.person?.id;
-    const isChid = this.person?.children?.find((child) => child === person.id)
+    const isChild = this.person?.children?.find((child) => child === person.id)
       ? true
       : !!this.children.find((child) => child === person.id);
-    return !isSamePerson && !isChid;
+    const isMarriedToOther = person.spouse && person.spouse !== this.person?.id
+    return !isSamePerson && !isChild && !isMarriedToOther;
   }
 
   setSpouse(event: any): void {
-    this.selectedSpouse = event.target.value === 1 ? undefined : (event.target.value as number);
+    this.selectedSpouse = event.target.value === "0" ? undefined : parseInt(event.target.value,10);
   }
 
   private getPossibleSpouses(): Person[] {
