@@ -3,7 +3,10 @@
     <div class='item-title'>
       <h4 class='title px-4'>
         <i class='bi bi-tree-fill'></i>
-        {{ familyTree.name }}
+        <span *ngIf='mode !== "edit"'>{{ familyTree.name }}</span>
+        <span [formGroup]='updateNameForm'>
+          <input *ngIf='mode === "edit"' formControlName='treeName' type='text' (change)='updateName()'>
+        </span>
       </h4>
     </div>
     <div class='infobox px-4 d-flex' style='width: 50%;'>

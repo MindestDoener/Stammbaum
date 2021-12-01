@@ -126,6 +126,18 @@ export class FamilyTreeService {
     return this.treeApi.deleteTree(id);
   }
 
+  updateFamilyTree(tree: FamilyTree): Observable<any> {
+    const newTree: CreateFamilyTreeModel = {
+      config: {
+        name: tree.name,
+        persons: Array.from(tree.persons),
+        lastChanged: tree.lastChanged,
+      },
+      username: this.auth.getUsername(),
+    }
+    return this.treeApi.updateTree(tree.id, newTree)
+  }
+
   addPerson(familyTree: FamilyTree, personRequest: CreatePersonRequest): Person {
     const person = {
       id: this.makeUUID(familyTree),
@@ -212,7 +224,7 @@ export class FamilyTreeService {
       },
       username: this.auth.getUsername(),
     };
-    return this.treeApi.updateTree(familyTree, updateFamilyTree);
+    return this.treeApi.updateTree(familyTree.id, updateFamilyTree);
   }
 
   private makeUUID(tree: FamilyTree): number {

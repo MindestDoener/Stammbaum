@@ -72,8 +72,7 @@ export class TreeListComponent {
                 this.treeList$ = this.familyTreeService.getTreeListSorted(
                     this.sortMode
                 );
-            },
-            () => {}
+            }
         );
       // tslint:disable-next-line:no-non-null-assertion
       this.treeList.splice(this.treeList.indexOf(this.treeList.find(tree => tree.id = id)!),1)
@@ -86,12 +85,27 @@ export class TreeListComponent {
         }
     }
 
-  onFileImport(event: any): void {
-      const file: File = event.target.files[0];
-      this.familyTreeService.importTree(file)
-        .subscribe(() => {
-          this.treeList$ = this.familyTreeService.getTreeListSorted(this.sortMode);
-          this.treeList$.toPromise().then((value) => this.treeList = value);
-        })
-  }
+    onFileImport(event: any): void {
+        const file: File = event.target.files[0];
+        this.familyTreeService.importTree(file)
+            .subscribe(() => {
+              this.treeList$ = this.familyTreeService.getTreeListSorted(this.sortMode);
+              this.treeList$.toPromise().then((value) => this.treeList = value);
+            })
+    }
+
+    updateTreeName(newName: string, tree: FamilyTree): void {
+      tree.name = newName;
+      this.familyTreeService.updateFamilyTree(tree).subscribe(
+        () => {
+          if (this.sortMode === SortMode.alphabetic) {
+            this.treeList$ = this.familyTreeService.getTreeListSorted(
+              this.sortMode
+            );
+            this.treeList$.toPromise().then((value) => this.treeList = value)
+          }
+        },
+      )
+
+    }
 }

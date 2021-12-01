@@ -69,10 +69,10 @@ export class TreeApiService {
       .pipe(catchError(TreeApiService.handleError));
   }
 
-  updateTree(oldTree:FamilyTree, newTree: CreateFamilyTreeModel): Observable<any> {
+  updateTree(treeId: string, newTree: CreateFamilyTreeModel): Observable<any> {
     return this.http
       .put<FamilyTreeModel>(
-        apiUrl + 'trees/' + oldTree.id,
+        apiUrl + 'trees/' + treeId,
         newTree,
         apiHttpOptions
       )
