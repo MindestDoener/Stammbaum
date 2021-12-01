@@ -52,7 +52,7 @@
     </div>
     <div *ngFor='let tree of treeList | slice: (page-1) * pageSize : page * pageSize' class='item'>
       <div [ngClass]="{'disabled': mode !== 'view'}" (click)='openTree(tree.id)' class='list-group-item-action'>
-        <app-tree-list-item [mode]='mode' [familyTree]='tree' (delete)='deleteTree($event)'>
+        <app-tree-list-item [mode]='mode' [familyTree]='tree' (delete)='deleteTree($event)' (update)='updateTreeName($event, tree)'>
         </app-tree-list-item>
       </div>
     </div>
