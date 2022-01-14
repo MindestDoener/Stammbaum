@@ -1,35 +1,42 @@
-<nav class='navbar navbar-expand-lg navbar-dark bg-dark'>
+<nav class='navbar navbar-expand-lg navbar-themed'>
   <a class='navbar-brand' routerLink=''>
-    <div class='align-middle' style='padding-left: 20px'>
-      Stammb<i class='bi bi-tree-fill text-gradient tree'></i>um
+    <div class='align-middle logo'>
+      famitry
     </div>
   </a>
-  <button aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'
+  <!--<button aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'
           class='navbar-toggler'
           data-target='#navbarSupportedContent' data-toggle='collapse' type='button'>
     <span class='navbar-toggler-icon'></span>
-  </button>
+  </button>-->
   <div class='collapse navbar-collapse' id='navbarSupportedContent'>
     <ul class='navbar-nav mr-auto'>
       <li class='nav-item'>
-        <a class='nav-link' routerLink=''>
-          Start
+        <a class='nav-link' routerLink='/home' routerLinkActive="active-link">
+          <i class="bi bi-caret-right-fill"></i>
+          home
         </a>
       </li>
       <li class='nav-item'>
-        <a class='nav-link' routerLink='/trees'>
-          Stammbäume
+        <a class='nav-link' routerLink='/about' routerLinkActive="active-link">
+          <i class="bi bi-caret-right-fill"></i>
+          about
         </a>
       </li>
-      <li class='nav-item' ngbDropdown (click)='getTrees()'>
-        <a class='nav-link' id='navbarDropdownMenuLink' ngbDropdownToggle>
-          Editor
+      <li class='nav-item'>
+        <a class='nav-link' routerLink='/trees' routerLinkActive="active-link">
+          <i class="bi bi-caret-right-fill"></i>
+          my trees
         </a>
-        <div ngbDropdownMenu aria-labelledby='navbarDropdownMenuLink'>
-          <a ngbDropdownItem *ngFor='let tree of treeList$ | async' [href]='"/trees/" + tree.id'>{{tree.name}}</a>
-        </div>
+      </li>
+      <li class='nav-item'>
+        <a class='nav-link' routerLink='/howto' routerLinkActive="active-link">
+          <i class="bi bi-caret-right-fill"></i>
+          how to
+        </a>
       </li>
     </ul>
+    <button class='btn btn-outline-secondary' type='button' (click)='toggleTheme()'>toggle mode</button>
     <form class='d-flex ms-auto me-2' *ngIf='!auth.isAuthenticated()'>
       <button routerLink='/login' class='btn btn-outline-secondary' type='submit'>Einloggen</button>
     </form>
