@@ -1,15 +1,25 @@
-<div id='outer' (mousemove)='moveBg($event)'>
-  <div id='middle'>
-    <div id='inner'>
-      <h1 class='align-middle'>
-        Stammb<i class='bi bi-tree-fill text-gradient tree'></i>um
-      </h1>
-      <div class='w-100 d-flex'>
-        <button class='btn btn-outline-dark mx-auto rounded-0' routerLink='../trees' type='button'>
-          <i class='bi bi-tree-fill'></i>
-          Erstellen
-        </button>
-      </div>
+<div id='outer'>
+  <div id='waves'>
+    <app-wave-graphic></app-wave-graphic>
+  </div>
+  <div id='text'>
+    <h1>Create Family Trees</h1>
+    <div>simple, fast, free and stylish.</div>
+    <div>Personalized to your own wish.</div>
+  </div>
+  <div id='graphic'>
+    <div class='layer'>
+      <app-node-graphic class='node' initColor='secondary'></app-node-graphic>
+      <app-node-graphic class='node'></app-node-graphic>
+    </div>
+    <div class='layer'>
+      <app-node-graphic class='node'></app-node-graphic>
+      <app-node-graphic class='node'></app-node-graphic>
+      <app-node-graphic class='node' initColor='secondary'></app-node-graphic>
+    </div>
+    <div class='layer'>
+      <div class='node'></div>
+      <app-node-graphic class='node'></app-node-graphic>
     </div>
   </div>
 </div>

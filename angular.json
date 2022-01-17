@@ -32,9 +32,8 @@
               "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": [
-              "node_modules/popper.js/dist/esm/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.esm.js",
-              "node_modules/jquery/dist/jquery.min.js"
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

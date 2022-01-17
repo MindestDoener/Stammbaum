@@ -6,6 +6,7 @@ import { FamilyTree } from './shared/types/familyTree';
 import { SortMode } from './shared/types/sortMode';
 import { AuthService } from './shared/auth.service';
 import { PreferenceService } from './shared/preference.service';
+import { Theme } from './shared/types/theme';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,10 @@ export class AppComponent {
 
   toggleTheme(): void {
     this.pref.toggleTheme();
+  }
+
+  getThemeIcon(): string {
+    return this.pref.theme === Theme.LIGHT ? 'moon' : 'sun'
   }
 
   getTrees():void {

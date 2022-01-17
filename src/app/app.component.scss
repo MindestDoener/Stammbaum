@@ -8,9 +8,8 @@
 
 .footer {
   height: 50px;
-  background-color: $bg;
-  color: $text-secondary;
-
+  background-color: $color-primary;
+  color: $bg;
   padding: 10px 20px;
 }
 
@@ -38,4 +37,41 @@
   display: inline;
   left: 0;
   position: absolute;
+}
+
+.toggle {
+  :hover {
+    color: $text-secondary;
+  }
+}
+
+.dropdown-toggle::after {
+  display:none;
+}
+
+.theme-toggle {
+  padding: 10px 15px;
+  font-size: 20px;
+}
+
+.user-toggle {
+  padding: 10px 15px;
+  font-size: 24px;
+}
+
+#dropdown {
+  right: 0;
+  left: auto !important;
+  background-color: $bg;
+  border-color: $text-secondary;
+  color: $text;
+  .dropdown-item:hover {
+    background-color: $hover;
+  }
+  .dropdown-item:focus {
+    background-color: $hover;
+  }
+  .dropdown-item:active {
+    background-color: $color-primary;
+  }
 }
