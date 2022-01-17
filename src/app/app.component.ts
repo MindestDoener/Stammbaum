@@ -5,6 +5,8 @@ import { FamilyTreeService } from './shared/family-tree.service';
 import { FamilyTree } from './shared/types/familyTree';
 import { SortMode } from './shared/types/sortMode';
 import { AuthService } from './shared/auth.service';
+import { PreferenceService } from './shared/preference.service';
+import { Theme } from './shared/types/theme';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +15,19 @@ import { AuthService } from './shared/auth.service';
 })
 export class AppComponent {
   title = 'stammbaum-app';
-
   treeList$: Observable<FamilyTree[]>;
 
-  constructor(private familyTreeService: FamilyTreeService, public auth: AuthService) {
+  constructor(private familyTreeService: FamilyTreeService, public auth: AuthService, private pref: PreferenceService) {
     this.treeList$ = new Observable<FamilyTree[]>();
     this.getTrees();
+  }
+
+  toggleTheme(): void {
+    this.pref.toggleTheme();
+  }
+
+  getThemeIcon(): string {
+    return this.pref.theme === Theme.LIGHT ? 'moon' : 'sun'
   }
 
   getTrees():void {

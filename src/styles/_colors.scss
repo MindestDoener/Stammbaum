@@ -1,0 +1,33 @@
+:root {
+  --bg--light: #ffffff;
+  --bg--dark: #222222;
+
+  --text--light: #222222;
+  --text--dark: #ffffff;
+
+  --text-secondary--light: #888888;
+  --text-secondary--dark: #888888;
+
+  --hover--light: #EEEEEE;
+  --hover--dark: #444444;
+
+  --primary--light: #85CDCA;
+  --primary--dark: #58AEAB;
+
+  --secondary--light: #E88A67;
+  --secondary--dark: #E27249;
+
+  --bg: var(--bg--light);
+  --text: var(--text--light);
+  --text-secondary: var(--text-secondary--light);
+  --hover: var(--hover--light);
+  --primary: var(--primary--light);
+  --secondary: var(--secondary--light);
+}
+
+$bg: var(--bg);
+$text: var(--text);
+$text-secondary: var(--text-secondary);
+$hover: var(--hover);
+$color-primary: var(--primary);
+$color-secondary: var(--secondary);

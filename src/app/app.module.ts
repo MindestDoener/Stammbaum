@@ -18,6 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './Components/login-page/login-page.component';
 import { ExportMenuComponent } from './Components/editor/export-menu/export-menu.component';
 import { ChildSelectionComponent } from './Components/editor/child-selection/child-selection.component';
+import { NodeGraphicComponent } from './Components/node-graphic/node-graphic.component';
+import { WaveGraphicComponent } from './Components/wave-graphic/wave-graphic.component';
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import { ChildSelectionComponent } from './Components/editor/child-selection/chi
     LoginPageComponent,
     ExportMenuComponent,
     ChildSelectionComponent,
+    NodeGraphicComponent,
+    WaveGraphicComponent,
   ],
   imports: [
     BrowserModule,
