@@ -10,7 +10,7 @@ export class PreferenceService {
   constructor() {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       // checks for browser dark mode preference
-      this.setTheme(Theme.DARK)
+      // this.setTheme(Theme.DARK)
     }
   }
 
