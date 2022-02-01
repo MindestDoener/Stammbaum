@@ -26,9 +26,9 @@
         </div>
 
       </div>
-      <div class="list">
 
   <div class='list'>
+    <div class="items">
       <div *ngIf="mode === 'add'" class='card item'>
         <div class='d-flex p-2 card-body'>
           <div class='item-title'>
@@ -54,13 +54,13 @@
             <app-tree-list-item [mode]='mode' [familyTree]='tree' (delete)='deleteTree($event)' (update)='updateTreeName($event, tree)'>
             </app-tree-list-item>
           </div>
-        </div>
-        <div class='my-3 size-fixed'>
+      </div>
+    </div>
+  </div>
+        <div class='my-3 size-fixed' style="margin: auto">
            <ngb-pagination *ngIf='treeList.length > pageSize' [collectionSize]='treeList.length' [(page)]='page'
                             [pageSize]='pageSize' [directionLinks]='false'></ngb-pagination>
                             </div>
-      </div>
-    </div>
   </div>
   <div id='waves'>
     <app-wave-graphic></app-wave-graphic>
