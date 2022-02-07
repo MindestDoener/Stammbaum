@@ -1,44 +1,70 @@
-<div id="outer">
-  <div id="content-container">
-    <div class='login'>
-      <main class='form-signin'>
-        <form [formGroup]='form' (submit)='authenticate()'>
-          <h1 class='h3 mb-3 fw-normal'>{{ translation.get(this.routingName) }}</h1>
-          <div class='form-floating username'>
-            <input type='text' class='form-control' formControlName='username' id='floatingInput' placeholder='Benutzername'
-                   required>
-            <label for='floatingPassword'>Benutzername</label>
-          </div>
-          <div class='form-floating password' [class.password-register]='!isLogin()'>
-            <input type='password' class='form-control' formControlName='password' id='floatingPassword'
-                   placeholder='Passwort' required>
-            <label for='floatingPassword'>Passwort</label>
-          </div>
-          <div class='form-floating confirm-password' *ngIf="!isLogin()">
-            <input type='password' class='form-control' formControlName='confirmPassword' id='floatingConfirmPassword'
-                   placeholder='Passwort bestätigen' required >
-            <label for='floatingConfirmPassword'>Passwort bestätigen</label>
-          </div>
-          <!--<div class='checkbox mb-3' *ngIf="this.routingName === 'login'">
-            <label>
-              <input type='checkbox' value='remember-me'> Angemeldet Bleiben
-            </label>
-          </div>-->
-          <div *ngIf='!success'>
-            <p style='color: red'>{{ errorMessage }}</p>
-          </div>
-          <button class='w-100 btn btn-lg btn-outline-dark'
-                  type='submit'
-                  [disabled]="form.status == 'INVALID'">
+<div class="login">
+  <main class="form-signin">
+    <form [formGroup]="form" (submit)="authenticate()">
+      <h1 class="h2 mb-3 fw-normal">{{ translation.get(this.routingName) }}</h1>
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control input-item"
+          formControlName="username"
+          id="floatingInput"
+          placeholder="Username"
+          required
+        />
+        <label for="floatingInput">Username</label>
+      </div>
+      <div class="form-floating" [class.password-register]="!isLogin()">
+        <input
+          type="password"
+          class="form-control input-item"
+          formControlName="password"
+          id="floatingPassword"
+          placeholder="Password"
+          required
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+      <div class="form-floating" *ngIf="!isLogin()">
+        <input
+          type="password"
+          class="form-control input-item"
+          formControlName="confirmPassword"
+          id="floatingConfirmPassword"
+          placeholder="Passwort bestätigen"
+          required
+        />
+        <label for="floatingConfirmPassword">Repeat Password</label>
+      </div>
+      <!--<div class='checkbox mb-3' *ngIf="this.routingName === 'login'">
+        <label>
+          <input type='checkbox' value='remember-me'> Angemeldet Bleiben
+        </label>
+      </div>-->
+      <div *ngIf="!success">
+        <p style="color: red">{{ errorMessage }}</p>
+      </div>
+      <div class="row g-2">
+        <div class="col-md">
+          <button
+            class="btn"
+            type="submit"
+            [disabled]="form.status == 'INVALID'"
+          >
             {{ translation.get(this.routingName) }}
           </button>
-        </form>
-        <div *ngIf="isLogin()">Neu hier? <a routerLink='/register'>Jetzt registrieren!</a></div>
-        <div *ngIf="!isLogin()">Du hast bereits ein Konto? <a routerLink='/login'>Jetzt einloggen!</a></div>
-      </main>
-    </div>
-    <div id='waves'>
-      <app-wave-graphic></app-wave-graphic>
-    </div>
-  </div>
+        </div>
+        <div class="col-md center">
+          <div *ngIf="isLogin()">
+            New here? <a routerLink="/register">Register now!</a>
+          </div>
+          <div *ngIf="!isLogin()">
+            Already registered? <a routerLink="/login">Login!</a>
+          </div>
+        </div>
+      </div>
+      <div id="waves">
+        <app-wave-graphic></app-wave-graphic>
+      </div>
+    </form>
+  </main>
 </div>
