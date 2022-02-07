@@ -2,103 +2,38 @@
   <main class="form-signin">
     <form [formGroup]="form" (submit)="authenticate()">
       <h1 class="h2 mb-3 fw-normal">{{ translation.get(this.routingName) }}</h1>
-      <div class="row g-2 mb-3" *ngIf="!isLogin()">
-        <div class="col-md">
-          <div class="form-floating">
-            <input
-              type="text"
-              class="form-control input-item"
-              formControlName="firstname"
-              id="text"
-              placeholder="First Name"
-              required
-            />
-            <label for="floatingFirstName">First Name</label>
-          </div>
-        </div>
-        <div class="col-md">
-          <div class="form-floating">
-            <input
-              type="text"
-              class="form-control input-item"
-              formControlName="lastname"
-              id="floatingLastName"
-              placeholder="Last Name"
-              required
-            />
-            <label for="floatingLastName">Last Name</label>
-          </div>
-        </div>
-      </div>
-      <div class="form-floating mb-3" *ngIf="!isLogin()">
+      <div class="form-floating">
         <input
           type="text"
           class="form-control input-item"
-          formControlName="email"
-          id="floatingEmail"
-          placeholder="Email"
+          formControlName="username"
+          id="floatingInput"
+          placeholder="Username"
           required
         />
-        <label for="floatingEmail">Email</label>
+        <label for="floatingInput">Username</label>
       </div>
-      <div class="row g-2 mb-3">
-        <div class="col-md">
-          <div class="form-floating">
-            <input
-              type="text"
-              class="form-control input-item"
-              formControlName="username"
-              id="floatingInput"
-              placeholder="Username"
-              required
-            />
-            <label for="floatingInput">Username</label>
-          </div>
-        </div>
-        <div class="col-md" *ngIf="!isLogin()">
-          <div class="form-floating">
-            <input
-              type="text"
-              class="form-control input-item"
-              formControlName="birthdate"
-              id="floatingBirthdate"
-              placeholder="Birthdate"
-              required
-            />
-            <label for="floatingBirthdate">Birthdate</label>
-          </div>
-        </div>
+      <div class="form-floating" [class.password-register]="!isLogin()">
+        <input
+          type="password"
+          class="form-control input-item"
+          formControlName="password"
+          id="floatingPassword"
+          placeholder="Password"
+          required
+        />
+        <label for="floatingPassword">Password</label>
       </div>
-      <div class="row g-2 mb-3">
-        <div class="col-md">
-          <div
-            class="form-floating"
-            [class.password-register]="!isLogin()"
-          >
-            <input
-              type="password"
-              class="form-control input-item"
-              formControlName="password"
-              id="floatingPassword"
-              placeholder="Password"
-              required
-            />
-            <label for="floatingPassword">Password</label>
-          </div>
-        </div>
-        <div class="col-md" *ngIf="!isLogin()">
-          <div class="form-floating">
-            <input
-              type="password"
-              class="form-control input-item"
-              formControlName="confirmPassword"
-              id="floatingConfirmPassword"
-              placeholder="Passwort bestätigen"
-              required
-            />
-            <label for="floatingConfirmPassword">Repeat Password</label>
-          </div>
-        </div>
+      <div class="form-floating" *ngIf="!isLogin()">
+        <input
+          type="password"
+          class="form-control input-item"
+          formControlName="confirmPassword"
+          id="floatingConfirmPassword"
+          placeholder="Passwort bestätigen"
+          required
+        />
+        <label for="floatingConfirmPassword">Repeat Password</label>
       </div>
       <!--<div class='checkbox mb-3' *ngIf="this.routingName === 'login'">
         <label>
@@ -111,7 +46,7 @@
       <div class="row g-2">
         <div class="col-md">
           <button
-            class="w-100 btn btn-lg btn-outline-dark"
+            class="btn"
             type="submit"
             [disabled]="form.status == 'INVALID'"
           >
@@ -127,9 +62,9 @@
           </div>
         </div>
       </div>
+      <div id="waves">
+        <app-wave-graphic></app-wave-graphic>
+      </div>
     </form>
   </main>
-  <div id="waves">
-    <app-wave-graphic></app-wave-graphic>
-  </div>
 </div>
