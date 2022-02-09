@@ -20,6 +20,7 @@ import { ExportMenuComponent } from './Components/editor/export-menu/export-menu
 import { ChildSelectionComponent } from './Components/editor/child-selection/child-selection.component';
 import { NodeGraphicComponent } from './Components/node-graphic/node-graphic.component';
 import { WaveGraphicComponent } from './Components/wave-graphic/wave-graphic.component';
+import { AboutComponent } from './Components/about-page/about.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { WaveGraphicComponent } from './Components/wave-graphic/wave-graphic.com
     ChildSelectionComponent,
     NodeGraphicComponent,
     WaveGraphicComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

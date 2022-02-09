@@ -8,9 +8,11 @@
 
 .footer {
   height: 50px;
+  width: 100%;
   background-color: $color-primary;
-  color: $bg;
+  color: $text;
   padding: 10px 20px;
+  position: absolute;
 }
 
 .navbar-themed {
