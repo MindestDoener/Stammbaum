@@ -1,3 +1,10 @@
+@import "src/styles/styles";
+
+.card {
+  background-color: $bg;
+  border-color: $hover;
+}
+
 .scrollable {
   height: auto;
   overflow-x: hidden;

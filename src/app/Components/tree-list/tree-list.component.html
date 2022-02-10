@@ -1,68 +1,74 @@
-<div id="outer">
-  <div id="content-container">
-    <div class="list-container">
-      <div class="toolbar">
+<div id='outer'>
+  <div id='content-container'>
+    <div class='list-container'>
+      <div class='toolbar'>
         <button (click)="setMode('add');" *ngIf="mode === 'view' " class='btn toolbar-item'>
           <i class='bi bi-plus-circle'></i>
-           </button>
-        <button (click)="setMode('edit');" *ngIf="mode === 'view' "  class="btn toolbar-item" > <i class='bi bi-pen-fill'></i></button>
-        <button (click)="setMode('view');" *ngIf="mode === 'add' || mode === 'edit' " class='btn toolbar-item'>
-               <i class='bi bi-x'></i>
-             </button>
-        <button (click)="fileUpload.click()" class="btn toolbar-item"> 
-          <i class='bi bi-file-earmark-arrow-up'></i>
-          <input type='file' style='display: none' accept='application/json' (change)='onFileImport($event)' #fileUpload>
         </button>
-        <input type="text" class="form-control toolbar-item search" placeholder="search my trees...">
+        <button (click)="setMode('edit');" *ngIf="mode === 'view' " class='btn toolbar-item'><i
+          class='bi bi-pen-fill'></i></button>
+        <button (click)="setMode('view');" *ngIf="mode === 'add' || mode === 'edit' " class='btn toolbar-item'>
+          <i class='bi bi-x'></i>
+        </button>
+        <button (click)='fileUpload.click()' class='btn toolbar-item'>
+          <i class='bi bi-file-earmark-arrow-up'></i>
+          <input type='file' style='display: none' accept='application/json' (change)='onFileImport($event)'
+                 #fileUpload>
+        </button>
+        <input type='text' class='form-control toolbar-item search' placeholder='search my trees...'>
         <div ngbDropdown class='toolbar-item sort last'>
-                <button class='form-control drop-down-button' id='sortDropdown' ngbDropdownToggle>sort by...</button>
-                <div ngbDropdownMenu aria-labelledby='sortDropdown'>
-                  <button ngbDropdownItem (click)='setSortMode(0)'>Zuletzt Geändert <i *ngIf='sortMode === 0'
-                                                                                       class='bi bi-check'></i></button>
-                  <button ngbDropdownItem (click)='setSortMode(1)'>Alphabetisch <i *ngIf='sortMode === 1' class='bi bi-check'></i>
-                  </button>
-                  <button ngbDropdownItem (click)='setSortMode(2)'>Anzahl Personen <i *ngIf='sortMode === 2' class='bi bi-check'></i></button>
-                </div>
+          <button class='form-control drop-down-button' id='sortDropdown' ngbDropdownToggle>sort by...</button>
+          <div ngbDropdownMenu aria-labelledby='sortDropdown'>
+            <button ngbDropdownItem (click)='setSortMode(0)'>Zuletzt Geändert <i *ngIf='sortMode === 0'
+                                                                                 class='bi bi-check'></i></button>
+            <button ngbDropdownItem (click)='setSortMode(1)'>Alphabetisch <i *ngIf='sortMode === 1'
+                                                                             class='bi bi-check'></i>
+            </button>
+            <button ngbDropdownItem (click)='setSortMode(2)'>Anzahl Personen <i *ngIf='sortMode === 2'
+                                                                                class='bi bi-check'></i></button>
+          </div>
         </div>
 
       </div>
+      <div class='list'>
+        <div class='items'>
+          <div *ngIf="mode === 'add'" class='card item'>
+            <div class='d-flex p-2 card-body'>
+              <div class='item-title'>
+                <h4 class='border-right pr-4 title'><i class='bi bi-tree-fill'></i>
+                </h4>
+              </div>
+              <div class='border-left px-4'>
+                <form (ngSubmit)='onCreateFamilyTree()' [formGroup]='createFamilyTreeForm' class='form-row'>
+                  <label class='m-1'>
+                    Stammbaum Name:
+                    <input class='form-control' formControlName='treeName' placeholder='Neuer Baum' required
+                           type='text'>
+                  </label>
+                  <button [disabled]="createFamilyTreeForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
+                    Erstellen
+                  </button>
+                </form>
 
-  <div class='list'>
-    <div class="items">
-      <div *ngIf="mode === 'add'" class='card item'>
-        <div class='d-flex p-2 card-body'>
-          <div class='item-title'>
-            <h4 class='border-right pr-4 title'><i class='bi bi-tree-fill'></i>
-            </h4>
+              </div>
+            </div>
           </div>
-          <div class='border-left px-4'>
-            <form (ngSubmit)='onCreateFamilyTree()' [formGroup]='createFamilyTreeForm' class='form-row'>
-              <label class='m-1'>
-                Stammbaum Name:
-                <input class='form-control' formControlName='treeName' placeholder='Neuer Baum' required type='text'>
-              </label>
-              <button [disabled]="createFamilyTreeForm.status == 'INVALID'" class='btn btn-dark m-1' type='submit'>
-                Erstellen
-              </button>
-            </form>
-  
-           </div>
-         </div>
-       </div>
-        <div *ngFor='let tree of treeList | slice: (page-1) * pageSize : page * pageSize' class='item'>
-          <div [ngClass]="{'disabled': mode !== 'view'}" (click)='openTree(tree.id)' class='list-group-item-action'>
-            <app-tree-list-item [mode]='mode' [familyTree]='tree' (delete)='deleteTree($event)' (update)='updateTreeName($event, tree)'>
-            </app-tree-list-item>
+          <div *ngFor='let tree of treeList | slice: (page-1) * pageSize : page * pageSize' class='item'>
+            <div [ngClass]="{'disabled': mode !== 'view'}" (click)='openTree(tree.id)' class='list-group-item-action'>
+              <app-tree-list-item [mode]='mode' [familyTree]='tree' (delete)='deleteTree($event)'
+                                  (update)='updateTreeName($event, tree)'>
+              </app-tree-list-item>
+            </div>
           </div>
+        </div>
+      </div>
+      <div class='my-3 size-fixed' style='margin: auto'>
+        <ngb-pagination *ngIf='treeList.length > pageSize' [collectionSize]='treeList.length' [(page)]='page'
+                        [pageSize]='pageSize' [directionLinks]='false'></ngb-pagination>
       </div>
     </div>
-  </div>
-        <div class='my-3 size-fixed' style="margin: auto">
-           <ngb-pagination *ngIf='treeList.length > pageSize' [collectionSize]='treeList.length' [(page)]='page'
-                            [pageSize]='pageSize' [directionLinks]='false'></ngb-pagination>
-                            </div>
-  </div>
-  <div id='waves'>
-    <app-wave-graphic></app-wave-graphic>
+    <div id='waves'>
+      <app-wave-graphic></app-wave-graphic>
+    </div>
   </div>
 </div>

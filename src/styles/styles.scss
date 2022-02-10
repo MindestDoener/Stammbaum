@@ -11,7 +11,7 @@
 }
 
 .content {
-  height: calc(100% - 122px);
+  height: calc(100% - 72px);
   background-color: $bg;
   padding: 0 !important;
 }
@@ -57,4 +57,29 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+}
+
+//modals
+::ng-deep.modal-content {
+  border: none;
+}
+
+.modal-header {
+  background-color: $bg;
+  color: $text;
+  border: solid 2px $hover;
+  border-bottom: none !important;
+}
+
+.modal-body {
+  background-color: $bg;
+  color: $text;
+  border: solid 2px $hover;
+}
+
+.modal-footer {
+  background-color: $bg;
+  color: $text;
+  border: solid 2px $hover;
+  border-top: none !important;
 }
