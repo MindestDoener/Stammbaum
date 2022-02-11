@@ -22,6 +22,7 @@ export class PreferenceService {
   setTheme(theme: Theme): void {
     this.theme = theme
     document.documentElement.style.setProperty('--bg', `var(--bg--${this.theme.name})`)
+    document.documentElement.style.setProperty('--bg-a', `var(--bg-a-${this.theme.name})`)
     document.documentElement.style.setProperty('--text', `var(--text--${this.theme.name})`)
     document.documentElement.style.setProperty('--text-secondary', `var(--text-secondary--${this.theme.name})`)
     document.documentElement.style.setProperty('--hover', `var(--hover--${this.theme.name})`)

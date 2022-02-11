@@ -17,7 +17,7 @@ export class TreeListComponent {
     treeList: FamilyTree[] = [];
 
     page = 1;
-    pageSize = 5;
+    pageSize = 4;
 
     createFamilyTreeForm = new FormGroup({
         treeName: new FormControl(),

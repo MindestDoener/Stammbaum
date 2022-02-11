@@ -1,0 +1,26 @@
+@import "src/styles/styles";
+
+.btn {
+  color: $text;
+  &:hover {
+    background-color: $hover;
+    color: $text;
+  }
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.close {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  &:focus {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.outline {
+  border: solid 1px $text;
+  &:focus {
+    border: solid 1px $text;
+  }
+}

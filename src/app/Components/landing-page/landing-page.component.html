@@ -1,25 +1,27 @@
 <div id='outer'>
-  <div id='waves'>
-    <app-wave-graphic></app-wave-graphic>
-  </div>
-  <div id='text'>
-    <h1>Create Family Trees</h1>
-    <div>simple, fast, free and stylish.</div>
-    <div>Personalized to your own wish.</div>
-  </div>
-  <div id='graphic'>
-    <div class='layer'>
-      <app-node-graphic class='node' initColor='secondary'></app-node-graphic>
-      <app-node-graphic class='node'></app-node-graphic>
-    </div>
-    <div class='layer'>
-      <app-node-graphic class='node'></app-node-graphic>
-      <app-node-graphic class='node'></app-node-graphic>
-      <app-node-graphic class='node' initColor='secondary'></app-node-graphic>
-    </div>
-    <div class='layer'>
-      <div class='node'></div>
-      <app-node-graphic class='node'></app-node-graphic>
+  <div id="content-container">
+      <div id='text'>
+        <h1>Create Family Trees</h1>
+        <div>simple, fast, free and stylish.</div>
+        <div>Personalized to your own wish.</div>
+      </div>
+      <div id='graphic'>
+        <div class='layer'>
+          <app-node-graphic class='node' initColor='secondary'></app-node-graphic>
+          <app-node-graphic class='node'></app-node-graphic>
+        </div>
+        <div class='layer'>
+          <app-node-graphic class='node'></app-node-graphic>
+          <app-node-graphic class='node'></app-node-graphic>
+          <app-node-graphic class='node' initColor='secondary'></app-node-graphic>
+        </div>
+        <div class='layer'>
+          <div class='node'></div>
+          <app-node-graphic class='node'></app-node-graphic>
+        </div>
+      </div>
+    <div id='waves'>
+      <app-wave-graphic></app-wave-graphic>
     </div>
   </div>
 </div>

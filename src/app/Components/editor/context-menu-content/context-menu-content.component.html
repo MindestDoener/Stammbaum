@@ -1,36 +1,31 @@
 <div class="modal-header">
   <h4 class="modal-title" *ngIf="isUpdateMode()">
-    Person bearbeiten: {{ person?.firstName }} {{ person?.lastName }}
+    Edit person: {{ person?.firstName }} {{ person?.lastName }}
   </h4>
-  <h4 class="modal-title" *ngIf="!isUpdateMode()">Person hinzufügen</h4>
-  <button
-    (click)="activeModal.dismiss('Cross click')"
-    aria-label="Close"
-    class="btn-close"
-    type="button"
-  >
-    <span aria-hidden="true"></span>
-  </button>
+  <h4 class="modal-title" *ngIf="!isUpdateMode()">Add person</h4>
+  <div (click)="activeModal.dismiss('Cross click')" aria-label='Close' class='btn close'>
+    <i class='bi bi-x-lg'></i>
+  </div>
 </div>
 <div class="modal-body">
   <form [formGroup]="editPersonForm">
     <div class="row nowrap">
       <label class="m-1 col">
-        Vorname: *
+        First Name: *
         <input
           class="form-control"
           formControlName="firstName"
-          placeholder="Vorname"
+          placeholder="First Name"
           required
           type="text"
         />
       </label>
       <label class="m-1 col">
-        Nachname: *
+        Last Name: *
         <input
           class="form-control"
           formControlName="lastName"
-          placeholder="Nachname"
+          placeholder="Last Name"
           required
           type="text"
           [ngbTypeahead]="searchLastNames"
@@ -39,7 +34,7 @@
     </div>
     <div class="row nowrap">
       <label class="m-1 col">
-        Geburtstag: *
+        Birthdate: *
         <div class="input-group">
           <input
             class="form-control"
@@ -61,7 +56,7 @@
         </div>
       </label>
       <label class="m-1 col">
-        Todestag:
+        Death Date:
         <div class="input-group">
           <input
             class="form-control"
@@ -84,22 +79,22 @@
     </div>
     <div class="row nowrap">
       <label class="m-1 col">
-        Geschlecht: *
+        Gender: *
         <select class="form-select" formControlName="gender" required>
-          <option selected disabled value="">Wähle ein Geschlecht</option>
+          <option selected disabled value="">choose a Gender</option>
           <option *ngFor="let gender of genders; index as i" [ngValue]="i">
             {{ gender }}
           </option>
         </select>
       </label>
       <label class="col m-1">
-        Partner/in
+        Partner
         <select
           class="form-select"
           aria-label="Default select example"
           (change)="setSpouse($event)"
         >
-          <option selected disabled>Partner/in Auswählen</option>
+          <option selected disabled>choose Partner</option>
           <option [value]="0"></option>
           <option
             [value]="spouse.id"
@@ -148,15 +143,15 @@
       id="addMore"
       [formControl]="addMoreCheckBox"
     />
-    <label class="form-check-label" for="addMore"> Weitere hinzufügen </label>
+    <label class="form-check-label" for="addMore"> Add more </label>
   </div>
   <button
     [disabled]="editPersonForm.status == 'INVALID'"
-    class="btn btn-dark m-1"
+    class="btn outline m-1"
     (click)="isUpdateMode() ? onUpdatePerson() : onAddPerson()"
     type="button"
   >
-    {{ isUpdateMode() ? 'Aktualisieren' : 'Hinzufügen' }}
+    {{ isUpdateMode() ? 'Update' : 'Add' }}
   </button>
   <button
     *ngIf="isUpdateMode()"
@@ -164,13 +159,13 @@
     class="btn btn-danger m-1"
     type="button"
   >
-    Person entfernen
+    Remove person
   </button>
   <button
     (click)="activeModal.close('Close click')"
-    class="btn btn-outline-dark"
+    class="btn outline"
     type="button"
   >
-    Schließen
+    Close
   </button>
 </div>

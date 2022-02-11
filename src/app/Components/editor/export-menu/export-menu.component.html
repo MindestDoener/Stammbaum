@@ -1,24 +1,24 @@
 <div class='modal-header'>
-  <h4 class='modal-title'>Exportieren</h4>
+  <h4 class='modal-title'>Export</h4>
   <div class='spinner-border m-1' role='status' *ngIf='loading'>
     <span class='sr-only'></span>
   </div>
-  <button (click)="activeModal.dismiss('Cross click')" aria-label='Close' class='btn-close' type='button'>
-    <span aria-hidden='true'></span>
-  </button>
+  <div (click)="activeModal.dismiss('Cross click')" aria-label='Close' class='btn close'>
+    <i class='bi bi-x-lg'></i>
+  </div>
 </div>
 <div class='modal-body'>
-  <button class='btn btn-outline-dark me-1' type='button' (click)='exportJSON()'>
-    als JSON (kann wieder importiert werden)
+  <button class='btn outline me-1' type='button' (click)='exportJSON()'>
+    as JSON (can be imported)
   </button>
-  <button class='btn btn-outline-dark' type='button' (click)='exportPNG()' [disabled]='loading'>
-    als PNG
+  <button class='btn outline' type='button' (click)='exportPNG()' [disabled]='loading'>
+    as PNG
   </button>
   <!-- als PDF könnte man noch machen-->
 </div>
 <div class='modal-footer'>
-  <button (click)="activeModal.close('Close click')" class='btn btn-outline-dark' type='button'>
-    Schließen
+  <button (click)="activeModal.close('Close click')" class='btn outline' type='button'>
+    close
   </button>
 </div>
 

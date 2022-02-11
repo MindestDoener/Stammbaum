@@ -5,6 +5,7 @@ import { EditorResolverService } from './Components/editor/editor.resolver';
 import { LandingPageComponent } from './Components/landing-page/landing-page.component';
 import { TreeListComponent } from './Components/tree-list/tree-list.component';
 import { LoginPageComponent } from './Components/login-page/login-page.component';
+import { AboutComponent } from './Components/about-page/about.component';
 import { AuthService } from './shared/auth.service';
 
 const routes: Routes = [
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: LoginPageComponent,
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
   }
 ];
 

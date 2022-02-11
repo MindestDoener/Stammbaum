@@ -1,22 +1,33 @@
 <div class='card item'>
   <div class='d-flex p-2 card-body'>
+    <div class="item-image">
+      <img class="tree" src="../../../../assets/img/tree.svg" alt="tree icon" width="121" height="64" >
+    </div>
     <div class='item-title'>
-      <h4 class='title px-4'>
-        <i class='bi bi-tree-fill'></i>
-        <span *ngIf='mode !== "edit"'>{{ familyTree.name }}</span>
-        <span [formGroup]='updateNameForm'>
-          <input *ngIf='mode === "edit"' formControlName='treeName' type='text' (change)='updateName()'>
-        </span>
-      </h4>
+      <div style="display: flex;">
+        <i class="bi bi-tag icon"></i>
+        <h4 class='title px-1'>
+          <span *ngIf='mode !== "edit"'>{{ familyTree.name }}</span>
+          <span [formGroup]='updateNameForm'>
+            <input *ngIf='mode === "edit"' formControlName='treeName' type='text' (change)='updateName()'>
+          </span>
+        </h4>
+      </div>
+      <p class="description">
+        no description...
+      </p>
+      <div class="created">
+        <i class="bi bi-clock"></i> created at 04.20.2022
+      </div>
     </div>
     <div class='infobox px-4 d-flex' style='width: 50%;'>
       <div>
         <p class='card-text item-info'>
-          <i class='bi bi-people-fill'></i>
-          {{ familyTree.persons.size }}
+          <i class="bi bi-pencil-square"></i> last edited: {{ getLastChanged() }}
         </p>
         <p class='card-text item-info'>
-          Zuletzt Geändert: {{ getLastChanged() }}
+          <i class='bi bi-people-fill'></i>
+          {{ familyTree.persons.size }} persons
         </p>
       </div>
       <div *ngIf='mode === "edit"' class='btn btn-outline-danger d-inline-flex align-items-center' (click)='delete.emit(familyTree.id)'>

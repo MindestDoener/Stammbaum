@@ -1,0 +1,111 @@
+@import 'src/styles/styles';
+
+#graphic {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+}
+
+#belowouter {
+  background-color: $color-primary;
+  overflow: hidden;
+  position: relative;
+  height: 150%;
+  width: 100%;
+}
+
+#vision {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 50%;
+  color: $text;
+  font-size: 1.2rem;
+  @include media-breakpoint-down(xxl) {
+    font-size: 0.9rem;
+  }
+  h1 {
+    font-weight: 400;
+    font-size: 3rem;
+
+    @include media-breakpoint-down(xxl) {
+      font-size: 2.5rem;
+    }
+
+    @media (min-width: 1850px) {
+      font-size: 4rem;
+    }
+  }
+}
+
+#team {
+  position: absolute;
+  top: 34%;
+  left: 18%;
+  width: 100%;
+  color: $text;
+
+  font-weight: 400;
+  font-size: 5rem;
+
+  @include media-breakpoint-down(xxl) {
+    font-size: 2.5rem;
+  }
+
+  @media (min-width: 1850px) {
+    font-size: 4rem;
+  }
+}
+
+#teamimg{
+  position: absolute;
+  top: 43%;
+  left: 13%;
+  width: 70%;
+}
+
+#how {
+  z-index: 4;
+  position: absolute;
+  top: 0%;
+  right: 5%;
+  width: 50%;
+  color: $text;
+  font-size: 1.4rem;
+  @include media-breakpoint-down(xxl) {
+    font-size: 1.1rem;
+  }
+  h1 {
+    font-weight: 400;
+    font-size: 3rem;
+
+    @include media-breakpoint-down(xxl) {
+      font-size: 2.5rem;
+    }
+
+    @media (min-width: 1850px) {
+      font-size: 4rem;
+    }
+  }
+}
+
+.layer {
+  display: flex;
+  justify-content: center;
+}
+
+.node {
+  margin: 5px 7px;
+  height: 90px;
+  width: calc(115 / 65 * 90px);
+
+  @include media-breakpoint-down(xxl) {
+    height: 75px;
+    width: calc(115 / 65 * 75px);
+  }
+
+  @media (min-width: 1850px) {
+    height: 110px;
+    width: calc(115 / 65 * 110px);
+  }
+}

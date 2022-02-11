@@ -10,10 +10,14 @@ import { AuthService } from '../../shared/auth.service';
 })
 export class LoginPageComponent implements OnInit {
 
-  translation = new Map([['login', 'Anmelden'], ['register', 'Registrieren']]);
+  translation = new Map([['login', 'Login'], ['register', 'Create an Account']]);
 
   form = new FormGroup({
+    firstname: new FormControl(),
+    lastname: new FormControl(),
+    email: new FormControl(),
     username: new FormControl(),
+    birthdate: new FormControl(),
     password: new FormControl(),
     confirmPassword: new FormControl(),
   });
@@ -49,7 +53,7 @@ export class LoginPageComponent implements OnInit {
     if (this.success) {
       this.router.navigate(['trees']);
     }
-    this.errorMessage = 'Benutzername oder Passwort falsch';
+    this.errorMessage = 'Username or Password wrong!';
   }
 
   async register(): Promise<void> {
@@ -59,10 +63,10 @@ export class LoginPageComponent implements OnInit {
       if (this.success) {
         this.router.navigate(['trees']);
       }
-      this.errorMessage = 'Benutzername ist schon vergeben';
+      this.errorMessage = 'Username is already taken!';
     } else {
       this.success = false;
-      this.errorMessage = 'Stelle sicher, dass Passwort und Passwort bestätigen identisch sind'
+      this.errorMessage = 'Make sure that your repeated password matches with the initial one!'
     }
   }
 
