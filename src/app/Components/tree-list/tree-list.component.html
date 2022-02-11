@@ -19,54 +19,59 @@
         <div ngbDropdown class='toolbar-item sort last'>
           <button class='form-control drop-down-button' id='sortDropdown' ngbDropdownToggle>sort by...</button>
           <div ngbDropdownMenu aria-labelledby='sortDropdown'>
-            <button ngbDropdownItem (click)='setSortMode(0)'>Zuletzt Geändert <i *ngIf='sortMode === 0'
+            <button ngbDropdownItem (click)='setSortMode(0)'>last changed <i *ngIf='sortMode === 0'
                                                                                  class='bi bi-check'></i></button>
-            <button ngbDropdownItem (click)='setSortMode(1)'>Alphabetisch <i *ngIf='sortMode === 1'
+            <button ngbDropdownItem (click)='setSortMode(1)'>alphabetic <i *ngIf='sortMode === 1'
                                                                              class='bi bi-check'></i>
             </button>
-            <button ngbDropdownItem (click)='setSortMode(2)'>Anzahl Personen <i *ngIf='sortMode === 2'
+            <button ngbDropdownItem (click)='setSortMode(2)'>amount of persons <i *ngIf='sortMode === 2'
                                                                                 class='bi bi-check'></i></button>
           </div>
         </div>
 
       </div>
 
-  <div class='list'>
-    <div class="items">
-      <div *ngIf="mode === 'add'" class="list-group-item-action item">
-        <div class='card item'>
-          <div class='d-flex p-2 card-body'>
-            <div class="item-image">
-              <img class="tree" src="../../../../assets/img/tree.svg" alt="tree icon" width="121" height="64" >
-            </div>
-            <div class='item-title'>
-              <div style="display: flex;">
-                <i class="bi bi-tag icon"></i>
-                <form (ngSubmit)='onCreateFamilyTree()' [formGroup]='createFamilyTreeForm' class='form-inline'>
+      <div class='list'>
+        <div class='items'>
+          <div *ngIf="mode === 'add'" class='list-group-item-action item'>
+            <div class='card item'>
+              <div class='d-flex p-2 card-body'>
+                <div class='item-image'>
+                  <img class='tree' src='../../../../assets/img/tree.svg' alt='tree icon' width='121' height='64'>
+                </div>
+                <div class='item-title'>
+                  <div style='display: flex;'>
+                    <i class='bi bi-tag icon'></i>
+                    <form (ngSubmit)='onCreateFamilyTree()' [formGroup]='createFamilyTreeForm' class='form-inline'>
 
-                  <input class='form-control toolbar-item' formControlName='treeName' placeholder='Neuer Baum' required type='text' style="margin: 0;margin-left: 0.25rem; height: 2rem; width: 50%">
-                  <button [disabled]="createFamilyTreeForm.status == 'INVALID'" class='create-btn toolbar-item' type='submit'>
-                    create
-                  </button>
-                </form>
-              </div>
+                      <input class='form-control toolbar-item' formControlName='treeName' placeholder='Neuer Baum'
+                             required type='text' style='margin: 0;margin-left: 0.25rem; height: 2rem; width: 50%'>
+                      <button [disabled]="createFamilyTreeForm.status == 'INVALID'" class='create-btn toolbar-item'
+                              type='submit'>
+                        create
+                      </button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div *ngFor='let tree of treeList | slice: (page-1) * pageSize : page * pageSize' class='item'>
-          <div [ngClass]="{'disabled': mode !== 'view'}" (click)='openTree(tree.id)' class='list-group-item-action'>
-            <app-tree-list-item [mode]='mode' [familyTree]='tree' (delete)='deleteTree($event)' (update)='updateTreeName($event, tree)'>
-            </app-tree-list-item>
+          <div *ngFor='let tree of treeList | slice: (page-1) * pageSize : page * pageSize' class='item'>
+            <div (click)='openTree(tree.id)' class='list-group-item-action'>
+              <app-tree-list-item [mode]='mode' [familyTree]='tree' (delete)='deleteTree($event)'
+                                  (update)='updateTreeName($event, tree)'>
+              </app-tree-list-item>
+            </div>
           </div>
         </div>
       </div>
+      <div class='my-3 size-fixed' style='margin: auto'>
+        <ngb-pagination *ngIf='treeList.length > pageSize' [collectionSize]='treeList.length' [(page)]='page'
+                        [pageSize]='pageSize' [directionLinks]='false'></ngb-pagination>
+      </div>
+      <div id='waves'>
+        <app-wave-graphic></app-wave-graphic>
+      </div>
     </div>
-        <div class='my-3 size-fixed' style="margin: auto">
-           <ngb-pagination *ngIf='treeList.length > pageSize' [collectionSize]='treeList.length' [(page)]='page'
-                            [pageSize]='pageSize' [directionLinks]='false'></ngb-pagination>
-                            </div>
-  <div id='waves'>
-    <app-wave-graphic></app-wave-graphic>
   </div>
 </div>

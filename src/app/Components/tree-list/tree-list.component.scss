@@ -9,7 +9,7 @@
   flex-direction: column;
   background-color: $bg-a;
   color: $text;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 9px;
   margin: 10px
 }
@@ -61,14 +61,21 @@ color: $bg !important;
   height: 3rem;
   color: $text;
   background-color: $bg;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  &:hover {
+    background-color: $hover;
+    color: $text;
+  }
+  &:focus {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
 }
 
 .toolbar-item {
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   height: 3rem;
-  margin: 1rem;
   border: 0;
-  margin-right: 0;
+  margin: 1rem 0 1rem 1rem;
   color: $text;
   background-color: $bg;
   &.last {
@@ -94,13 +101,13 @@ color: $bg !important;
   border: none;
   opacity: 100;
   background-color: $bg;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   color: $text;
   .icon {
     font-size: 1.5rem;
     color: $color-secondary;
   }
-  
+
 }
 
 .card-body {
@@ -123,7 +130,4 @@ ngb-pagination ::ng-deep ul > li:not(.active) > a {
 ngb-pagination ::ng-deep ul > li.active > a {
   background-color: $dark !important;
   border-color: $dark !important;
-}
-.disabled {
-  pointer-events: none;
 }
