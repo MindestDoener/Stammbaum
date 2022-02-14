@@ -1,26 +1,8 @@
 @import 'src/styles/styles';
 
-#teamimg {
-  right: 5%;
-  max-height: 450px;
-  overflow: hidden;
-}
-
-#content{
-  padding: 7%;
-}
-.column1 {
-  flex: 40%;
-}
-
-.column2{
-  flex: 60%;
-  padding: 10px;
-}
-
-.row {
-  display: flex;
-  top: 10%;
+.contact{
+  padding: 5%;
+  top: 5%;
   left: 5%;
   color: $text;
   font-size: 1.2rem;

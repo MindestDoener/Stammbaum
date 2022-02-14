@@ -41,7 +41,7 @@ const routes: Routes = [
     component: LoginPageComponent,
   },
   {
-    path: 'about',
+    path: 'howto',
     component: AboutComponent,
   },
   {

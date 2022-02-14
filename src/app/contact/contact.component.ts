@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PreferenceService } from '../shared/preference.service';
-import { Theme } from '../shared/types/theme';
 
 @Component({
   selector: 'app-contact',
@@ -9,11 +7,7 @@ import { Theme } from '../shared/types/theme';
 })
 export class ContactComponent implements OnInit {
 
-  constructor(private pref: PreferenceService) { }
-
-  getPicPath(): string {
-    return this.pref.theme === Theme.LIGHT ? '../../../assets/img/TeamLight.svg' : '../../../assets/img/TeamDark.svg'
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }
