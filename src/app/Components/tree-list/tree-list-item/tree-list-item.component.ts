@@ -32,7 +32,7 @@ export class TreeListItemComponent implements OnInit{
   getLastChanged = () => {
     const lastChanged = this.familyTree.lastChanged;
     if (lastChanged.date.equals(getToday())) {
-      return 'Heute ' + lastChanged.time.toString() ;
+      return 'Today ' + lastChanged.time.toString() ;
     }
     return this.dateConverter.format(lastChanged.date) + ' ' + lastChanged.time.toString();
   };

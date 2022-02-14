@@ -1,0 +1,43 @@
+@import 'src/styles/styles';
+
+#teamimg {
+  right: 5%;
+  max-height: 450px;
+  overflow: hidden;
+}
+
+#content{
+  padding: 7%;
+}
+.column1 {
+  flex: 40%;
+}
+
+.column2{
+  flex: 60%;
+  padding: 10px;
+}
+
+.row {
+  display: flex;
+  top: 10%;
+  left: 5%;
+  color: $text;
+  font-size: 1.2rem;
+  @include media-breakpoint-down(xxl) {
+    font-size: 0.9rem;
+  }
+  h1 {
+    font-weight: 400;
+    font-size: 3rem;
+
+    @include media-breakpoint-down(xxl) {
+      font-size: 2.5rem;
+    }
+
+    @media (min-width: 1850px) {
+      font-size: 4rem;
+    }
+  }
+}
+

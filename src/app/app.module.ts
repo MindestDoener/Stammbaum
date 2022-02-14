@@ -20,6 +20,7 @@ import { ChildSelectionComponent } from './Components/editor/child-selection/chi
 import { NodeGraphicComponent } from './Components/node-graphic/node-graphic.component';
 import { WaveGraphicComponent } from './Components/wave-graphic/wave-graphic.component';
 import { AboutComponent } from './Components/about-page/about.component';
+import { ContactComponent } from './contact/contact.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AboutComponent } from './Components/about-page/about.component';
     NodeGraphicComponent,
     WaveGraphicComponent,
     AboutComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

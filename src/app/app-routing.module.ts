@@ -7,6 +7,7 @@ import { TreeListComponent } from './Components/tree-list/tree-list.component';
 import { LoginPageComponent } from './Components/login-page/login-page.component';
 import { AboutComponent } from './Components/about-page/about.component';
 import { AuthService } from './shared/auth.service';
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
   }
 ];
 

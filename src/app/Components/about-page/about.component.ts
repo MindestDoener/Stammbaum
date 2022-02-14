@@ -5,18 +5,14 @@ import { Theme } from '../../shared/types/theme';
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent implements OnInit {
+  constructor() {}
 
-  constructor(private pref: PreferenceService) {
+  scroll(el: HTMLElement) {
+    el.scrollIntoView();
   }
 
-  getPicPath(): string {
-    return this.pref.theme === Theme.LIGHT ? '../../../assets/img/TeamLight.svg' : '../../../assets/img/TeamDark.svg'
-  }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

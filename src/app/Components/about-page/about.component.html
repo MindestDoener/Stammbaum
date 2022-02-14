@@ -3,15 +3,15 @@
     <div id="vision">
       <h1>The Vision</h1>
       <div>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-        clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-        amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-        nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-        rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-        ipsum dolor sit amet.
+        We have started building famitry back in early 2021 as a small project.
+        But soon it grew bigger and everyone started to put work into it. As we
+        sat together to clarify our aims everyone should say one quality of the
+        website which is the most important to him. That's where our vision for
+        this project was settled. Simple, fast, free and stylish are the four
+        words which should always describe this website. We all hope that you
+        have the experience we want to deliver. So if you come across any
+        problems using this website feel free to <a routerLink="/contact">contact</a> us. You can also find quick help on how to use the
+        tree editor <a (click)="scroll(target)" routerLink="/about">down below</a>.
       </div>
     </div>
     <div id="graphic">
@@ -35,16 +35,106 @@
   </div>
 </div>
 <div id="belowouter">
-  <div id="how">
-    <h1>How it was done</h1>
-    <div>
-      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr sit amet.
+  <div #target id="how">
+    <h1 class="center">How to?</h1>
+    <div class="row">
+      <div class="column">
+        <div id="help" class="p-2">
+          <h3>Create new trees?</h3>
+          <ol>
+            <li>navigate to <a routerLink="/trees">"my trees"</a>.</li>
+            <li>
+              press the <i class="bi bi-plus-circle"></i> button and name the
+              tree as you like
+            </li>
+            <li>now click the "create" button and you will get to your tree</li>
+          </ol>
+        </div>
+        <div id="help" class="p-2">
+          <h3>Delete or rename trees?</h3>
+          <ol>
+            <li>navigate to <a routerLink="/trees">"my trees"</a>.</li>
+            <li>
+              press the <i class="bi bi-pen-fill"></i> button and name the tree
+              as you like or delete it by pressing on
+              <i class="bi bi-trash-fill"></i>
+            </li>
+            <li>now click the "create" button and you will get to your tree</li>
+          </ol>
+        </div>
+        <div id="help" class="p-2">
+          <h3>Export my tree?</h3>
+          <ol>
+            <li>navigate to one of your trees</li>
+            <li>
+              press the <i class='bi bi-file-earmark-arrow-down'></i> button
+            </li>
+            <li>you can choose between .png file or .json file</li>
+            <li>if you just like to have a picture of your famitry in your local storage choose the .png file</li>
+            <li>if you want to save the famitry in your local storage to import it again choose .json file</li>
+          </ol>
+        </div>
+        <div id="help" class="p-2">
+          <h3>Import my tree?</h3>
+          <ol>
+            <li>navigate to <a routerLink="/trees">"my trees"</a>.</li>
+            <li>
+              press the <i class='bi bi-file-earmark-arrow-up'></i> button
+            </li>
+            <li>now select one .json file from your local storage</li>
+            <li>the tree is now in "my trees" again</li>
+          </ol>
+        </div>
+      </div>
+      <div class="column">
+        <div id="help" class="p-2">
+          <h3>Add a person to a tree?</h3>
+          <ol>
+            <li>navigate to one of your trees</li>
+            <li>
+              press the <i class="bi bi-plus-circle"></i> button and fill out at
+              least the required fields marked with a *
+            </li>
+            <li>
+              now click the "add" button and the person will get added into your
+              tree
+            </li>
+            <li>
+              if you want to continue adding persons simply check the "Add more"
+              option
+            </li>
+          </ol>
+        </div>
+        <div id="help" class="p-2">
+          <h3>Navigate in my tree?</h3>
+          <ol>
+            <li>navigate to one of your trees</li>
+            <li>
+              if you click the
+              <i class="bi bi-fullscreen-exit"></i> button you can always get to
+              the middle of your tree
+            </li>
+            <li>you can also drag&drop to get to your wished position</li>
+            <li>
+              or just use the scroll wheel on your mouse to go in or out of the
+              tree
+            </li>
+          </ol>
+        </div>
+        <div id="help" class="p-2">
+          <h3>Delete or edit a person?</h3>
+          <ol>
+            <li>navigate to one of your trees</li>
+            <li>
+              double click one of your created persons
+            </li>
+            <li>now you can see all propertys of the person, just edit them and press the "update" button to save your changes</li>
+            <li>
+              to delete the person just press the "remove person" button
+            </li>
+          </ol>
+        </div>
+      </div>
     </div>
   </div>
-    <h1  id="team">The Team</h1>
-    <div id="teamimg"><img [src]="getPicPath()"></div>
 </div>
