@@ -57,19 +57,11 @@
   }
 }
 
-#teamimg{
-  position: absolute;
-  top: 43%;
-  left: 13%;
-  width: 70%;
-}
-
 #how {
   z-index: 4;
   position: absolute;
   top: 0%;
-  right: 5%;
-  width: 50%;
+  left: 5%;
   color: $text;
   font-size: 1.4rem;
   @include media-breakpoint-down(xxl) {
@@ -77,16 +69,33 @@
   }
   h1 {
     font-weight: 400;
-    font-size: 3rem;
+    font-size: 4rem;
+    margin-bottom: 70px;
+
 
     @include media-breakpoint-down(xxl) {
-      font-size: 2.5rem;
+      font-size: 4.5rem;
     }
 
     @media (min-width: 1850px) {
-      font-size: 4rem;
+      font-size: 5rem;
     }
   }
+}
+
+#help{
+  width: 90%;
+  margin-bottom: 70px;
+  background-color: $color-primary;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.column {
+  flex: 50%;
+  padding: 10px;
+}
+.row {
+  display: flex;
 }
 
 .layer {

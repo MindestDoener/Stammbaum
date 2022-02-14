@@ -44,7 +44,7 @@
                     <i class='bi bi-tag icon'></i>
                     <form (ngSubmit)='onCreateFamilyTree()' [formGroup]='createFamilyTreeForm' class='form-inline'>
 
-                      <input class='form-control toolbar-item' formControlName='treeName' placeholder='Neuer Baum'
+                      <input class='form-control toolbar-item' formControlName='treeName' placeholder='New Tree'
                              required type='text' style='margin: 0;margin-left: 0.25rem; height: 2rem; width: 50%'>
                       <button [disabled]="createFamilyTreeForm.status == 'INVALID'" class='create-btn toolbar-item'
                               type='submit'>
