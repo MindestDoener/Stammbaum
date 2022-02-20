@@ -1,0 +1,96 @@
+{
+	"addEditPerson": {
+		"addMore": "Mehr hinzufügen",
+		"addPerson": "Person hinzufügen",
+		"birthdate": "Geburtsdatum: *",
+		"chooseGender": "Wähle ein Geschlecht",
+		"choosePartner": "Partner wählen",
+		"close": "Schließen",
+		"deathDate": "Todesdatum:",
+		"editPerson": "Person bearbeiten:",
+		"firstName": "Vorname: *",
+		"gender": "Geschlecht: *",
+		"lastName": "Nachname: *",
+		"phLastName": "Nachname",
+		"phVorname": "Vorname",
+		"removePerson": "Person löschen",
+		"save": "Speichern"
+	},
+	"children": {
+		"children": "Kinder",
+		"fields": "Fülle bitte die Plfichtfelder aus!",
+		"persons": "Personen",
+		"possibleChildren": "Mögliche Kinder"
+	},
+	"contact": {
+		"contact": "Kontakt",
+		"feedback": "Wenn du uns einfach eine schnelle Rückmeldung geben möchtest, würde es sehr helfen, wenn du dir einmal unsere",
+		"reachOut": "Um uns zu erreichen, kannst du ganz einfach an eine der folgenden E-Mail Adressen schreiben:",
+		"survey": "Umfrage anschaust"
+	},
+	"howto": {
+		"addButton": "klicke nun auf den \"hinzufügen\" Button und die Person wird deinem Baum angefügt",
+		"addPerson": "Personen hinzufügen",
+		"chooseJson": "wenn du deinen famitry auf deinem Computer speichern möchtest um diesen später wieder hochzuladen dann wähle die .json Datei",
+		"choosePng": "wenn du nur ein Bild von deinem famitry speichern möchtest dann wähle die .png Datei",
+		"contact": "kontaktieren",
+		"continue": "wenn du noch mehr Personen hinzufügen möchtest setze einen Haken bei der \"mehr hinzufügen\" Option",
+		"create": "Neue Bäume erstellen",
+		"createButton": "klicke nun auf \"Erstellen\" um zu deinem Baum zu gelangen",
+		"delEditPerson": "Eine Person löschen oder bearbeiten",
+		"delPerson": "um eine Person zu löschen drücke einfach den \"Person löschen\" Button",
+		"deleteRename": "Bäume umbenennen oder löschen",
+		"doubleClick": "klick doppet auf eine deiner erstellten Personen",
+		"drag&drop": "durch gedrückt halten der linken Maustaste kannst du auch in deinem Baum navigieren",
+		"export": "Meinen Baum exportieren",
+		"files": "du kannst zwischen einer .png Datei oder einer .json Datei wählen",
+		"fillOut": "und fülle mindestens die mit einem * markierten Felder aus",
+		"ifClick": "wenn du den",
+		"import": "Meinen Baum importieren",
+		"lowerTitle": "Hilfe",
+		"middleTree": "Button anklickst kannst du immer in eine zentrierte Sicht deines Baums kommen",
+		"nameAndDelTrees": "Button und benenne den Baum wie du möchtest oder lösche ihn mit ",
+		"nameTrees": "Button und benenne den Baum wie du möchtest ",
+		"navigate": "In meinem Baum zurechtfinden",
+		"navigateTo": "navigiere zu",
+		"navigateToTrees": "navigiere zu einem deiner Bäume",
+		"nowAgain": "der Baum wird nun wieder in deinen Bäumen angezeigt",
+		"press": "drücke auf den ",
+		"propertys": "jetzt kannst du alle Eigenschaften der Person sehen, verändere diese einfach und drück den \"aktualisieren\" Button um deine Änderungen zu speichern",
+		"scroll": "vorbeischauen.",
+		"selectJson": "wähle nun eine .json Datei aus deinem lokalen Speicher ",
+		"text1": "Wir haben angefangen famitry als kleines Projekt im Frühjahr 2021 zu bauen. Bald investierte jeder von uns immer mehr Arbeit und die Anwendung wuchs immer schneller. Wir beschlossen uns zusammen zu setzen, um unsere Ziele klar zu definieren. Hierfür sollte jeder ein Ziel nennen, was ihm persönlich am Wichtigsten ist. So enstand unsere Projektvision. Einfach, Schnell, Kostenlos und Modern. Wir hoffen, dass wir genau dieses Erlebnis bei der Benutzung der Website abliefern können. Wenn sie also auf irgendwelche Probleme stoßen, können sie uns ganz einfach ",
+		"text2": "Für eine Schnellhilfe zu allen Funktionen der Anwendung können sie weiter unten",
+		"title": "Die Vision",
+		"zoom": "oder vergrößere/verkleinere den Baum durch Benutzung des Mausrads"
+	},
+	"landing-page": {
+		"text": "Nach ihren Wünschen angepasst.",
+		"title": "Familienbäume",
+		"vision": "Einfach, Schnell, Kostenlos und Modern."
+	},
+	"mytrees": {
+		"alphabetic": "alphabetisch",
+		"amountPerson": "Personenanzahl",
+		"create": "Erstellen",
+		"lastChanged": "zuletzt geändert",
+		"newTree": "Neuer Baum",
+		"searchTree": "Meine Bäume durchsuchen...",
+		"sortBy": "sortieren nach..."
+	},
+	"navbar": {
+		"contact": "Kontakt",
+		"home": "Start",
+		"howto": "Hilfe",
+		"login": "Einloggen",
+		"logout": "Ausloggen",
+		"mytrees": "Meine Bäume",
+		"register": "Registrieren"
+	},
+	"treeListItem": {
+		"created": "erstellt am 04.20.2022",
+		"lastEdit": "letzte Änderung:",
+		"noDescription": "keine Beschreibung...",
+		"persons": "Personen"
+	}
+}

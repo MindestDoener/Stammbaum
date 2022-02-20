@@ -1,17 +1,16 @@
 <div id="outer">
   <div id="content-container">
     <div id="vision">
-      <h1>The Vision</h1>
+      <h1>
+        {{ 'howto.title' | translate }}
+      </h1>
       <div>
-        We have started building famitry back in early 2021 as a small project.
-        But soon it grew bigger and everyone started to put work into it. As we
-        sat together to clarify our aims everyone should say one quality of the
-        website which is the most important to him. That's where our vision for
-        this project was settled. Simple, fast, free and stylish are the four
-        words which should always describe this website. We all hope that you
-        have the experience we want to deliver. So if you come across any
-        problems using this website feel free to <a routerLink="/contact">contact</a> us. You can also find quick help on how to use the
-        tree editor <a (click)="scroll(target)" routerLink="/about">down below</a>.
+        {{ 'howto.text1' | translate }}
+        <a routerLink="/contact"> {{ 'howto.contact' | translate }}</a>
+        {{ 'howto.text2' | translate }}
+        <a (click)="scroll(target)" routerLink="/about">
+          {{ 'howto.scroll' | translate }}</a
+        >
       </div>
     </div>
     <div id="graphic">
@@ -36,102 +35,115 @@
 </div>
 <div id="belowouter">
   <div #target id="how">
-    <h1 class="center">How to?</h1>
+    <h1 class="center">{{ 'howto.lowerTitle' | translate }}</h1>
     <div class="row">
       <div class="column">
         <div id="help" class="p-2">
-          <h3>Create new trees?</h3>
+          <h3>{{ 'howto.create' | translate }}</h3>
           <ol>
-            <li>navigate to <a routerLink="/trees">"my trees"</a>.</li>
             <li>
-              press the <i class="bi bi-plus-circle"></i> button and name the
-              tree as you like
+              {{ 'howto.navigateTo' | translate }}
+              <a routerLink="/trees">{{ 'navbar.mytrees' | translate }}</a
+              >.
             </li>
-            <li>now click the "create" button and you will get to your tree</li>
+            <li>
+              {{ 'howto.press' | translate }} <i class="bi bi-plus-circle"></i>
+              {{ 'howto.nameTrees' | translate }}
+            </li>
+            <li>{{ 'howto.createButton' | translate }}</li>
           </ol>
         </div>
         <div id="help" class="p-2">
-          <h3>Delete or rename trees?</h3>
+          <h3>{{ 'howto.deleteRename' | translate }}</h3>
           <ol>
-            <li>navigate to <a routerLink="/trees">"my trees"</a>.</li>
             <li>
-              press the <i class="bi bi-pen-fill"></i> button and name the tree
-              as you like or delete it by pressing on
+              {{ 'howto.navigateTo' | translate }}
+              <a routerLink="/trees">{{ 'navbar.mytrees' | translate }}</a
+              >.
+            </li>
+            <li>
+              {{ 'howto.press' | translate }} <i class="bi bi-pen-fill"></i>
+              {{ 'howto.nameAndDelTrees' | translate }}
               <i class="bi bi-trash-fill"></i>
             </li>
-            <li>now click the "create" button and you will get to your tree</li>
           </ol>
         </div>
         <div id="help" class="p-2">
-          <h3>Export my tree?</h3>
+          <h3>{{ 'howto.export' | translate }}</h3>
           <ol>
-            <li>navigate to one of your trees</li>
+            <li>{{ 'howto.navigateToTrees' | translate }}</li>
             <li>
-              press the <i class='bi bi-file-earmark-arrow-down'></i> button
+              {{ 'howto.press' | translate }}
+              <i class="bi bi-file-earmark-arrow-down"></i> button
             </li>
-            <li>you can choose between .png file or .json file</li>
-            <li>if you just like to have a picture of your famitry in your local storage choose the .png file</li>
-            <li>if you want to save the famitry in your local storage to import it again choose .json file</li>
+            <li>{{ 'howto.files' | translate }}</li>
+            <li>
+              {{ 'howto.choosePng' | translate }}
+            </li>
+            <li>
+              {{ 'howto.chooseJson' | translate }}
+            </li>
           </ol>
         </div>
         <div id="help" class="p-2">
-          <h3>Import my tree?</h3>
+          <h3>{{ 'howto.import' | translate }}</h3>
           <ol>
-            <li>navigate to <a routerLink="/trees">"my trees"</a>.</li>
             <li>
-              press the <i class='bi bi-file-earmark-arrow-up'></i> button
+              {{ 'howto.navigateTo' | translate }}
+              <a routerLink="/trees">{{ 'navbar.mytrees' | translate }}</a
+              >.
             </li>
-            <li>now select one .json file from your local storage</li>
-            <li>the tree is now in "my trees" again</li>
+            <li>
+              {{ 'howto.press' | translate }}
+              <i class="bi bi-file-earmark-arrow-up"></i> button
+            </li>
+            <li>{{ 'howto.selectJson' | translate }}</li>
+            <li>{{ 'howto.nowAgain' | translate }}</li>
           </ol>
         </div>
       </div>
       <div class="column">
         <div id="help" class="p-2">
-          <h3>Add a person to a tree?</h3>
+          <h3>{{ 'howto.addPerson' | translate }}</h3>
           <ol>
-            <li>navigate to one of your trees</li>
+            <li>{{ 'howto.navigateToTrees' | translate }}</li>
             <li>
-              press the <i class="bi bi-plus-circle"></i> button and fill out at
-              least the required fields marked with a *
+              {{ 'howto.press' | translate }}
+              <i class="bi bi-plus-circle"></i> button
+              {{ 'howto.fillOut' | translate }}
             </li>
             <li>
-              now click the "add" button and the person will get added into your
-              tree
+              {{ 'howto.addButton' | translate }}
             </li>
             <li>
-              if you want to continue adding persons simply check the "Add more"
-              option
+              {{ 'howto.continue' | translate }}
             </li>
           </ol>
         </div>
         <div id="help" class="p-2">
-          <h3>Navigate in my tree?</h3>
+          <h3>{{ 'howto.navigate' | translate }}</h3>
           <ol>
-            <li>navigate to one of your trees</li>
+            <li>{{ 'howto.navigateToTrees' | translate }}</li>
             <li>
-              if you click the
-              <i class="bi bi-fullscreen-exit"></i> button you can always get to
-              the middle of your tree
+              {{ 'howto.ifClick' | translate }}
+              <i class="bi bi-fullscreen-exit"></i>
+              {{ 'howto.middleTree' | translate }}
             </li>
-            <li>you can also drag&drop to get to your wished position</li>
+            <li>{{ 'howto.drag&drop' | translate }}</li>
             <li>
-              or just use the scroll wheel on your mouse to go in or out of the
-              tree
+              {{ 'howto.zoom' | translate }}
             </li>
           </ol>
         </div>
         <div id="help" class="p-2">
-          <h3>Delete or edit a person?</h3>
+          <h3>{{ 'howto.delEditPerson' | translate }}</h3>
           <ol>
-            <li>navigate to one of your trees</li>
+            <li>{{ 'howto.navigateToTrees' | translate }}</li>
+            <li>{{ 'howto.doubleClick' | translate }}</li>
             <li>
-              double click one of your created persons
+              {{ 'howto.propertys' | translate }}
             </li>
-            <li>now you can see all propertys of the person, just edit them and press the "update" button to save your changes</li>
-            <li>
-              to delete the person just press the "remove person" button
-            </li>
+            <li>{{ 'howto.delPerson' | translate }}</li>
           </ol>
         </div>
       </div>
