@@ -1,0 +1,96 @@
+{
+	"addEditPerson": {
+		"addMore": "Add more",
+		"addPerson": "Add person",
+		"birthdate": "Birthdate: *",
+		"chooseGender": "choose a Gender",
+		"choosePartner": "choose Partner",
+		"close": "Close",
+		"deathDate": "Death Date:",
+		"editPerson": "Edit person:",
+		"firstName": "First Name: *",
+		"gender": "Gender: *",
+		"lastName": "Last Name: *",
+		"phLastName": "Last Name",
+		"phVorname": "First Name",
+		"removePerson": "Remove person",
+		"save": "Save"
+	},
+	"children": {
+		"children": "Children",
+		"fields": "Please first fill in the mandatory fields!",
+		"persons": "persons",
+		"possibleChildren": "Possible Children"
+	},
+	"contact": {
+		"contact": "contact",
+		"feedback": "If you just want to give us a quick feedback. It would really help if you could check out this",
+		"reachOut": "If you want to reach out to one of us just send an e-mail to one of the following adresses:",
+		"survey": "survey"
+	},
+	"howto": {
+		"addButton": "now click the \"add\" button and the person will get added into your tree",
+		"addPerson": "Add a person to a tree?",
+		"chooseJson": "if you want to save the famitry in your local storage to import it again choose .json file",
+		"choosePng": "if you just like to have a picture of your famitry in your local storage choose the .png file",
+		"contact": "contact us.",
+		"continue": "if you want to continue adding persons simply check the \"Add more\" option",
+		"create": "Create new trees?",
+		"createButton": "now click the \"create\" button and you will get to your tree",
+		"delEditPerson": "Delete or edit a person?",
+		"delPerson": "to delete the person just press the \"remove person\" button",
+		"deleteRename": "Delete or rename trees?",
+		"doubleClick": "double click one of your created persons",
+		"drag&drop": "you can also drag&drop to get to your wished position",
+		"export": "Export my tree?",
+		"files": "you can choose between .png file or .json file",
+		"fillOut": "and fill out at least the required fields marked with a *",
+		"ifClick": "if you click the",
+		"import": "Import my tree?",
+		"lowerTitle": "How to?",
+		"middleTree": "button you can always get to the middle of your tree",
+		"nameAndDelTrees": "button and name the tree as you like or delete it by pressing on",
+		"nameTrees": "button and name the tree as you like",
+		"navigate": "Navigate in my tree?",
+		"navigateTo": "navigate to",
+		"navigateToTrees": "navigate to one of your trees",
+		"nowAgain": "the tree is now in \"my trees\" again",
+		"press": "press the",
+		"propertys": "now you can see all propertys of the person, just edit them and press the \"update\" button to save your changes",
+		"scroll": "down below.",
+		"selectJson": "now select one .json file from your local storage",
+		"text1": "We have started building famitry back in early 2021 as a small project. But soon it grew bigger and everyone started to put work into it. As we sat together to clarify our aims everyone should say one quality of the website which is the most important to him. That's where our vision for this project was settled. Simple, fast, free and stylish are the four words which should always describe this website. We all hope that you have the experience we want to deliver. So if you come across any problems using this website feel free to ",
+		"text2": "You can also find quick help on how to use the tree editor",
+		"title": "The Vision",
+		"zoom": "or just use the scroll wheel on your mouse to zoom in or out of the tree"
+	},
+	"landing-page": {
+		"text": "Pesonalized to your own wish.",
+		"title": "Create Family Trees",
+		"vision": "simple, fast, free and stylish."
+	},
+	"mytrees": {
+		"alphabetic": "alphabetic",
+		"amountPerson": "amount of persons",
+		"create": "create",
+		"lastChanged": "last changed",
+		"newTree": "New Tree",
+		"searchTree": "search my trees...",
+		"sortBy": "sort by..."
+	},
+	"navbar": {
+		"contact": "contact",
+		"home": "home",
+		"howto": "howto",
+		"login": "Login",
+		"logout": "Logout",
+		"mytrees": "mytrees",
+		"register": "Register"
+	},
+	"treeListItem": {
+		"created": "created at 04.20.2022",
+		"lastEdit": "last edited:",
+		"noDescription": "no Description...",
+		"persons": "persons"
+	}
+}

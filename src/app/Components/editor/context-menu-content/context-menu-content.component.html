@@ -1,8 +1,8 @@
 <div class="modal-header">
   <h4 class="modal-title" *ngIf="isUpdateMode()">
-    Edit person: {{ person?.firstName }} {{ person?.lastName }}
+    {{'addEditPerson.removePerson' | translate}} {{ person?.firstName }} {{ person?.lastName }}
   </h4>
-  <h4 class="modal-title" *ngIf="!isUpdateMode()">Add person</h4>
+  <h4 class="modal-title" *ngIf="!isUpdateMode()">{{'addEditPerson.addPerson' | translate}}</h4>
   <div (click)="activeModal.dismiss('Cross click')" aria-label='Close' class='btn close'>
     <i class='bi bi-x-lg'></i>
   </div>
@@ -11,21 +11,21 @@
   <form [formGroup]="editPersonForm">
     <div class="row nowrap">
       <label class="m-1 col">
-        First Name: *
+        {{'addEditPerson.firstName' | translate}}
         <input
           class="form-control"
           formControlName="firstName"
-          placeholder="First Name"
+          placeholder="{{'addEditPerson.phLastName' | translate}}"
           required
           type="text"
         />
       </label>
       <label class="m-1 col">
-        Last Name: *
+        {{'addEditPerson.lastName' | translate}}
         <input
           class="form-control"
           formControlName="lastName"
-          placeholder="Last Name"
+          placeholder="{{'addEditPerson.phLastName' | translate}}"
           required
           type="text"
           [ngbTypeahead]="searchLastNames"
@@ -34,7 +34,7 @@
     </div>
     <div class="row nowrap">
       <label class="m-1 col">
-        Birthdate: *
+        {{'addEditPerson.birthdate' | translate}}
         <div class="input-group">
           <input
             class="form-control"
@@ -56,7 +56,7 @@
         </div>
       </label>
       <label class="m-1 col">
-        Death Date:
+        {{'addEditPerson.deathDate' | translate}}
         <div class="input-group">
           <input
             class="form-control"
@@ -79,9 +79,9 @@
     </div>
     <div class="row nowrap">
       <label class="m-1 col">
-        Gender: *
+        {{'addEditPerson.gender' | translate}}
         <select class="form-select" formControlName="gender" required>
-          <option selected disabled value="">choose a Gender</option>
+          <option selected disabled value="">{{'addEditPerson.chooseGender' | translate}}</option>
           <option *ngFor="let gender of genders; index as i" [ngValue]="i">
             {{ gender }}
           </option>
@@ -94,7 +94,7 @@
           aria-label="Default select example"
           (change)="setSpouse($event)"
         >
-          <option selected disabled>choose Partner</option>
+          <option selected disabled>{{'addEditPerson.choosePartner' | translate}}</option>
           <option [value]="0"></option>
           <option
             [value]="spouse.id"
@@ -143,7 +143,8 @@
       id="addMore"
       [formControl]="addMoreCheckBox"
     />
-    <label class="form-check-label" for="addMore"> Add more </label>
+    <label class="form-check-label" for="addMore">
+      {{'addEditPerson.addMore' | translate}} </label>
   </div>
   <button
     [disabled]="editPersonForm.status == 'INVALID'"
@@ -151,7 +152,7 @@
     (click)="isUpdateMode() ? onUpdatePerson() : onAddPerson()"
     type="button"
   >
-    {{ isUpdateMode() ? 'Update' : 'Add' }}
+    {{'addEditPerson.save' | translate}}
   </button>
   <button
     *ngIf="isUpdateMode()"
@@ -159,13 +160,13 @@
     class="btn btn-danger m-1"
     type="button"
   >
-    Remove person
+  {{'addEditPerson.removePerson' | translate}}
   </button>
   <button
     (click)="activeModal.close('Close click')"
     class="btn outline"
     type="button"
   >
-    Close
+  {{'addEditPerson.close' | translate}}
   </button>
 </div>

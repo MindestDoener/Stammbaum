@@ -1,55 +1,96 @@
-<nav class='navbar navbar-expand-lg navbar-themed'>
-  <a class='navbar-brand' routerLink=''>
-    <div class='align-middle logo'>
-      famitry
-    </div>
+<nav class="navbar navbar-expand-lg navbar-themed">
+  <a class="navbar-brand" routerLink="">
+    <div class="align-middle logo">famitry</div>
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-    <ul class='navbar-nav mr-auto'>
-      <li class='nav-item'>
-        <a class='nav-link' routerLink='/home' routerLinkActive="active-link">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home" routerLinkActive="active-link">
           <i class="bi bi-caret-right-fill"></i>
-          home
+          {{ 'navbar.home' | translate }}
         </a>
       </li>
-      <li class='nav-item'>
-        <a class='nav-link' routerLink='/howto' routerLinkActive="active-link">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/howto" routerLinkActive="active-link">
           <i class="bi bi-caret-right-fill"></i>
-          howto
+          {{ 'navbar.howto' | translate }}
         </a>
       </li>
-      <li class='nav-item'>
-        <a class='nav-link' routerLink='/trees' routerLinkActive="active-link">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/trees" routerLinkActive="active-link">
           <i class="bi bi-caret-right-fill"></i>
-          my trees
+          {{ 'navbar.mytrees' | translate }}
         </a>
       </li>
-      <li class='nav-item'>
-        <a class='nav-link' routerLink='/contact' routerLinkActive="active-link">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLink="/contact"
+          routerLinkActive="active-link"
+        >
           <i class="bi bi-caret-right-fill"></i>
-          contact
+          {{ 'navbar.contact' | translate }}
         </a>
       </li>
     </ul>
-    <div class='d-flex ms-auto me-2' ngbDropdown display='dynamic' placement='bottom-right'>
-      <a class='nav-link toggle user-toggle' id='navbarDropdownMenuLink' ngbDropdownToggle>
-        <i class='bi bi-person-fill'></i>
+    <div
+      class="d-flex ms-auto me-2"
+      ngbDropdown
+      display="dynamic"
+      placement="bottom-right"
+    >
+      <a
+        class="nav-link toggle user-toggle"
+        id="navbarDropdownMenuLink"
+        ngbDropdownToggle
+      >
+        <i class="bi bi-person-fill"></i>
       </a>
-      <div ngbDropdownMenu aria-labelledby='navbarDropdownMenuLink' id='dropdown'>
-        <a ngbDropdownItem routerLink='/login' *ngIf='!auth.isAuthenticated()'>Login</a>
-        <a ngbDropdownItem routerLink='/register' *ngIf='!auth.isAuthenticated()'>Register</a>
-        <a ngbDropdownItem (click)='auth.logout()' *ngIf='auth.isAuthenticated()'>Logout</a>
+      <div
+        ngbDropdownMenu
+        aria-labelledby="navbarDropdownMenuLink"
+        id="dropdown"
+      >
+        <a ngbDropdownItem routerLink="/login" *ngIf="!auth.isAuthenticated()"
+          >
+          {{ 'navbar.login' | translate }}</a
+        >
+        <a
+          ngbDropdownItem
+          routerLink="/register"
+          *ngIf="!auth.isAuthenticated()"
+          >
+          {{ 'navbar.register' | translate }}</a
+        >
+        <a
+          ngbDropdownItem
+          (click)="auth.logout()"
+          *ngIf="auth.isAuthenticated()"
+          >
+          {{ 'navbar.logout' | translate }}</a
+        >
       </div>
     </div>
-    <div class='d-flex me-2 toggle theme-toggle' (click)='toggleTheme()'>
-      <i [class]='"bi bi-" + getThemeIcon() + "-fill"'></i>
+    <div class="d-flex me-2 toggle theme-toggle" (click)="toggleLanguage()">
+      {{ getLanguage() }}
+    </div>
+    <div class="d-flex me-2 toggle theme-toggle" (click)="toggleTheme()">
+      <i [class]="'bi bi-' + getThemeIcon() + '-fill'"></i>
     </div>
   </div>
 </nav>
-<div class='container-fluid content'>
+<div class="container-fluid content">
   <router-outlet></router-outlet>
 </div>

@@ -15,16 +15,16 @@
           <input type='file' style='display: none' accept='application/json' (change)='onFileImport($event)'
                  #fileUpload>
         </button>
-        <input type='text' class='form-control toolbar-item search' placeholder='search my trees...'>
+        <input type='text' class='form-control toolbar-item search' placeholder="{{'mytrees.searchTree' | translate}}">
         <div ngbDropdown class='toolbar-item sort last'>
-          <button class='form-control drop-down-button' id='sortDropdown' ngbDropdownToggle>sort by...</button>
+          <button class='form-control drop-down-button' id='sortDropdown' ngbDropdownToggle>{{'mytrees.sortBy' | translate}}</button>
           <div ngbDropdownMenu aria-labelledby='sortDropdown'>
-            <button ngbDropdownItem (click)='setSortMode(0)'>last changed <i *ngIf='sortMode === 0'
+            <button ngbDropdownItem (click)='setSortMode(0)'>{{'mytrees.lastChanged' | translate}} <i *ngIf='sortMode === 0'
                                                                                  class='bi bi-check'></i></button>
-            <button ngbDropdownItem (click)='setSortMode(1)'>alphabetic <i *ngIf='sortMode === 1'
+            <button ngbDropdownItem (click)='setSortMode(1)'>{{'mytrees.alphabetic' | translate}} <i *ngIf='sortMode === 1'
                                                                              class='bi bi-check'></i>
             </button>
-            <button ngbDropdownItem (click)='setSortMode(2)'>amount of persons <i *ngIf='sortMode === 2'
+            <button ngbDropdownItem (click)='setSortMode(2)'>{{'mytrees.amountPerson' | translate}} <i *ngIf='sortMode === 2'
                                                                                 class='bi bi-check'></i></button>
           </div>
         </div>
@@ -44,11 +44,11 @@
                     <i class='bi bi-tag icon'></i>
                     <form (ngSubmit)='onCreateFamilyTree()' [formGroup]='createFamilyTreeForm' class='form-inline'>
 
-                      <input class='form-control toolbar-item' formControlName='treeName' placeholder='New Tree'
+                      <input class='form-control toolbar-item' formControlName='treeName' placeholder="{{'mytrees.newTree' | translate}}"
                              required type='text' style='margin: 0;margin-left: 0.25rem; height: 2rem; width: 50%'>
                       <button [disabled]="createFamilyTreeForm.status == 'INVALID'" class='create-btn toolbar-item'
                               type='submit'>
-                        create
+                              {{'mytrees.create' | translate}}
                       </button>
                     </form>
                   </div>

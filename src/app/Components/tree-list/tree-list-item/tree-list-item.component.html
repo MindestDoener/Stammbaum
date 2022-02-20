@@ -14,20 +14,23 @@
         </h4>
       </div>
       <p class="description">
-        no description...
+        {{'treeListItem.noDescription' | translate}}
       </p>
       <div class="created">
-        <i class="bi bi-clock"></i> created at 04.20.2022
+        <i class="bi bi-clock"></i>
+        {{'treeListItem.created' | translate}}
       </div>
     </div>
     <div class='infobox px-4 d-flex' style='width: 50%;'>
       <div>
         <p class='card-text item-info'>
-          <i class="bi bi-pencil-square"></i> last edited: {{ getLastChanged() }}
+          <i class="bi bi-pencil-square"></i>
+          {{'treeListItem.lastEdit' | translate}} {{ getLastChanged() }}
         </p>
         <p class='card-text item-info'>
           <i class='bi bi-people-fill'></i>
-          {{ familyTree.persons.size }} persons
+          {{ familyTree.persons.size }}
+          {{'treeListItem.persons' | translate}}
         </p>
       </div>
       <div *ngIf='mode === "edit"' class='btn btn-outline-danger d-inline-flex align-items-center' (click)='delete.emit(familyTree.id)'>

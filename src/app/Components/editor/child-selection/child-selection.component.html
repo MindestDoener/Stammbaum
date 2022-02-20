@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body row">
     <div class="col">
-      <p class="card-title">Children</p>
+      <p class="card-title">{{'children.children' | translate}}</p>
       <div class="card-text scrollable display">
         <div class="d-grid gap-2">
           <div
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="col">
-      <p class="card-title">Possible Children</p>
+      <p class="card-title">{{'children.possibleChildren' | translate}}</p>
       <div class="input-group input-group-sm my-2 search">
         <input
           (keyup)="onSearchInput($event)"
@@ -40,7 +40,7 @@
       <div class="card-text scrollable selection">
         <div class="d-grid gap-2">
           <div *ngIf="editPersonForm?.invalid; else other">
-            Please first fill in the mandatory fields!
+            {{'children.fields' | translate}}
           </div>
           <ng-template #other>
             <div
